@@ -1,5 +1,4 @@
 #pragma once
-#include "resource.h"
 
 #define WIDTH 1920
 #define HEIGHT 1080
@@ -13,7 +12,7 @@
 #define SAFE_DELETE(p) if (p) { delete p; p = nullptr;}
 
 #define TITLE_SCENE		0
-#define GAME_SCENE_01	1
+#define GAME_SCENE	1
 #define HELP_SCENE		2
 #define GAME_OVER_SCENE 3
 

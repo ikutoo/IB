@@ -23,10 +23,10 @@ void CDirector::update()
 //FUNCTION:
 bool CDirector::setActiveScene(int vSceneID)
 {
-	if (m_SceneMap.find(vSceneID) == m_SceneMap.end()) return false;
+	if (m_ID2SceneMap.find(vSceneID) == m_ID2SceneMap.end()) return false;
 
 	if (m_pActiveScene) m_pActiveScene->destroyV();
-	m_pActiveScene = m_SceneMap[vSceneID];
+	m_pActiveScene = m_ID2SceneMap[vSceneID];
 	if (!m_pActiveScene->initV()) return false;
 
 	return true;

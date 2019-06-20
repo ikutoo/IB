@@ -26,9 +26,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Source Files\common</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Source Files\common</Filter>
-    </ClInclude>
     <ClInclude Include="common.h">
       <Filter>Source Files\common</Filter>
     </ClInclude>
@@ -47,9 +44,6 @@
     <ClInclude Include="gameoverScene.h">
       <Filter>Source Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="gameScene01.h">
-      <Filter>Source Files\game</Filter>
-    </ClInclude>
     <ClInclude Include="helpScene.h">
       <Filter>Source Files\game</Filter>
     </ClInclude>
@@ -58,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="utility.h">
       <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="gameScene.h">
+      <Filter>Source Files\game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -79,9 +76,6 @@
     <ClCompile Include="gameoverScene.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
-    <ClCompile Include="gameScene01.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
     <ClCompile Include="helpScene.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
@@ -94,18 +88,8 @@
     <ClCompile Include="utility.cpp">
       <Filter>Source Files\base</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="InfiniteBarrage.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="InfiniteBarrage.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
+    <ClCompile Include="gameScene.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

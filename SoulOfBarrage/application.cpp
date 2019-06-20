@@ -3,7 +3,7 @@
 #include "director.h"
 #include "titleScene.h"
 #include "helpScene.h"
-#include "gameScene01.h"
+#include "gameScene.h"
 #include "gameoverScene.h"
 
 //*********************************************************************
@@ -42,7 +42,7 @@ bool CApplication::__init()
 
 	CDirector::getInstance()->registerScene(TITLE_SCENE, new CTitleScene);
 	CDirector::getInstance()->registerScene(HELP_SCENE, new CHelpScene);
-	CDirector::getInstance()->registerScene(GAME_SCENE_01, new CGameScene01);
+	CDirector::getInstance()->registerScene(GAME_SCENE, new CGameScene);
 	CDirector::getInstance()->registerScene(GAME_OVER_SCENE, new CGameoverScene);
 
 	_ASSERT(CDirector::getInstance()->setActiveScene(TITLE_SCENE));

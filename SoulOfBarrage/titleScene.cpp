@@ -13,7 +13,7 @@ bool CTitleScene::initV()
 
 	ASSERT_SUCCESS(ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE));
 
-	m_TitleLabel = { "Infinite Barrage", 530, 200, 100, 6, 0xffffff, 0xffff00 };
+	m_TitleLabel = { "SOUL OF BARRAGE", 530, 200, 100, 6, 0xffffff, 0xffff00 };
 	m_FlagLabel = { "->", 800, 600, 40, 1, 0xffffff, 0x00aa00 };
 
 	SLabel MenuLabel = { "开始游戏", 870, 600, 40, 2, 0xffffff, 0xaaaaaa };
@@ -79,7 +79,7 @@ void CTitleScene::__handleInput()
 		switch (m_SelectedLabelIndex)
 		{
 		case 0: //开始游戏
-			CDirector::getInstance()->setActiveScene(GAME_SCENE_01);
+			CDirector::getInstance()->setActiveScene(GAME_SCENE);
 			break;
 		case 1: //操作说明
 			CDirector::getInstance()->setActiveScene(HELP_SCENE);

@@ -1,11 +1,11 @@
 #pragma once
 #include "scene.h"
 
-class CGameScene01 : public CScene
+class CGameScene : public CScene
 {
 public:
-	CGameScene01();
-	~CGameScene01();
+	CGameScene();
+	~CGameScene();
 
 	virtual void updateV(double vDeltaTime) override;
 };

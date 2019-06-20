@@ -22,8 +22,9 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{3E75F01A-03FF-4909-93E8-B921BD427536}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>InfiniteBarrage</RootNamespace>
+    <RootNamespace>SoulOfBarrage</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>SoulOfBarrage</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -50,7 +51,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -155,10 +156,9 @@
     <ClInclude Include="common.h" />
     <ClInclude Include="director.h" />
     <ClInclude Include="gameoverScene.h" />
-    <ClInclude Include="gameScene01.h" />
+    <ClInclude Include="gameScene.h" />
     <ClInclude Include="helpScene.h" />
     <ClInclude Include="inputManager.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -169,7 +169,7 @@
     <ClCompile Include="application.cpp" />
     <ClCompile Include="director.cpp" />
     <ClCompile Include="gameoverScene.cpp" />
-    <ClCompile Include="gameScene01.cpp" />
+    <ClCompile Include="gameScene.cpp" />
     <ClCompile Include="helpScene.cpp" />
     <ClCompile Include="inputManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -182,13 +182,6 @@
     </ClCompile>
     <ClCompile Include="titleScene.cpp" />
     <ClCompile Include="utility.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="InfiniteBarrage.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="InfiniteBarrage.ico" />
-    <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

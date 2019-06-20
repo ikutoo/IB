@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InfiniteBarrage", "InfiniteBarrage\InfiniteBarrage.vcxproj", "{3E75F01A-03FF-4909-93E8-B921BD427536}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SoulOfBarrage", "SoulOfBarrage\SoulOfBarrage.vcxproj", "{3E75F01A-03FF-4909-93E8-B921BD427536}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
