@@ -21,4 +21,4 @@
 // reference additional headers your program requires here
 #include <DxLib.h>
 
-#define ASSERT_SUCCESS(call) assert(0 == call)
+#define CHECK_RESULT(call) if (0 != call) assert(false);

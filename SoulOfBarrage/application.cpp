@@ -18,7 +18,7 @@ int CApplication::run()
 
 		CDirector::getInstance()->update();
 
-		ASSERT_SUCCESS(ScreenFlip());
+		CHECK_RESULT(ScreenFlip());
 	}
 
 	__destroy();
@@ -30,22 +30,22 @@ int CApplication::run()
 //FUNCTION:
 bool CApplication::__init()
 {
-	ASSERT_SUCCESS(ChangeWindowMode(TRUE));
-	ASSERT_SUCCESS(SetGraphMode(WIDTH, HEIGHT, 32));
-	ASSERT_SUCCESS(SetWindowText("IB"));
-	ASSERT_SUCCESS(SetBackgroundColor(50, 50, 50));
+	CHECK_RESULT(ChangeWindowMode(TRUE));
+	CHECK_RESULT(SetGraphMode(WIDTH, HEIGHT, 32));
+	CHECK_RESULT(SetWindowText("IB"));
+	CHECK_RESULT(SetBackgroundColor(50, 50, 50));
 
-	ASSERT_SUCCESS(DxLib_Init());
-	ASSERT_SUCCESS(SetDrawScreen(DX_SCREEN_BACK));
+	CHECK_RESULT(DxLib_Init());
+	CHECK_RESULT(SetDrawScreen(DX_SCREEN_BACK));
 
-	ASSERT_SUCCESS(SetMouseDispFlag(FALSE));
+	CHECK_RESULT(SetMouseDispFlag(FALSE));
 
 	CDirector::getInstance()->registerScene(TITLE_SCENE, new CTitleScene);
 	CDirector::getInstance()->registerScene(HELP_SCENE, new CHelpScene);
 	CDirector::getInstance()->registerScene(GAME_SCENE, new CGameScene);
 	CDirector::getInstance()->registerScene(GAME_OVER_SCENE, new CGameoverScene);
 
-	_ASSERT(CDirector::getInstance()->setActiveScene(TITLE_SCENE));
+	if (!CDirector::getInstance()->setActiveScene(TITLE_SCENE)) return false;
 
 	return true;
 }
@@ -64,5 +64,5 @@ int CApplication::__processLoop()
 //FUNCTION:
 void CApplication::__destroy()
 {
-	ASSERT_SUCCESS(DxLib_End());
+	CHECK_RESULT(DxLib_End());
 }

@@ -11,7 +11,7 @@ bool CTitleScene::initV()
 {
 	if (!CScene::initV()) return false;
 
-	ASSERT_SUCCESS(ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE));
+	CHECK_RESULT(ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE));
 
 	m_TitleLabel = { "SOUL OF BARRAGE", 530, 200, 100, 6, 0xffffff, 0xffff00 };
 	m_FlagLabel = { "->", 800, 600, 40, 1, 0xffffff, 0x00aa00 };
