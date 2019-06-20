@@ -2,14 +2,7 @@
 #include "common.h"
 #include "titleScene.h"
 #include "utility.h"
-
-CTitleScene::CTitleScene()
-{
-}
-
-CTitleScene::~CTitleScene()
-{
-}
+#include "inputManager.h"
 
 //*********************************************************************
 //FUNCTION:
@@ -39,12 +32,7 @@ bool CTitleScene::init()
 void CTitleScene::update()
 {
 	__drawUI();
-
-	if (CheckHitKey(KEY_INPUT_DOWN)) m_SelectedLabelIndex++;
-	else if (CheckHitKey(KEY_INPUT_UP)) m_SelectedLabelIndex--;
-
-	if (m_SelectedLabelIndex < 0) m_SelectedLabelIndex = m_MenuLabels.size() - 1;
-	else if (m_SelectedLabelIndex >= m_MenuLabels.size()) m_SelectedLabelIndex = 0;
+	__handleInput();
 }
 
 //*********************************************************************
@@ -61,5 +49,34 @@ void CTitleScene::__drawUI()
 		auto MenuLabel = m_MenuLabels[i];
 		if (i == m_SelectedLabelIndex) MenuLabel.edgeColor = 0x00aa00;
 		utility::drawLabel(MenuLabel);
+	}
+}
+
+//*********************************************************************
+//FUNCTION:
+void CTitleScene::__handleInput()
+{
+	if (1 == GET_KEY_STATE(KEY_INPUT_DOWN)) m_SelectedLabelIndex++;
+	else if (1 == GET_KEY_STATE(KEY_INPUT_UP)) m_SelectedLabelIndex--;
+
+	if (m_SelectedLabelIndex < 0) m_SelectedLabelIndex = m_MenuLabels.size() - 1;
+	else if (m_SelectedLabelIndex >= m_MenuLabels.size()) m_SelectedLabelIndex = 0;
+
+	if (CheckHitKey(KEY_INPUT_Z))
+	{
+		switch (m_SelectedLabelIndex)
+		{
+		case 0:	//start game
+
+			break;
+		case 1:	//help
+
+			break;
+		case 2:	//exit game
+			exit(EXIT_SUCCESS);
+			break;
+		default:
+			break;
+		}
 	}
 }

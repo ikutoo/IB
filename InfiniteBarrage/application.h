@@ -6,20 +6,18 @@ class CTitleScene;
 class CApplication
 {
 public:
-	CApplication();
-	~CApplication();
-
-	static CApplication* getInstance()
-	{
-		static CApplication Instance;
-		return &Instance;
-	}
+	SINGLETION(CApplication);
+	DISALLOW_COPY_AND_ASSIGN(CApplication);
 
 	int run();
 
 private:
-	void __init();
+	CApplication() = default;
+	~CApplication() = default;
+
+	bool __init();
 	int __processLoop();
+	void __destroy();
 
 	CTitleScene* m_pTitleScene = nullptr;
 };

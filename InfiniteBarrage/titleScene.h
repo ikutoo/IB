@@ -5,9 +5,6 @@
 class CTitleScene
 {
 public:
-	CTitleScene();
-	~CTitleScene();
-
 	bool init();
 	void update();
 
@@ -19,4 +16,5 @@ private:
 	int m_SelectedLabelIndex = 0;
 
 	void __drawUI();
+	void __handleInput();
 };

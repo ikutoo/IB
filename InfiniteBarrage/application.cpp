@@ -1,39 +1,32 @@
 #include "stdafx.h"
 #include "application.h"
 #include "titleScene.h"
-
-CApplication::CApplication()
-{
-}
-
-CApplication::~CApplication()
-{
-	delete m_pTitleScene;
-}
+#include "inputManager.h"
 
 //*********************************************************************
 //FUNCTION:
 int CApplication::run()
 {
-	__init();
+	if (!__init()) return EXIT_FAILURE;
 
 	while (0 == __processLoop())
 	{
 		if (CheckHitKey(KEY_INPUT_ESCAPE)) break;
 
+		CInputManager::getInstance()->update();
 		m_pTitleScene->update();
 
-		ScreenFlip();
+		ASSERT_SUCCESS(ScreenFlip());
 	}
 
-	DxLib_End();
+	__destroy();
 
 	return EXIT_SUCCESS;
 }
 
 //*********************************************************************
 //FUNCTION:
-void CApplication::__init()
+bool CApplication::__init()
 {
 	ASSERT_SUCCESS(ChangeWindowMode(TRUE));
 	ASSERT_SUCCESS(SetGraphMode(WIDTH, HEIGHT, 32));
@@ -43,8 +36,12 @@ void CApplication::__init()
 	ASSERT_SUCCESS(DxLib_Init());
 	ASSERT_SUCCESS(SetDrawScreen(DX_SCREEN_BACK));
 
+	ASSERT_SUCCESS(SetMouseDispFlag(FALSE));
+
 	m_pTitleScene = new CTitleScene;
-	m_pTitleScene->init();
+	if (!m_pTitleScene->init()) return false;
+
+	return true;
 }
 
 //*********************************************************************
@@ -55,4 +52,12 @@ int CApplication::__processLoop()
 	if (0 != ClearDrawScreen()) return -1;
 
 	return 0;
+}
+
+//*********************************************************************
+//FUNCTION:
+void CApplication::__destroy()
+{
+	ASSERT_SUCCESS(DxLib_End());
+	SAFE_DELETE(m_pTitleScene);
 }
