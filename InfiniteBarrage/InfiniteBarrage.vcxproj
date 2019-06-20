@@ -153,8 +153,13 @@
   <ItemGroup>
     <ClInclude Include="application.h" />
     <ClInclude Include="common.h" />
+    <ClInclude Include="director.h" />
+    <ClInclude Include="gameoverScene.h" />
+    <ClInclude Include="gameScene01.h" />
+    <ClInclude Include="helpScene.h" />
     <ClInclude Include="inputManager.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="scene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="titleScene.h" />
@@ -162,8 +167,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="application.cpp" />
+    <ClCompile Include="director.cpp" />
+    <ClCompile Include="gameoverScene.cpp" />
+    <ClCompile Include="gameScene01.cpp" />
+    <ClCompile Include="helpScene.cpp" />
     <ClCompile Include="inputManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

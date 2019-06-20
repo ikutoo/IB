@@ -3,11 +3,14 @@
 #include "titleScene.h"
 #include "utility.h"
 #include "inputManager.h"
+#include "director.h"
 
 //*********************************************************************
 //FUNCTION:
-bool CTitleScene::init()
+bool CTitleScene::initV()
 {
+	if (!CScene::initV()) return false;
+
 	ASSERT_SUCCESS(ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE));
 
 	m_TitleLabel = { "Infinite Barrage", 530, 200, 100, 6, 0xffffff, 0xffff00 };
@@ -29,10 +32,19 @@ bool CTitleScene::init()
 
 //*********************************************************************
 //FUNCTION:
-void CTitleScene::update()
+void CTitleScene::updateV(double vDeltaTime)
 {
+	CScene::updateV(vDeltaTime);
+
 	__drawUI();
 	__handleInput();
+}
+
+//***********************************************************************************************
+//FUNCTION:
+void CTitleScene::destroyV()
+{
+	CScene::destroyV();
 }
 
 //*********************************************************************
@@ -66,13 +78,13 @@ void CTitleScene::__handleInput()
 	{
 		switch (m_SelectedLabelIndex)
 		{
-		case 0:	//start game
-
+		case 0: //开始游戏
+			CDirector::getInstance()->setActiveScene(GAME_SCENE_01);
 			break;
-		case 1:	//help
-
+		case 1: //操作说明
+			CDirector::getInstance()->setActiveScene(HELP_SCENE);
 			break;
-		case 2:	//exit game
+		case 2: //退出游戏
 			exit(EXIT_SUCCESS);
 			break;
 		default:

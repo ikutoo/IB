@@ -1,8 +1,6 @@
 #pragma once
 #include "common.h"
 
-class CTitleScene;
-
 class CApplication
 {
 public:
@@ -18,6 +16,4 @@ private:
 	bool __init();
 	int __processLoop();
 	void __destroy();
-
-	CTitleScene* m_pTitleScene = nullptr;
 };

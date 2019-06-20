@@ -1,7 +1,10 @@
 #include "stdafx.h"
 #include "application.h"
+#include "director.h"
 #include "titleScene.h"
-#include "inputManager.h"
+#include "helpScene.h"
+#include "gameScene01.h"
+#include "gameoverScene.h"
 
 //*********************************************************************
 //FUNCTION:
@@ -13,8 +16,7 @@ int CApplication::run()
 	{
 		if (CheckHitKey(KEY_INPUT_ESCAPE)) break;
 
-		CInputManager::getInstance()->update();
-		m_pTitleScene->update();
+		CDirector::getInstance()->update();
 
 		ASSERT_SUCCESS(ScreenFlip());
 	}
@@ -38,8 +40,12 @@ bool CApplication::__init()
 
 	ASSERT_SUCCESS(SetMouseDispFlag(FALSE));
 
-	m_pTitleScene = new CTitleScene;
-	if (!m_pTitleScene->init()) return false;
+	CDirector::getInstance()->registerScene(TITLE_SCENE, new CTitleScene);
+	CDirector::getInstance()->registerScene(HELP_SCENE, new CHelpScene);
+	CDirector::getInstance()->registerScene(GAME_SCENE_01, new CGameScene01);
+	CDirector::getInstance()->registerScene(GAME_OVER_SCENE, new CGameoverScene);
+
+	_ASSERT(CDirector::getInstance()->setActiveScene(TITLE_SCENE));
 
 	return true;
 }
@@ -59,5 +65,4 @@ int CApplication::__processLoop()
 void CApplication::__destroy()
 {
 	ASSERT_SUCCESS(DxLib_End());
-	SAFE_DELETE(m_pTitleScene);
 }

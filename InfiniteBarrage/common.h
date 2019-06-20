@@ -1,5 +1,4 @@
 #pragma once
-
 #include "resource.h"
 
 #define WIDTH 1920
@@ -12,6 +11,11 @@
     T& operator=(const T&) = delete;
 
 #define SAFE_DELETE(p) if (p) { delete p; p = nullptr;}
+
+#define TITLE_SCENE		0
+#define GAME_SCENE_01	1
+#define HELP_SCENE		2
+#define GAME_OVER_SCENE 3
 
 struct SLabel
 {

@@ -5,59 +5,94 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\common">
+      <UniqueIdentifier>{5378435e-c9eb-4ab6-ba5d-78bbb242e313}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game">
+      <UniqueIdentifier>{3703e8c3-dec5-4009-a1a8-7399f8f599c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\base">
+      <UniqueIdentifier>{7696f402-4050-42b6-9086-e8f3463c7765}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\common</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\common</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="titleScene.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\common</Filter>
     </ClInclude>
     <ClInclude Include="common.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\common</Filter>
     </ClInclude>
-    <ClInclude Include="application.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="scene.h">
+      <Filter>Source Files\base</Filter>
     </ClInclude>
-    <ClInclude Include="utility.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="director.h">
+      <Filter>Source Files\base</Filter>
     </ClInclude>
     <ClInclude Include="inputManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="application.h">
+      <Filter>Source Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="gameoverScene.h">
+      <Filter>Source Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="gameScene01.h">
+      <Filter>Source Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="helpScene.h">
+      <Filter>Source Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="titleScene.h">
+      <Filter>Source Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="utility.h">
+      <Filter>Source Files\base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\common</Filter>
     </ClCompile>
-    <ClCompile Include="titleScene.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="scene.cpp">
+      <Filter>Source Files\base</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="utility.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="director.cpp">
+      <Filter>Source Files\base</Filter>
     </ClCompile>
     <ClCompile Include="inputManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="application.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="gameoverScene.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="gameScene01.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="helpScene.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="titleScene.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="utility.cpp">
+      <Filter>Source Files\base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

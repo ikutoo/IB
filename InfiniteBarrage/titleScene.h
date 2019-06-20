@@ -1,12 +1,14 @@
 #pragma once
 #include <vector>
 #include "common.h"
+#include "scene.h"
 
-class CTitleScene
+class CTitleScene : public CScene
 {
 public:
-	bool init();
-	void update();
+	virtual bool initV() override;
+	virtual void updateV(double vDeltaTime) override;
+	virtual void destroyV() override;
 
 private:
 	SLabel m_TitleLabel;
