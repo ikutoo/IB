@@ -11,8 +11,10 @@
 
 #define SAFE_DELETE(p) if (p) { delete p; p = nullptr;}
 
+#define CHECK_RESULT(call) if (0 != call) assert(false);
+
 #define TITLE_SCENE		0
-#define GAME_SCENE	1
+#define GAME_SCENE		1
 #define HELP_SCENE		2
 #define GAME_OVER_SCENE 3
 
@@ -25,4 +27,11 @@ struct SLabel
 	int fontThickness = 6;
 	unsigned int color = 0;
 	unsigned int edgeColor = 0;
+};
+
+struct SBullet
+{
+	int x;
+	int y;
+	int image;
 };

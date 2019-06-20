@@ -8,6 +8,8 @@
 #include "targetver.h"
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
+#define _CRT_SECURE_NO_WARNINGS
+
 // Windows Header Files
 #include <windows.h>
 
@@ -20,5 +22,3 @@
 
 // reference additional headers your program requires here
 #include <DxLib.h>
-
-#define CHECK_RESULT(call) if (0 != call) assert(false);

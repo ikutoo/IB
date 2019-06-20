@@ -46,6 +46,7 @@ bool CApplication::__init()
 	CDirector::getInstance()->registerScene(GAME_OVER_SCENE, new CGameoverScene);
 
 	if (!CDirector::getInstance()->setActiveScene(TITLE_SCENE)) return false;
+	CDirector::getInstance()->displayFPS(true);
 
 	return true;
 }
