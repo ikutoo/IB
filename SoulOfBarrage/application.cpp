@@ -14,8 +14,6 @@ int CApplication::run()
 
 	while (0 == __processLoop())
 	{
-		if (CheckHitKey(KEY_INPUT_ESCAPE)) break;
-
 		CDirector::getInstance()->update();
 
 		CHECK_RESULT(ScreenFlip());
@@ -32,7 +30,7 @@ bool CApplication::__init()
 {
 	CHECK_RESULT(ChangeWindowMode(TRUE));
 	CHECK_RESULT(SetGraphMode(WIDTH, HEIGHT, 32));
-	CHECK_RESULT(SetWindowText("Soul of Barrage - Ô­µã"));
+	CHECK_RESULT(SetWindowText("SOB - Lost Doll"));
 	CHECK_RESULT(SetBackgroundColor(50, 50, 50));
 
 	CHECK_RESULT(DxLib_Init());
