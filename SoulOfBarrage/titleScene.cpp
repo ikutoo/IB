@@ -11,28 +11,28 @@ bool CTitleScene::initV()
 {
 	if (!CScene::initV()) return false;
 
-	m_TitleLabel.image = LoadGraph("../Resource/images/title.png");
+	m_TitleLabel.image = LoadGraph(LOCATE_IMAGE("title.png"));
 	int ImgWidth, ImgHeight;
 	CHECK_RESULT(GetGraphSize(m_TitleLabel.image, &ImgWidth, &ImgHeight));
 	m_TitleLabel.x = (WIDTH - ImgWidth) / 2;
 	m_TitleLabel.y = 100;
 
-	SImageLabel MenuLabel = {};
-	MenuLabel.image = LoadGraph("../Resource/images/play.png");
+	SImageLabel MenuLabel;
+	MenuLabel.image = LoadGraph(LOCATE_IMAGE("play.png"));
 	CHECK_RESULT(GetGraphSize(MenuLabel.image, &ImgWidth, &ImgHeight));
 	MenuLabel.x = (WIDTH - ImgWidth) / 2;
 	MenuLabel.y = 600;
 	m_MenuLabels.emplace_back(MenuLabel);
 
-	MenuLabel.image = LoadGraph("../Resource/images/help.png");
+	MenuLabel.image = LoadGraph(LOCATE_IMAGE("help.png"));
 	MenuLabel.y += 100;
 	m_MenuLabels.emplace_back(MenuLabel);
 
-	MenuLabel.image = LoadGraph("../Resource/images/exit.png");
+	MenuLabel.image = LoadGraph(LOCATE_IMAGE("exit.png"));
 	MenuLabel.y += 100;
 	m_MenuLabels.emplace_back(MenuLabel);
 
-	m_FlagLabel = { "->", 800, 600, 40, 1, 0xffffff, 0x00aa00 };
+	m_FlagLabel = { 750, m_MenuLabels[0].y, LoadGraph(LOCATE_IMAGE("flag.png")) };
 
 	return true;
 }
@@ -60,8 +60,8 @@ void CTitleScene::__drawUI()
 {
 	DrawGraph(m_TitleLabel.x, m_TitleLabel.y, m_TitleLabel.image, TRUE);
 
-	m_FlagLabel.y = m_MenuLabels[m_SelectedLabelIndex].y;
-	utility::drawLabel(m_FlagLabel);
+	m_FlagLabel.y = m_MenuLabels[m_SelectedLabelIndex].y + 10;
+	DrawGraph(m_FlagLabel.x, m_FlagLabel.y, m_FlagLabel.image, TRUE);
 
 	for (int i = 0; i < m_MenuLabels.size(); ++i)
 	{
@@ -80,7 +80,7 @@ void CTitleScene::__handleInput()
 	if (m_SelectedLabelIndex < 0) m_SelectedLabelIndex = m_MenuLabels.size() - 1;
 	else if (m_SelectedLabelIndex >= m_MenuLabels.size()) m_SelectedLabelIndex = 0;
 
-	if (CheckHitKey(KEY_INPUT_Z))
+	if (CheckHitKey(KEY_INPUT_Z) || CheckHitKey(KEY_INPUT_RETURN))
 	{
 		switch (m_SelectedLabelIndex)
 		{

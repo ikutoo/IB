@@ -1,7 +1,5 @@
 #pragma once
-
-#define WIDTH 1920
-#define HEIGHT 1080
+#include <string>
 
 #define SINGLETION(T) static T* getInstance() { static T Instance; return &Instance; }
 
@@ -13,10 +11,16 @@
 
 #define CHECK_RESULT(call) if (0 != call) assert(false);
 
+#define WIDTH 1920
+#define HEIGHT 1080
+
 #define TITLE_SCENE		0
 #define GAME_SCENE		1
 #define HELP_SCENE		2
 #define GAME_OVER_SCENE 3
+
+const std::string RES_IMG_ROOT = "../Resource/images/";
+#define LOCATE_IMAGE(file) (RES_IMG_ROOT + file).c_str()
 
 struct SLabel
 {
