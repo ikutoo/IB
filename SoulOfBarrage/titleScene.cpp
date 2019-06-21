@@ -11,21 +11,28 @@ bool CTitleScene::initV()
 {
 	if (!CScene::initV()) return false;
 
-	CHECK_RESULT(ChangeFontType(DX_FONTTYPE_ANTIALIASING_EDGE));
+	m_TitleLabel.image = LoadGraph("../Resource/images/title.png");
+	int ImgWidth, ImgHeight;
+	CHECK_RESULT(GetGraphSize(m_TitleLabel.image, &ImgWidth, &ImgHeight));
+	m_TitleLabel.x = (WIDTH - ImgWidth) / 2;
+	m_TitleLabel.y = 100;
 
-	m_TitleLabel = { "SOUL OF BARRAGE", 530, 200, 100, 6, 0xffffff, 0xffff00 };
+	SImageLabel MenuLabel = {};
+	MenuLabel.image = LoadGraph("../Resource/images/play.png");
+	CHECK_RESULT(GetGraphSize(MenuLabel.image, &ImgWidth, &ImgHeight));
+	MenuLabel.x = (WIDTH - ImgWidth) / 2;
+	MenuLabel.y = 600;
+	m_MenuLabels.emplace_back(MenuLabel);
+
+	MenuLabel.image = LoadGraph("../Resource/images/help.png");
+	MenuLabel.y += 100;
+	m_MenuLabels.emplace_back(MenuLabel);
+
+	MenuLabel.image = LoadGraph("../Resource/images/exit.png");
+	MenuLabel.y += 100;
+	m_MenuLabels.emplace_back(MenuLabel);
+
 	m_FlagLabel = { "->", 800, 600, 40, 1, 0xffffff, 0x00aa00 };
-
-	SLabel MenuLabel = { "开始游戏", 870, 600, 40, 2, 0xffffff, 0xaaaaaa };
-	m_MenuLabels.emplace_back(MenuLabel);
-
-	MenuLabel.pText = "操作说明";
-	MenuLabel.y += 100;
-	m_MenuLabels.emplace_back(MenuLabel);
-
-	MenuLabel.pText = "退出游戏";
-	MenuLabel.y += 100;
-	m_MenuLabels.emplace_back(MenuLabel);
 
 	return true;
 }
@@ -51,7 +58,7 @@ void CTitleScene::destroyV()
 //FUNCTION:
 void CTitleScene::__drawUI()
 {
-	utility::drawLabel(m_TitleLabel);
+	DrawGraph(m_TitleLabel.x, m_TitleLabel.y, m_TitleLabel.image, TRUE);
 
 	m_FlagLabel.y = m_MenuLabels[m_SelectedLabelIndex].y;
 	utility::drawLabel(m_FlagLabel);
@@ -59,8 +66,7 @@ void CTitleScene::__drawUI()
 	for (int i = 0; i < m_MenuLabels.size(); ++i)
 	{
 		auto MenuLabel = m_MenuLabels[i];
-		if (i == m_SelectedLabelIndex) MenuLabel.edgeColor = 0x00aa00;
-		utility::drawLabel(MenuLabel);
+		DrawGraph(MenuLabel.x, MenuLabel.y, MenuLabel.image, TRUE);
 	}
 }
 

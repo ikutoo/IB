@@ -29,9 +29,9 @@ struct SLabel
 	unsigned int edgeColor = 0;
 };
 
-struct SBullet
+struct SImageLabel
 {
-	int x;
-	int y;
-	int image;
+	int x = 0;
+	int y = 0;
+	int image = -1;
 };

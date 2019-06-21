@@ -32,7 +32,7 @@ bool CApplication::__init()
 {
 	CHECK_RESULT(ChangeWindowMode(TRUE));
 	CHECK_RESULT(SetGraphMode(WIDTH, HEIGHT, 32));
-	CHECK_RESULT(SetWindowText("IB"));
+	CHECK_RESULT(SetWindowText("Soul of Barrage - Ô­µã"));
 	CHECK_RESULT(SetBackgroundColor(50, 50, 50));
 
 	CHECK_RESULT(DxLib_Init());
