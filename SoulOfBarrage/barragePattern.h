@@ -1,6 +1,8 @@
 #pragma once
 
+#define BARRAGE_PATTHERN_001 0
+
 namespace barrage_pattern
 {
-	void testBarrage();
+	void barragePattern001(int x, int y, int vCounter);
 }

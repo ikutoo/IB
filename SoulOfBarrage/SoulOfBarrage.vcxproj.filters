@@ -65,8 +65,11 @@
     <ClInclude Include="barragePattern.h">
       <Filter>Source Files\game\barrage</Filter>
     </ClInclude>
-    <ClInclude Include="barrageManager.h">
+    <ClInclude Include="movePattern.h">
       <Filter>Source Files\game\barrage</Filter>
+    </ClInclude>
+    <ClInclude Include="barrageManager.h">
+      <Filter>Source Files\base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -106,8 +109,11 @@
     <ClCompile Include="barragePattern.cpp">
       <Filter>Source Files\game\barrage</Filter>
     </ClCompile>
-    <ClCompile Include="barrageManager.cpp">
+    <ClCompile Include="movePattern.cpp">
       <Filter>Source Files\game\barrage</Filter>
+    </ClCompile>
+    <ClCompile Include="barrageManager.cpp">
+      <Filter>Source Files\base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

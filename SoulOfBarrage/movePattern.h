@@ -3,5 +3,5 @@
 
 namespace move_pattern
 {
-	void executeMove(int vPatternID, SBullet& vioBullet);
+	void movePattern001(SBullet& vioBullet);
 }

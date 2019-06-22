@@ -25,7 +25,7 @@ void CDirector::update()
 
 	m_pActiveScene->updateV(deltaTime);
 
-	if (m_DisplayFPS) __drawFPS();
+	if (m_DisplayStatus) __drawStatus();
 }
 
 //***********************************************************************************************
@@ -43,10 +43,15 @@ bool CDirector::setActiveScene(int vSceneID)
 
 //*********************************************************************
 //FUNCTION:
-void CDirector::__drawFPS()
+void CDirector::__drawStatus()
 {
+	CHECK_RESULT(DxLib::SetFontSize(20));
+
 	char Buf[64];
+	unsigned int Color = 0x00ff00;
 	sprintf(Buf, "FPS: %6.1f", m_FPS);
-	SetFontSize(20);
-	DrawString(10, 10, Buf, 0x00ff00);
+	CHECK_RESULT(DxLib::DrawString(10, 10, Buf, Color));
+
+	sprintf(Buf, "Bullet Num: %i", CBarrageManager::getInstance()->getNumBullets());
+	CHECK_RESULT(DxLib::DrawString(10, 60, Buf, Color));
 }

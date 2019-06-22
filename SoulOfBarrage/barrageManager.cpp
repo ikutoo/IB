@@ -12,24 +12,59 @@ CBarrageManager::~CBarrageManager()
 
 //*********************************************************************
 //FUNCTION:
+bool CBarrageManager::init()
+{
+	return true;
+}
+
+//*********************************************************************
+//FUNCTION:
+void CBarrageManager::registerBulletType(int vBulletType, const char* vImageFile)
+{
+	if (m_BulletType2ImageMap.find(vBulletType) != m_BulletType2ImageMap.end()) return;
+
+	auto ImageHandle = LoadGraph(vImageFile);
+	_ASSERTE(ImageHandle != -1);
+
+	m_BulletType2ImageMap[vBulletType] = ImageHandle;
+}
+
+//*********************************************************************
+//FUNCTION:
 void CBarrageManager::update()
 {
+	for (auto iter = m_ActiveBarrages.begin(); iter != m_ActiveBarrages.end();)
+	{
+		auto& Barrage = *iter;
+
+		if (Barrage.counter > Barrage.liveTime)
+		{
+			iter = m_ActiveBarrages.erase(iter);
+		}
+		else
+		{
+			TBarrageFunc GenBarrage = m_ID2BarrageFuncMap[Barrage.barragePattern];
+			GenBarrage(Barrage.x, Barrage.y, Barrage.counter);
+			Barrage.counter++;
+			iter++;
+		}
+	}
+
 	for (auto iter = m_Bullets.begin(); iter != m_Bullets.end();)
 	{
 		auto& Bullet = *iter;
 
 		if (__isBulletDead(Bullet))
 		{
-			__destroyBullet(Bullet);
 			iter = m_Bullets.erase(iter);
 		}
 		else
 		{
-			TMoveFunc Move = m_MovePatternMap[Bullet.movePattern];
+			TMoveFunc Move = m_ID2MoveFuncMap[Bullet.movePattern];
 			Move(Bullet);
 			Bullet.counter++;
 
-			CHECK_RESULT(DxLib::DrawGraph(Bullet.x, Bullet.y, Bullet.image, TRUE));
+			CHECK_RESULT(DxLib::DrawGraph(Bullet.x, Bullet.y, m_BulletType2ImageMap[Bullet.bulletType], TRUE));
 			iter++;
 		}
 	}
@@ -37,16 +72,25 @@ void CBarrageManager::update()
 
 //*********************************************************************
 //FUNCTION:
-bool CBarrageManager::__isBulletDead(const SBullet& vBullet) const
+void CBarrageManager::destroy()
 {
-	if (vBullet.x < 0 || vBullet.x > WIDTH || vBullet.y < 0 || vBullet.y > HEIGHT) return true;
+	for (auto iter = m_BulletType2ImageMap.begin(); iter != m_BulletType2ImageMap.end(); ++iter)
+	{
+		CHECK_RESULT(DxLib::DeleteGraph(iter->second));
+	}
 
-	return false;
+	m_Bullets.clear();
+	m_ActiveBarrages.clear();
+	m_BulletType2ImageMap.clear();
+	m_ID2BarrageFuncMap.clear();
+	m_ID2MoveFuncMap.clear();
 }
 
 //*********************************************************************
 //FUNCTION:
-void CBarrageManager::__destroyBullet(const SBullet& vBullet) const
+bool CBarrageManager::__isBulletDead(const SBullet& vBullet) const
 {
-	CHECK_RESULT(DxLib::DeleteGraph(vBullet.image));
+	if (vBullet.x < -100 || vBullet.x > WIDTH + 100 || vBullet.y < -100 || vBullet.y > HEIGHT + 100) return true;
+
+	return false;
 }

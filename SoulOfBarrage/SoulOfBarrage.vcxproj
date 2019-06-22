@@ -161,6 +161,7 @@
     <ClInclude Include="gameScene.h" />
     <ClInclude Include="helpScene.h" />
     <ClInclude Include="inputManager.h" />
+    <ClInclude Include="movePattern.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="helpScene.cpp" />
     <ClCompile Include="inputManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="movePattern.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

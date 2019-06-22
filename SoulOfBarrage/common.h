@@ -9,6 +9,8 @@
 
 #define CHECK_RESULT(call) if (0 != call) assert(false);
 
+#define PI 3.1415926
+
 #define WIDTH 1920
 #define HEIGHT 1080
 
@@ -40,10 +42,20 @@ struct SImageLabel
 
 struct SBullet
 {
-	int x = 0;
-	int y = 0;
-	int image = -1;
+	double x = 0.0;
+	double y = 0.0;
+	double angle = 0.0;
+	double speed = 0.0;
+	int bulletType = -1;
 	int movePattern = -1;
 	int counter = 0;
-	double angle = 0.0;
+};
+
+struct SBarrage
+{
+	int x = 0;
+	int y = 0;
+	int barragePattern = -1;
+	int counter = 0;
+	int liveTime = 0;
 };
