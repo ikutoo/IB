@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "gameScene.h"
+#include "barrageManager.h"
 
 CGameScene::CGameScene()
 {
@@ -42,7 +43,7 @@ void CGameScene::__drawUI()
 //FUNCTION:
 void CGameScene::__drawBarrage()
 {
-
+	
 }
 
 //*********************************************************************

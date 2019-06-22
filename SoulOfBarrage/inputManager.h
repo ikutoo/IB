@@ -7,7 +7,6 @@ class CInputManager
 {
 public:
 	SINGLETION(CInputManager);
-	DISALLOW_COPY_AND_ASSIGN(CInputManager);
 
 	void update();
 

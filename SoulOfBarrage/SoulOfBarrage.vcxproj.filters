@@ -18,6 +18,12 @@
     <Filter Include="Source Files\base">
       <UniqueIdentifier>{7696f402-4050-42b6-9086-e8f3463c7765}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\game\scenes">
+      <UniqueIdentifier>{1caa4866-9d7c-4e74-b93e-24666b85ec73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\barrage">
+      <UniqueIdentifier>{4d59ff80-7444-45b1-a1cc-665213b16b6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -41,23 +47,26 @@
     <ClInclude Include="application.h">
       <Filter>Source Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="gameoverScene.h">
-      <Filter>Source Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="helpScene.h">
-      <Filter>Source Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="titleScene.h">
-      <Filter>Source Files\game</Filter>
-    </ClInclude>
     <ClInclude Include="utility.h">
       <Filter>Source Files\base</Filter>
     </ClInclude>
+    <ClInclude Include="titleScene.h">
+      <Filter>Source Files\game\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="helpScene.h">
+      <Filter>Source Files\game\scenes</Filter>
+    </ClInclude>
     <ClInclude Include="gameScene.h">
-      <Filter>Source Files\game</Filter>
+      <Filter>Source Files\game\scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="gameoverScene.h">
+      <Filter>Source Files\game\scenes</Filter>
     </ClInclude>
     <ClInclude Include="barragePattern.h">
-      <Filter>Source Files\game</Filter>
+      <Filter>Source Files\game\barrage</Filter>
+    </ClInclude>
+    <ClInclude Include="barrageManager.h">
+      <Filter>Source Files\game\barrage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -76,26 +85,29 @@
     <ClCompile Include="application.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
-    <ClCompile Include="gameoverScene.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
-    <ClCompile Include="helpScene.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
-    <ClCompile Include="titleScene.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="utility.cpp">
       <Filter>Source Files\base</Filter>
     </ClCompile>
+    <ClCompile Include="gameoverScene.cpp">
+      <Filter>Source Files\game\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="titleScene.cpp">
+      <Filter>Source Files\game\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="helpScene.cpp">
+      <Filter>Source Files\game\scenes</Filter>
+    </ClCompile>
     <ClCompile Include="gameScene.cpp">
-      <Filter>Source Files\game</Filter>
+      <Filter>Source Files\game\scenes</Filter>
     </ClCompile>
     <ClCompile Include="barragePattern.cpp">
-      <Filter>Source Files\game</Filter>
+      <Filter>Source Files\game\barrage</Filter>
+    </ClCompile>
+    <ClCompile Include="barrageManager.cpp">
+      <Filter>Source Files\game\barrage</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

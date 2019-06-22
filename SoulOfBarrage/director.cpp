@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "director.h"
 #include "inputManager.h"
+#include "barrageManager.h"
 #include "scene.h"
 
 CDirector::CDirector()
@@ -20,6 +21,8 @@ void CDirector::update()
 	m_TimeCounter = GetNowCount();
 
 	CInputManager::getInstance()->update();
+	CBarrageManager::getInstance()->update();
+
 	m_pActiveScene->updateV(deltaTime);
 
 	if (m_DisplayFPS) __drawFPS();

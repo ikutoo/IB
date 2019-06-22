@@ -8,7 +8,6 @@ class CDirector
 {
 public:
 	SINGLETION(CDirector);
-	DISALLOW_COPY_AND_ASSIGN(CDirector);
 
 	void update();
 	void registerScene(int vSceneID, CScene* vScene) { _ASSERTE(vScene && !m_IsInitialized), m_ID2SceneMap[vSceneID] = vScene; }

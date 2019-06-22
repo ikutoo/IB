@@ -1,9 +1,7 @@
 #pragma once
 #include <string>
 
-#define SINGLETION(T) static T* getInstance() { static T Instance; return &Instance; }
-
-#define DISALLOW_COPY_AND_ASSIGN(T)	\
+#define SINGLETION(T) static T* getInstance() { static T Instance; return &Instance; } \
     T(const T&) = delete;			\
     T& operator=(const T&) = delete;
 
@@ -38,4 +36,14 @@ struct SImageLabel
 	int x = 0;
 	int y = 0;
 	int image = -1;
+};
+
+struct SBullet
+{
+	int x = 0;
+	int y = 0;
+	int image = -1;
+	int movePattern = -1;
+	int counter = 0;
+	double angle = 0.0;
 };

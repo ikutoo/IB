@@ -5,7 +5,6 @@ class CApplication
 {
 public:
 	SINGLETION(CApplication);
-	DISALLOW_COPY_AND_ASSIGN(CApplication);
 
 	int run();
 
