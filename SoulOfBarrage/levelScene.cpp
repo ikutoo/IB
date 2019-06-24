@@ -1,26 +1,17 @@
 #include "stdafx.h"
-#include "common.h"
-#include "titleScene.h"
-#include "utility.h"
 #include "inputManager.h"
+#include "levelScene.h"
 #include "director.h"
 
 //*********************************************************************
 //FUNCTION:
-bool CTitleScene::initV()
+bool CLevelScene::initV()
 {
 	if (!CScene::initV()) return false;
 
-	m_BgImageLabel = { 1100, 150, DxLib::LoadGraph(LOCATE_IMAGE("bg_01.png")) };
-
-	m_TitleLabel.image = DxLib::LoadGraph(LOCATE_IMAGE("title.png"));
-	int ImgWidth, ImgHeight;
-	CHECK_RESULT(DxLib::GetGraphSize(m_TitleLabel.image, &ImgWidth, &ImgHeight));
-	m_TitleLabel.x = (WIDTH - ImgWidth) / 2;
-	m_TitleLabel.y = 100;
-
 	SImageLabel MenuLabel;
 	MenuLabel.image = DxLib::LoadGraph(LOCATE_IMAGE("play.png"));
+	int ImgWidth, ImgHeight;
 	CHECK_RESULT(DxLib::GetGraphSize(MenuLabel.image, &ImgWidth, &ImgHeight));
 	MenuLabel.x = (WIDTH - ImgWidth) / 2;
 	MenuLabel.y = 600;
@@ -43,21 +34,21 @@ bool CTitleScene::initV()
 
 //*********************************************************************
 //FUNCTION:
-void CTitleScene::updateV(double vDeltaTime)
+void CLevelScene::updateV(double vDeltaTime)
 {
 	CScene::updateV(vDeltaTime);
 
-	__drawUI();
 	__handleInput();
+	__drawUI();
+
+	if (DxLib::CheckHitKey(KEY_INPUT_X)) CDirector::getInstance()->setActiveScene(TITLE_SCENE); //HACK: fix bug
 }
 
-//***********************************************************************************************
+//*********************************************************************
 //FUNCTION:
-void CTitleScene::destroyV()
+void CLevelScene::destroyV()
 {
 	CHECK_RESULT(DxLib::StopMusic());
-	CHECK_RESULT(DxLib::DeleteGraph(m_BgImageLabel.image));
-	CHECK_RESULT(DxLib::DeleteGraph(m_TitleLabel.image));
 	CHECK_RESULT(DxLib::DeleteGraph(m_FlagLabel.image));
 	for (auto Label : m_MenuLabels) CHECK_RESULT(DxLib::DeleteGraph(Label.image));
 	m_MenuLabels.clear();
@@ -67,12 +58,9 @@ void CTitleScene::destroyV()
 
 //*********************************************************************
 //FUNCTION:
-void CTitleScene::__drawUI()
+void CLevelScene::__drawUI()
 {
-	DxLib::DrawGraph(m_BgImageLabel.x, m_BgImageLabel.y, m_BgImageLabel.image, TRUE);
-
-	DxLib::DrawGraph(m_TitleLabel.x, m_TitleLabel.y, m_TitleLabel.image, TRUE);
-
+	_ASSERT(m_SelectedLabelIndex >= 0 && m_SelectedLabelIndex < m_MenuLabels.size());
 	m_FlagLabel.y = m_MenuLabels[m_SelectedLabelIndex].y + 10;
 	DxLib::DrawGraph(m_FlagLabel.x, m_FlagLabel.y, m_FlagLabel.image, TRUE);
 
@@ -81,14 +69,11 @@ void CTitleScene::__drawUI()
 		auto MenuLabel = m_MenuLabels[i];
 		DxLib::DrawGraph(MenuLabel.x, MenuLabel.y, MenuLabel.image, TRUE);
 	}
-
-	CHECK_RESULT(DxLib::SetFontSize(20));
-	CHECK_RESULT(DxLib::DrawString(20, HEIGHT - 80, " <确认: 回车键>\n <选择: 方向键>", 0xffffff));
 }
 
 //*********************************************************************
 //FUNCTION:
-void CTitleScene::__handleInput()
+void CLevelScene::__handleInput()
 {
 	bool IndexChanged = false;
 	if (1 == GET_KEY_STATE(KEY_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }
@@ -103,14 +88,11 @@ void CTitleScene::__handleInput()
 	{
 		switch (m_SelectedLabelIndex)
 		{
-		case 0: //开始游戏
-			CDirector::getInstance()->setActiveScene(LEVEL_SCENE);
+		case 0:
 			break;
-		case 1: //操作说明
-			CDirector::getInstance()->setActiveScene(HELP_SCENE);
+		case 1:
 			break;
-		case 2: //退出游戏
-			exit(EXIT_SUCCESS);
+		case 2:
 			break;
 		default:
 			_ASSERT(false);

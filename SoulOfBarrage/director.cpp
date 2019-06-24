@@ -47,11 +47,8 @@ void CDirector::__drawStatus()
 {
 	CHECK_RESULT(DxLib::SetFontSize(20));
 
-	char Buf[64];
+	char Buf[0xff];
 	unsigned int Color = 0x00ff00;
-	sprintf(Buf, "FPS: %6.1f", m_FPS);
+	sprintf(Buf, " FPS: %6.1f \n Bullet Num: %i" , m_FPS, CBarrageManager::getInstance()->getNumBullets());
 	CHECK_RESULT(DxLib::DrawString(10, 10, Buf, Color));
-
-	sprintf(Buf, "Bullet Num: %i", CBarrageManager::getInstance()->getNumBullets());
-	CHECK_RESULT(DxLib::DrawString(10, 60, Buf, Color));
 }

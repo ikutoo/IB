@@ -18,6 +18,7 @@
 #define GAME_SCENE		1
 #define HELP_SCENE		2
 #define GAME_OVER_SCENE 3
+#define LEVEL_SCENE		4
 
 const std::string RES_IMG_ROOT = "../Resource/images/";
 const std::string RES_SND_ROOT = "../Resource/sounds/";
