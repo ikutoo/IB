@@ -36,8 +36,6 @@ bool CApplication::__init()
 	CHECK_RESULT(DxLib_Init());
 	CHECK_RESULT(SetDrawScreen(DX_SCREEN_BACK));
 
-	CHECK_RESULT(SetMouseDispFlag(FALSE));
-
 	CDirector::getInstance()->registerScene(TITLE_SCENE, new CTitleScene);
 	CDirector::getInstance()->registerScene(HELP_SCENE, new CHelpScene);
 	CDirector::getInstance()->registerScene(GAME_SCENE, new CGameScene);

@@ -11,6 +11,7 @@ public:
 	virtual void destroyV() override;
 
 private:
+	SImageLabel	m_BgImageLabel;
 	SImageLabel m_TitleLabel;
 	SImageLabel m_FlagLabel;
 	std::vector<SImageLabel> m_MenuLabels;
