@@ -9,9 +9,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\common">
-      <UniqueIdentifier>{5378435e-c9eb-4ab6-ba5d-78bbb242e313}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\game">
       <UniqueIdentifier>{3703e8c3-dec5-4009-a1a8-7399f8f599c0}</UniqueIdentifier>
     </Filter>
@@ -26,15 +23,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Source Files\common</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Source Files\common</Filter>
-    </ClInclude>
-    <ClInclude Include="common.h">
-      <Filter>Source Files\common</Filter>
-    </ClInclude>
     <ClInclude Include="scene.h">
       <Filter>Source Files\base</Filter>
     </ClInclude>
@@ -74,11 +62,17 @@
     <ClInclude Include="levelScene.h">
       <Filter>Source Files\game\scenes</Filter>
     </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Source Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Source Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>Source Files\game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files\common</Filter>
-    </ClCompile>
     <ClCompile Include="scene.cpp">
       <Filter>Source Files\base</Filter>
     </ClCompile>
@@ -120,6 +114,9 @@
     </ClCompile>
     <ClCompile Include="levelScene.cpp">
       <Filter>Source Files\game\scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files\game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

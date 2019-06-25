@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "barrageManager.h"
-#include "movePattern.h"
 
 CBarrageManager::CBarrageManager()
 {
