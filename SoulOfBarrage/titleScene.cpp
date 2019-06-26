@@ -3,7 +3,9 @@
 #include "titleScene.h"
 #include "utility.h"
 #include "inputManager.h"
-#include "director.h"
+#include "engine.h"
+
+using namespace DxEngine;
 
 //*********************************************************************
 //FUNCTION:
@@ -104,10 +106,10 @@ void CTitleScene::__handleInput()
 		switch (m_SelectedLabelIndex)
 		{
 		case 0: //开始游戏
-			CDirector::getInstance()->setActiveScene(LEVEL_SCENE);
+			Engine->setActiveScene(LEVEL_SCENE);
 			break;
 		case 1: //操作说明
-			CDirector::getInstance()->setActiveScene(HELP_SCENE);
+			Engine->setActiveScene(HELP_SCENE);
 			break;
 		case 2: //退出游戏
 			exit(EXIT_SUCCESS);

@@ -2,7 +2,7 @@
 #include "scene.h"
 #include "common.h"
 
-class CGameoverScene : public CScene
+class CGameoverScene : public DxEngine::CScene
 {
 public:
 	CGameoverScene();

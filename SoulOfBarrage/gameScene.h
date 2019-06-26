@@ -2,7 +2,12 @@
 #include <vector>
 #include "scene.h"
 
-class CGameScene : public CScene
+class CBarrageLayer
+{
+
+};
+
+class CGameScene : public  DxEngine::CScene
 {
 public:
 	CGameScene();

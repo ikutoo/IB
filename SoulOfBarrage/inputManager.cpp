@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "inputManager.h"
 
+using namespace DxEngine;
+
 //*********************************************************************
 //FUNCTION:
 void CInputManager::update()

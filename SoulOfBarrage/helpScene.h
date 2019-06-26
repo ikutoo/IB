@@ -1,7 +1,7 @@
 #pragma once
 #include "scene.h"
 
-class CHelpScene : public CScene
+class CHelpScene : public  DxEngine::CScene
 {
 public:
 	CHelpScene();

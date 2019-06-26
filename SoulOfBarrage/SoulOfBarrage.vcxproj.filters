@@ -26,14 +26,8 @@
     <ClInclude Include="scene.h">
       <Filter>Source Files\base</Filter>
     </ClInclude>
-    <ClInclude Include="director.h">
-      <Filter>Source Files\base</Filter>
-    </ClInclude>
     <ClInclude Include="inputManager.h">
       <Filter>Source Files\base</Filter>
-    </ClInclude>
-    <ClInclude Include="application.h">
-      <Filter>Source Files\game</Filter>
     </ClInclude>
     <ClInclude Include="utility.h">
       <Filter>Source Files\base</Filter>
@@ -56,9 +50,6 @@
     <ClInclude Include="movePattern.h">
       <Filter>Source Files\game\barrage</Filter>
     </ClInclude>
-    <ClInclude Include="barrageManager.h">
-      <Filter>Source Files\base</Filter>
-    </ClInclude>
     <ClInclude Include="levelScene.h">
       <Filter>Source Files\game\scenes</Filter>
     </ClInclude>
@@ -71,22 +62,19 @@
     <ClInclude Include="common.h">
       <Filter>Source Files\game</Filter>
     </ClInclude>
+    <ClInclude Include="engine.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="barrageManager.h">
+      <Filter>Source Files\game\barrage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scene.cpp">
       <Filter>Source Files\base</Filter>
     </ClCompile>
-    <ClCompile Include="director.cpp">
-      <Filter>Source Files\base</Filter>
-    </ClCompile>
     <ClCompile Include="inputManager.cpp">
       <Filter>Source Files\base</Filter>
-    </ClCompile>
-    <ClCompile Include="application.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="utility.cpp">
       <Filter>Source Files\base</Filter>
@@ -109,13 +97,19 @@
     <ClCompile Include="movePattern.cpp">
       <Filter>Source Files\game\barrage</Filter>
     </ClCompile>
-    <ClCompile Include="barrageManager.cpp">
-      <Filter>Source Files\base</Filter>
-    </ClCompile>
     <ClCompile Include="levelScene.cpp">
       <Filter>Source Files\game\scenes</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="engine.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="barrageManager.cpp">
+      <Filter>Source Files\game\barrage</Filter>
+    </ClCompile>
+    <ClCompile Include="application.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
   </ItemGroup>

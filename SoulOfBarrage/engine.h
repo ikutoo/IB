@@ -1,21 +1,49 @@
 #pragma once
+#include <functional>
+#include <vector>
+#include <map>
 #include "common.h"
 
-class CEngine
+#define Engine DxEngine::CEngine::getInstance()
+
+namespace DxEngine
 {
-public:
-	SINGLETION(CEngine);
-	DISALLOW_COPY_AND_ASSIGN(CEngine);
+	class CScene;
 
-	int run();
+	class CEngine
+	{
+	public:
+		SINGLETION(CEngine);
 
-private:
-	CEngine() = default;
-	~CEngine() = default;
+		int run();
 
-	bool __init();
-	void __destroy();
+		void registerInitFunc(std::function<void()> vFunc) { _ASSERTE(vFunc); m_ExtraInitFuncs.emplace_back(vFunc); }
+		void registerUpdateFunc(std::function<void()> vFunc) { _ASSERTE(vFunc); m_ExtraUpdateFuncs.emplace_back(vFunc); }
 
-	void __update();
-	void __render();
-};
+		void registerScene(int vSceneID, CScene* vScene) { _ASSERTE(vScene), m_ID2SceneMap[vSceneID] = vScene; }
+		bool setActiveScene(int vSceneID);
+
+		void displayStatus(bool vValue) { m_DisplayStatus = vValue; }
+
+	private:
+		CEngine() = default;
+		~CEngine() = default;
+
+		CScene* m_pActiveScene = nullptr;
+		std::map<int, CScene*> m_ID2SceneMap;
+
+		std::vector<std::function<void()>> m_ExtraInitFuncs;
+		std::vector<std::function<void()>> m_ExtraUpdateFuncs;
+
+		bool	m_DisplayStatus = false;
+		int		m_TimeCounter = 0;
+		float	m_FPS = 0.0;
+
+		void __drawStatus();
+
+		bool __init();
+		void __update();
+		void __render();
+		void __destroy();
+	};
+}

@@ -1,67 +1,39 @@
 #include "stdafx.h"
-#include "application.h"
-#include "director.h"
+#include "engine.h"
+#include "barrageManager.h"
 #include "titleScene.h"
 #include "helpScene.h"
 #include "gameScene.h"
 #include "gameoverScene.h"
 #include "levelScene.h"
 
-//*********************************************************************
-//FUNCTION:
-int CApplication::run()
-{
-	if (!__init()) return EXIT_FAILURE;
-
-	while (0 == __processLoop())
-	{
-		CDirector::getInstance()->update();
-
-		CHECK_RESULT(DxLib::ScreenFlip());
-	}
-
-	__destroy();
-
-	return EXIT_SUCCESS;
-}
-
-//*********************************************************************
-//FUNCTION:
-bool CApplication::__init()
+void init()
 {
 	CHECK_RESULT(DxLib::ChangeWindowMode(TRUE));
 	CHECK_RESULT(DxLib::SetGraphMode(WIDTH, HEIGHT, 32));
 	CHECK_RESULT(DxLib::SetWindowText("SOB - Lost Doll"));
 	CHECK_RESULT(DxLib::SetBackgroundColor(50, 50, 50));
 
-	CHECK_RESULT(DxLib::DxLib_Init());
-	CHECK_RESULT(DxLib::SetDrawScreen(DX_SCREEN_BACK));
+	Engine->registerScene(TITLE_SCENE, new CTitleScene);
+	Engine->registerScene(HELP_SCENE, new CHelpScene);
+	Engine->registerScene(GAME_SCENE, new CGameScene);
+	Engine->registerScene(GAME_OVER_SCENE, new CGameoverScene);
+	Engine->registerScene(LEVEL_SCENE, new CLevelScene);
 
-	CDirector::getInstance()->registerScene(TITLE_SCENE, new CTitleScene);
-	CDirector::getInstance()->registerScene(HELP_SCENE, new CHelpScene);
-	CDirector::getInstance()->registerScene(GAME_SCENE, new CGameScene);
-	CDirector::getInstance()->registerScene(GAME_OVER_SCENE, new CGameoverScene);
-	CDirector::getInstance()->registerScene(LEVEL_SCENE, new CLevelScene);
+	Engine->setActiveScene(TITLE_SCENE);
 
-	if (!CDirector::getInstance()->setActiveScene(TITLE_SCENE)) return false;
-	CDirector::getInstance()->displayStatus(true);
-
-	return true;
+	Engine->displayStatus(true);
 }
 
-//*********************************************************************
-//FUNCTION:
-int CApplication::__processLoop()
+void update()
 {
-	if (0 != DxLib::ProcessMessage()) return -1;
-	if (0 != DxLib::ClearDrawScreen()) return -1;
-
-	return 0;
+	CBarrageManager::getInstance()->update();
 }
 
-//*********************************************************************
-//FUNCTION:
-void CApplication::__destroy()
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	CHECK_RESULT(DxLib::DxLib_End());
+	Engine->registerInitFunc(init);
+	Engine->registerUpdateFunc(update);
+
+	return Engine->run();
 }

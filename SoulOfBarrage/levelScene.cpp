@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "inputManager.h"
 #include "levelScene.h"
-#include "director.h"
+#include "engine.h"
+
+using namespace DxEngine;
 
 //*********************************************************************
 //FUNCTION:
@@ -41,7 +43,7 @@ void CLevelScene::updateV(double vDeltaTime)
 	__handleInput();
 	__drawUI();
 
-	if (DxLib::CheckHitKey(KEY_INPUT_X)) CDirector::getInstance()->setActiveScene(TITLE_SCENE); //HACK: fix bug
+	if (DxLib::CheckHitKey(KEY_INPUT_X)) Engine->setActiveScene(TITLE_SCENE); //HACK: fix bug
 }
 
 //*********************************************************************

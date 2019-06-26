@@ -3,7 +3,7 @@
 #include "common.h"
 #include "scene.h"
 
-class CTitleScene : public CScene
+class CTitleScene : public  DxEngine::CScene
 {
 public:
 	virtual bool initV() override;

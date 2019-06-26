@@ -2,7 +2,7 @@
 #include <vector>
 #include "scene.h"
 
-class CLevelScene : public CScene
+class CLevelScene : public  DxEngine::CScene
 {
 public:
 	bool initV() override;

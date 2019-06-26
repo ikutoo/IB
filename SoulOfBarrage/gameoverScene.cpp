@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "gameoverScene.h"
-#include "director.h"
 
 CGameoverScene::CGameoverScene()
 {

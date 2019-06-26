@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "helpScene.h"
-#include "director.h"
+#include "engine.h"
 
 CHelpScene::CHelpScene()
 {
@@ -18,5 +18,5 @@ void CHelpScene::updateV(double vDeltaTime)
 
 	DrawString(500, 500, "this is help scene", 0xffffff);
 
-	if (CheckHitKey(KEY_INPUT_X)) CDirector::getInstance()->setActiveScene(TITLE_SCENE);
+	if (CheckHitKey(KEY_INPUT_X)) Engine->setActiveScene(TITLE_SCENE);
 }

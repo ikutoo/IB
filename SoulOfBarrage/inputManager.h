@@ -3,18 +3,21 @@
 
 #define GET_KEY_STATE(keyCode) CInputManager::getInstance()->getKeyState(keyCode)
 
-class CInputManager
+namespace DxEngine
 {
-public:
-	SINGLETION(CInputManager);
+	class CInputManager
+	{
+	public:
+		SINGLETION(CInputManager);
 
-	void update();
+		void update();
 
-	int getKeyState(unsigned char vKeyCode) const { return m_KeyState[vKeyCode]; }
+		int getKeyState(unsigned char vKeyCode) const { return m_KeyState[vKeyCode]; }
 
-private:
-	CInputManager() = default;
-	~CInputManager() = default;
+	private:
+		CInputManager() = default;
+		~CInputManager() = default;
 
-	int m_KeyState[256] = {};
-};
+		int m_KeyState[256] = {};
+	};
+}

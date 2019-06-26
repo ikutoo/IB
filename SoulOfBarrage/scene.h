@@ -1,12 +1,15 @@
 #pragma once
 
-class CScene
+namespace DxEngine
 {
-public:
-	CScene();
-	virtual ~CScene();
+	class CScene
+	{
+	public:
+		CScene();
+		virtual ~CScene();
 
-	virtual bool initV() { return true; }
-	virtual void updateV(double vDeltaTime) {}
-	virtual void destroyV() {}
-};
+		virtual bool initV() { return true; }
+		virtual void updateV(double vDeltaTime) {}
+		virtual void destroyV() {}
+	};
+}
