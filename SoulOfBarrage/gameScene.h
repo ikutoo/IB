@@ -18,10 +18,7 @@ public:
 	virtual void destroyV() override;
 
 private:
-	void __drawUI();
-	void __drawBarrage();
-	void __drawPlayer();
-	void __loadResource();
+	void __updateBarrage();
 
 	int m_Counter = 0;
 };

@@ -91,6 +91,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <DisableSpecificWarnings>4267</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -106,6 +107,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/Lib/DXLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4267</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -123,6 +125,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <DisableSpecificWarnings>4267</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,6 +145,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/Lib/DXLib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4267</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,6 +156,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="barrage.h" />
+    <ClInclude Include="bullet.h" />
+    <ClInclude Include="commonMicro.h" />
     <ClInclude Include="engine.h" />
     <ClInclude Include="barrageManager.h" />
     <ClInclude Include="barragePattern.h" />
@@ -159,27 +166,36 @@
     <ClInclude Include="gameoverScene.h" />
     <ClInclude Include="gameScene.h" />
     <ClInclude Include="helpScene.h" />
+    <ClInclude Include="label.h" />
     <ClInclude Include="inputManager.h" />
     <ClInclude Include="levelScene.h" />
+    <ClInclude Include="math.h" />
     <ClInclude Include="movePattern.h" />
+    <ClInclude Include="node.h" />
     <ClInclude Include="scene.h" />
+    <ClInclude Include="sprite.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="titleScene.h" />
     <ClInclude Include="utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="barrage.cpp" />
+    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="barrageManager.cpp" />
     <ClCompile Include="barragePattern.cpp" />
     <ClCompile Include="gameoverScene.cpp" />
     <ClCompile Include="gameScene.cpp" />
     <ClCompile Include="helpScene.cpp" />
+    <ClCompile Include="label.cpp" />
     <ClCompile Include="inputManager.cpp" />
     <ClCompile Include="levelScene.cpp" />
     <ClCompile Include="application.cpp" />
     <ClCompile Include="movePattern.cpp" />
+    <ClCompile Include="node.cpp" />
     <ClCompile Include="scene.cpp" />
+    <ClCompile Include="sprite.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

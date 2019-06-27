@@ -1,15 +1,17 @@
 #pragma once
+#include <vector>
+#include "node.h"
 
 namespace DxEngine
 {
-	class CScene
+	class CScene : public CNode
 	{
 	public:
-		CScene();
-		virtual ~CScene();
+		CScene() = default;
+		virtual ~CScene() = default;
 
 		virtual bool initV() { return true; }
-		virtual void updateV(double vDeltaTime) {}
+		virtual void updateV(double vDeltaTime) override { CNode::updateV(vDeltaTime); }
 		virtual void destroyV() {}
 	};
 }

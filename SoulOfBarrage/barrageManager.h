@@ -1,9 +1,11 @@
 #pragma once
-#include <vector>
 #include <list>
 #include <functional>
 #include <map>
 #include "common.h"
+
+class CBullet;
+class CBarrage;
 
 class CBarrageManager
 {

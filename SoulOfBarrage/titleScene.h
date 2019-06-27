@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
-#include "common.h"
 #include "scene.h"
+#include "label.h"
 
 class CTitleScene : public  DxEngine::CScene
 {
@@ -11,13 +11,8 @@ public:
 	virtual void destroyV() override;
 
 private:
-	SImageLabel	m_BgImageLabel;
-	SImageLabel m_TitleLabel;
-	SImageLabel m_FlagLabel;
-	std::vector<SImageLabel> m_MenuLabels;
+	DxEngine::CImageLabel* m_pFlagLabel = nullptr;
+	std::vector<DxEngine::CImageLabel*> m_MenuLabels;
 
 	int m_SelectedLabelIndex = 0;
-
-	void __drawUI();
-	void __handleInput();
 };

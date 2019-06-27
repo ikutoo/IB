@@ -1,2 +1,2 @@
 #include "stdafx.h"
-#include "utility.h"
+#include "sprite.h"

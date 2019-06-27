@@ -21,11 +21,11 @@
     <Filter Include="Source Files\game\barrage">
       <UniqueIdentifier>{4d59ff80-7444-45b1-a1cc-665213b16b6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\base\ui">
+      <UniqueIdentifier>{af11c3ee-470a-428e-b798-4c86a3116aff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="scene.h">
-      <Filter>Source Files\base</Filter>
-    </ClInclude>
     <ClInclude Include="inputManager.h">
       <Filter>Source Files\base</Filter>
     </ClInclude>
@@ -68,11 +68,32 @@
     <ClInclude Include="barrageManager.h">
       <Filter>Source Files\game\barrage</Filter>
     </ClInclude>
+    <ClInclude Include="commonMicro.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="math.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="node.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="sprite.h">
+      <Filter>Source Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="label.h">
+      <Filter>Source Files\base\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="barrage.h">
+      <Filter>Source Files\game\barrage</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>Source Files\game\barrage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="scene.cpp">
-      <Filter>Source Files\base</Filter>
-    </ClCompile>
     <ClCompile Include="inputManager.cpp">
       <Filter>Source Files\base</Filter>
     </ClCompile>
@@ -111,6 +132,24 @@
     </ClCompile>
     <ClCompile Include="application.cpp">
       <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="node.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="sprite.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="label.cpp">
+      <Filter>Source Files\base\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="barrage.cpp">
+      <Filter>Source Files\game\barrage</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>Source Files\game\barrage</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

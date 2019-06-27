@@ -13,14 +13,8 @@ int CEngine::run()
 
 	while (0 == DxLib::ProcessMessage())
 	{
-		CInputManager::getInstance()->update();
-
-		CHECK_RESULT(ClearDrawScreen());
-
 		__update();
 		__render();
-
-		CHECK_RESULT(DxLib::ScreenFlip());
 	}
 
 	__destroy();
@@ -30,12 +24,17 @@ int CEngine::run()
 
 //***********************************************************************************************
 //FUNCTION:
-bool CEngine::setActiveScene(int vSceneID)
+bool CEngine::setActiveScene(CScene* vScene)
 {
-	if (m_ID2SceneMap.find(vSceneID) == m_ID2SceneMap.end()) return false;
+	_ASSERT(vScene);
 
-	if (m_pActiveScene) m_pActiveScene->destroyV();
-	m_pActiveScene = m_ID2SceneMap[vSceneID];
+	if (m_pActiveScene)
+	{
+		m_pActiveScene->destroyV();
+		SAFE_DELETE(m_pActiveScene);
+	}
+
+	m_pActiveScene = vScene;
 	if (!m_pActiveScene->initV()) return false;
 
 	return true;
@@ -45,10 +44,12 @@ bool CEngine::setActiveScene(int vSceneID)
 //FUNCTION:
 bool CEngine::__init()
 {
+	for (auto PreInitFunc : m_PreInitFuncs) PreInitFunc();
+
 	CHECK_RESULT(DxLib::DxLib_Init());
 	CHECK_RESULT(DxLib::SetDrawScreen(DX_SCREEN_BACK));
 
-	for (auto InitFunc : m_ExtraInitFuncs) InitFunc();
+	for (auto InitFunc : m_InitFuncs) InitFunc();
 
 	return true;
 }
@@ -57,25 +58,35 @@ bool CEngine::__init()
 //FUNCTION:
 void CEngine::__update()
 {
-	int deltaTime = GetNowCount() - m_TimeCounter;
-	m_FPS = 1000.0 / deltaTime;
+	CInputManager::getInstance()->update();
+
+	int DeltaTime = GetNowCount() - m_TimeCounter;
+	m_FPS = 1000.0f / DeltaTime;
 	m_TimeCounter = GetNowCount();
 
-	for (auto UpdateFunc : m_ExtraUpdateFuncs) UpdateFunc();
+	m_pActiveScene->updateV(DeltaTime);
+
+	for (auto UpdateFunc : m_UpdateFuncs) UpdateFunc();
 }
 
 //***********************************************************************************************
 //FUNCTION:
 void CEngine::__render()
 {
+	CHECK_RESULT(ClearDrawScreen());
+
+	m_pActiveScene->drawV();
 	if (m_DisplayStatus) __drawStatus();
-	m_pActiveScene->updateV(0.0);
+
+	CHECK_RESULT(DxLib::ScreenFlip());
 }
 
 //*********************************************************************
 //FUNCTION:
 void CEngine::__destroy()
 {
+	m_pActiveScene->destroyV();
+
 	CHECK_RESULT(DxLib::DxLib_End());
 }
 

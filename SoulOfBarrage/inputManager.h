@@ -1,5 +1,5 @@
 #pragma once
-#include "common.h"
+#include "commonMicro.h"
 
 #define GET_KEY_STATE(keyCode) CInputManager::getInstance()->getKeyState(keyCode)
 

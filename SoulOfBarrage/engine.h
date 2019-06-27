@@ -2,7 +2,7 @@
 #include <functional>
 #include <vector>
 #include <map>
-#include "common.h"
+#include "commonMicro.h"
 
 #define Engine DxEngine::CEngine::getInstance()
 
@@ -17,11 +17,11 @@ namespace DxEngine
 
 		int run();
 
-		void registerInitFunc(std::function<void()> vFunc) { _ASSERTE(vFunc); m_ExtraInitFuncs.emplace_back(vFunc); }
-		void registerUpdateFunc(std::function<void()> vFunc) { _ASSERTE(vFunc); m_ExtraUpdateFuncs.emplace_back(vFunc); }
+		void registerPreInitFunc(std::function<void()> vFunc) { _ASSERTE(vFunc); m_PreInitFuncs.emplace_back(vFunc); }
+		void registerInitFunc(std::function<void()> vFunc) { _ASSERTE(vFunc); m_InitFuncs.emplace_back(vFunc); }
+		void registerUpdateFunc(std::function<void()> vFunc) { _ASSERTE(vFunc); m_UpdateFuncs.emplace_back(vFunc); }
 
-		void registerScene(int vSceneID, CScene* vScene) { _ASSERTE(vScene), m_ID2SceneMap[vSceneID] = vScene; }
-		bool setActiveScene(int vSceneID);
+		bool setActiveScene(CScene* vScene);
 
 		void displayStatus(bool vValue) { m_DisplayStatus = vValue; }
 
@@ -32,8 +32,9 @@ namespace DxEngine
 		CScene* m_pActiveScene = nullptr;
 		std::map<int, CScene*> m_ID2SceneMap;
 
-		std::vector<std::function<void()>> m_ExtraInitFuncs;
-		std::vector<std::function<void()>> m_ExtraUpdateFuncs;
+		std::vector<std::function<void()>> m_PreInitFuncs;
+		std::vector<std::function<void()>> m_InitFuncs;
+		std::vector<std::function<void()>> m_UpdateFuncs;
 
 		bool	m_DisplayStatus = false;
 		int		m_TimeCounter = 0;

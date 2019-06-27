@@ -1,7 +1,9 @@
 #pragma once
-#include "common.h"
+#include "commonMicro.h"
 
-namespace utility
+namespace DxEngine
 {
-	void drawLabel(const SLabel& vLabel);
+	namespace Utility
+	{
+	}
 }

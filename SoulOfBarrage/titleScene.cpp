@@ -1,6 +1,9 @@
 #include "stdafx.h"
-#include "common.h"
 #include "titleScene.h"
+#include <thread>
+#include "common.h"
+#include "levelScene.h"
+#include "helpScene.h"
 #include "utility.h"
 #include "inputManager.h"
 #include "engine.h"
@@ -13,32 +16,33 @@ bool CTitleScene::initV()
 {
 	if (!CScene::initV()) return false;
 
-	m_BgImageLabel = { 1100, 150, DxLib::LoadGraph(LOCATE_IMAGE("bg_01.png")) };
+	auto pBgLabel = new CImageLabel(LOCATE_IMAGE("bg_01.png"));
+	pBgLabel->setPosition(1100, 150);
+	this->addChild(pBgLabel);
 
-	m_TitleLabel.image = DxLib::LoadGraph(LOCATE_IMAGE("title.png"));
-	int ImgWidth, ImgHeight;
-	CHECK_RESULT(DxLib::GetGraphSize(m_TitleLabel.image, &ImgWidth, &ImgHeight));
-	m_TitleLabel.x = (WIDTH - ImgWidth) / 2;
-	m_TitleLabel.y = 100;
+	auto pTitleLabel = new CImageLabel(LOCATE_IMAGE("title.png"));
+	pTitleLabel->setPosition((WIDTH - pTitleLabel->getSize().x) / 2, 100);
+	this->addChild(pTitleLabel);
 
-	SImageLabel MenuLabel;
-	MenuLabel.image = DxLib::LoadGraph(LOCATE_IMAGE("play.png"));
-	CHECK_RESULT(DxLib::GetGraphSize(MenuLabel.image, &ImgWidth, &ImgHeight));
-	MenuLabel.x = (WIDTH - ImgWidth) / 2;
-	MenuLabel.y = 600;
-	m_MenuLabels.emplace_back(MenuLabel);
+	auto pPlayLabel = new CImageLabel(LOCATE_IMAGE("play.png"));
+	pPlayLabel->setPosition((WIDTH - pPlayLabel->getSize().x) / 2, 600);
+	m_MenuLabels.emplace_back(pPlayLabel);
 
-	MenuLabel.image = DxLib::LoadGraph(LOCATE_IMAGE("help.png"));
-	MenuLabel.y += 100;
-	m_MenuLabels.emplace_back(MenuLabel);
+	auto pHelpLabel = new CImageLabel(LOCATE_IMAGE("help.png"));
+	pHelpLabel->setPosition((WIDTH - pHelpLabel->getSize().x) / 2, 700);
+	m_MenuLabels.emplace_back(pHelpLabel);
 
-	MenuLabel.image = DxLib::LoadGraph(LOCATE_IMAGE("exit.png"));
-	MenuLabel.y += 100;
-	m_MenuLabels.emplace_back(MenuLabel);
+	auto pExitLabel = new CImageLabel(LOCATE_IMAGE("exit.png"));
+	pExitLabel->setPosition((WIDTH - pExitLabel->getSize().x) / 2, 800);
+	m_MenuLabels.emplace_back(pExitLabel);
 
-	m_FlagLabel = { 750, m_MenuLabels[0].y, DxLib::LoadGraph(LOCATE_IMAGE("flag.png")) };
+	for (auto pLabel : m_MenuLabels) this->addChild(pLabel);
 
-	CHECK_RESULT(DxLib::PlayMusic(LOCATE_SOUND("bgm_01.mp3"), DX_PLAYTYPE_LOOP));
+	m_pFlagLabel = new CImageLabel(LOCATE_IMAGE("flag.png"));
+	m_pFlagLabel->setPosition(750, m_MenuLabels[0]->getPosition().y);
+	this->addChild(m_pFlagLabel);
+
+	CHECK_RESULT(DxLib::PlayMusic(LOCATE_SOUND("bgm_01.mp3"), DX_PLAYTYPE_BACK));
 
 	return true;
 }
@@ -49,49 +53,8 @@ void CTitleScene::updateV(double vDeltaTime)
 {
 	CScene::updateV(vDeltaTime);
 
-	__drawUI();
-	__handleInput();
-}
+	m_pFlagLabel->setPosition(m_pFlagLabel->getPosition().x, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y + 10);
 
-//***********************************************************************************************
-//FUNCTION:
-void CTitleScene::destroyV()
-{
-	CHECK_RESULT(DxLib::StopMusic());
-	CHECK_RESULT(DxLib::DeleteGraph(m_BgImageLabel.image));
-	CHECK_RESULT(DxLib::DeleteGraph(m_TitleLabel.image));
-	CHECK_RESULT(DxLib::DeleteGraph(m_FlagLabel.image));
-	for (auto Label : m_MenuLabels) CHECK_RESULT(DxLib::DeleteGraph(Label.image));
-	m_MenuLabels.clear();
-
-	CScene::destroyV();
-}
-
-//*********************************************************************
-//FUNCTION:
-void CTitleScene::__drawUI()
-{
-	DxLib::DrawGraph(m_BgImageLabel.x, m_BgImageLabel.y, m_BgImageLabel.image, TRUE);
-
-	DxLib::DrawGraph(m_TitleLabel.x, m_TitleLabel.y, m_TitleLabel.image, TRUE);
-
-	m_FlagLabel.y = m_MenuLabels[m_SelectedLabelIndex].y + 10;
-	DxLib::DrawGraph(m_FlagLabel.x, m_FlagLabel.y, m_FlagLabel.image, TRUE);
-
-	for (int i = 0; i < m_MenuLabels.size(); ++i)
-	{
-		auto MenuLabel = m_MenuLabels[i];
-		DxLib::DrawGraph(MenuLabel.x, MenuLabel.y, MenuLabel.image, TRUE);
-	}
-
-	CHECK_RESULT(DxLib::SetFontSize(20));
-	CHECK_RESULT(DxLib::DrawString(20, HEIGHT - 80, " <确认: 回车键>\n <选择: 方向键>", 0xffffff));
-}
-
-//*********************************************************************
-//FUNCTION:
-void CTitleScene::__handleInput()
-{
 	bool IndexChanged = false;
 	if (1 == GET_KEY_STATE(KEY_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }
 	else if (1 == GET_KEY_STATE(KEY_INPUT_UP)) { m_SelectedLabelIndex--; IndexChanged = true; }
@@ -106,10 +69,10 @@ void CTitleScene::__handleInput()
 		switch (m_SelectedLabelIndex)
 		{
 		case 0: //开始游戏
-			Engine->setActiveScene(LEVEL_SCENE);
+			Engine->setActiveScene(new CLevelScene);
 			break;
 		case 1: //操作说明
-			Engine->setActiveScene(HELP_SCENE);
+			Engine->setActiveScene(new CHelpScene);
 			break;
 		case 2: //退出游戏
 			exit(EXIT_SUCCESS);
@@ -121,4 +84,15 @@ void CTitleScene::__handleInput()
 
 		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_SOUND("se_ok_01.mp3"), DX_PLAYTYPE_NORMAL));
 	}
+}
+
+//***********************************************************************************************
+//FUNCTION:
+void CTitleScene::destroyV()
+{
+	CHECK_RESULT(DxLib::StopMusic());
+
+	this->destroyChilds();
+
+	CScene::destroyV();
 }
