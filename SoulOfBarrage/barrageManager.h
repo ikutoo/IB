@@ -4,8 +4,7 @@
 #include <map>
 #include "common.h"
 #include "barrage.h"
-
-class CBullet;
+#include "bullet.h"
 
 class CBarrageManager
 {
@@ -15,7 +14,6 @@ public:
 	bool init(DxEngine::CNode* vContainer);
 
 	void addBullet(CBullet* vBullet) { _ASSERTE(vBullet); m_Bullets.emplace_back(vBullet); m_pContainer->addChild(vBullet); }
-	void registerBulletType(int vBulletType, const char* vImageFile);
 
 	void startBarrage(CBarrage* vBarrage) { _ASSERTE(vBarrage); m_ActiveBarrages.emplace_back(vBarrage); m_pContainer->addChild(vBarrage); }
 
@@ -31,7 +29,6 @@ private:
 
 	std::list<CBullet*> m_Bullets;
 	std::list<CBarrage*> m_ActiveBarrages;
-	std::map<int, int> m_BulletType2ImageMap;
 
 	DxEngine::CNode* m_pContainer = nullptr;
 

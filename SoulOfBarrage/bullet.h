@@ -5,13 +5,12 @@
 class CBullet : public DxEngine::CSprite
 {
 public:
-	CBullet();
-	~CBullet();
+	CBullet(const std::string& vImageFile) : DxEngine::CSprite(vImageFile) {}
+	~CBullet() = default;
 
 private:
 	double	_Angle = 0.0;
 	double	_Speed = 0.0;
-	int		_BulletType = -1;
 
 	std::function<void(CBullet*)> _MoveFunc;
 

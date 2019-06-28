@@ -19,18 +19,6 @@ bool CBarrageManager::init(DxEngine::CNode* vContainer)
 
 //*********************************************************************
 //FUNCTION:
-void CBarrageManager::registerBulletType(int vBulletType, const char* vImageFile)
-{
-	if (m_BulletType2ImageMap.find(vBulletType) != m_BulletType2ImageMap.end()) return;
-
-	auto ImageHandle = LoadGraph(vImageFile);
-	_ASSERTE(ImageHandle != -1);
-
-	m_BulletType2ImageMap[vBulletType] = ImageHandle;
-}
-
-//*********************************************************************
-//FUNCTION:
 void CBarrageManager::update()
 {
 	for (auto iter = m_ActiveBarrages.begin(); iter != m_ActiveBarrages.end();)
@@ -72,16 +60,10 @@ void CBarrageManager::update()
 //FUNCTION:
 void CBarrageManager::destroy()
 {
-	for (auto iter = m_BulletType2ImageMap.begin(); iter != m_BulletType2ImageMap.end(); ++iter)
-	{
-		CHECK_RESULT(DxLib::DeleteGraph(iter->second));
-	}
-
 	m_pContainer->removeAllChilds();
 
 	m_Bullets.clear();
 	m_ActiveBarrages.clear();
-	m_BulletType2ImageMap.clear();
 }
 
 //*********************************************************************

@@ -20,8 +20,6 @@ bool CGameScene::initV()
 
 	CBarrageManager::getInstance()->init(this);
 
-	CBarrageManager::getInstance()->registerBulletType(1, LOCATE_IMAGE("bullet01.png"));
-
 	return true;
 }
 

@@ -7,16 +7,15 @@
 
 //*********************************************************************
 //FUNCTION:
-void CBarragePattern::barragePattern001(int x, int y, int vCounter)
+void CBarragePattern::barragePattern001(float x, float y, int vCounter)
 {
 	//if (vCounter % 2 != 0) return;
 
 	for (int i = 0; i < 360; i += 6)
 	{
-		CBullet* pBullet = new CBullet;
+		CBullet* pBullet = new CBullet(LOCATE_IMAGE("bullet01.png"));
 		pBullet->_Position.x = x;
 		pBullet->_Position.y = y;
-		pBullet->_BulletType = 1;
 		pBullet->_MoveFunc = CMovePattern::movePattern001;
 		pBullet->_Angle = (i + vCounter) * PI / 180;
 		pBullet->_Speed = 5.0;

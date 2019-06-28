@@ -24,11 +24,11 @@
     <Filter Include="Source Files\base\ui">
       <UniqueIdentifier>{af11c3ee-470a-428e-b798-4c86a3116aff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\base\managers">
+      <UniqueIdentifier>{eae79566-fa58-46ca-9dc0-b3bff391f1db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inputManager.h">
-      <Filter>Source Files\base</Filter>
-    </ClInclude>
     <ClInclude Include="utility.h">
       <Filter>Source Files\base</Filter>
     </ClInclude>
@@ -92,11 +92,14 @@
     <ClInclude Include="bullet.h">
       <Filter>Source Files\game\barrage</Filter>
     </ClInclude>
+    <ClInclude Include="resourceManager.h">
+      <Filter>Source Files\base\managers</Filter>
+    </ClInclude>
+    <ClInclude Include="inputManager.h">
+      <Filter>Source Files\base\managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="inputManager.cpp">
-      <Filter>Source Files\base</Filter>
-    </ClCompile>
     <ClCompile Include="utility.cpp">
       <Filter>Source Files\base</Filter>
     </ClCompile>
@@ -150,6 +153,12 @@
     </ClCompile>
     <ClCompile Include="bullet.cpp">
       <Filter>Source Files\game\barrage</Filter>
+    </ClCompile>
+    <ClCompile Include="resourceManager.cpp">
+      <Filter>Source Files\base\managers</Filter>
+    </ClCompile>
+    <ClCompile Include="inputManager.cpp">
+      <Filter>Source Files\base\managers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
