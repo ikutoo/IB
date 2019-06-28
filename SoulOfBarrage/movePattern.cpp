@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "movePattern.h"
-#include "common.h"
+#include "bullet.h"
 
 //*********************************************************************
 //FUNCTION:
-void move_pattern::movePattern001(SBullet& vioBullet)
+void CMovePattern::movePattern001(CBullet* vioBullet)
 {
-	vioBullet.x += vioBullet.speed * sin(vioBullet.angle);
-	vioBullet.y += vioBullet.speed * cos(vioBullet.angle);
+	vioBullet->_Position.x += vioBullet->_Speed * sin(vioBullet->_Angle);
+	vioBullet->_Position.y += vioBullet->_Speed * cos(vioBullet->_Angle);
 }

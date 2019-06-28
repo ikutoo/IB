@@ -3,26 +3,21 @@
 #include <functional>
 #include <map>
 #include "common.h"
+#include "barrage.h"
 
 class CBullet;
-class CBarrage;
 
 class CBarrageManager
 {
 public:
-	using TMoveFunc = std::function<void(SBullet&)>;
-	using TBarrageFunc = std::function<void(int, int, int)>;
-
 	SINGLETION(CBarrageManager);
 
-	bool init();
+	bool init(DxEngine::CNode* vContainer);
 
-	void addBullet(const SBullet& vBullet) { m_Bullets.emplace_back(std::move(vBullet)); }
-	void registerMovePattern(int vMovePattern, TMoveFunc vMoveFunc) { m_ID2MoveFuncMap[vMovePattern] = vMoveFunc; }
-	void registerBarragePattern(int vBarragePattern, TBarrageFunc vBarrageFunc) { m_ID2BarrageFuncMap[vBarragePattern] = vBarrageFunc; }
+	void addBullet(CBullet* vBullet) { _ASSERTE(vBullet); m_Bullets.emplace_back(vBullet); m_pContainer->addChild(vBullet); }
 	void registerBulletType(int vBulletType, const char* vImageFile);
 
-	void startBarrage(const SBarrage& vBarrage) { m_ActiveBarrages.emplace_back(vBarrage); }
+	void startBarrage(CBarrage* vBarrage) { _ASSERTE(vBarrage); m_ActiveBarrages.emplace_back(vBarrage); m_pContainer->addChild(vBarrage); }
 
 	void update();
 
@@ -31,14 +26,14 @@ public:
 	int getNumBullets() const { return m_Bullets.size(); }
 
 private:
-	CBarrageManager();
-	~CBarrageManager();
+	CBarrageManager() = default;
+	~CBarrageManager() = default;
 
-	std::list<SBullet> m_Bullets;
-	std::list<SBarrage> m_ActiveBarrages;
+	std::list<CBullet*> m_Bullets;
+	std::list<CBarrage*> m_ActiveBarrages;
 	std::map<int, int> m_BulletType2ImageMap;
-	std::map<int, TMoveFunc> m_ID2MoveFuncMap;
-	std::map<int, TBarrageFunc> m_ID2BarrageFuncMap;
 
-	bool __isBulletDead(const SBullet& vBullet) const;
+	DxEngine::CNode* m_pContainer = nullptr;
+
+	bool __isBulletDead(const CBullet* vBullet) const;
 };

@@ -1,13 +1,21 @@
 #pragma once
+#include <functional>
 #include "node.h"
 
 class CBarrage : public DxEngine::CNode
 {
 public:
-	CBarrage();
+	using TBarrageFunc = std::function<void(int, int, int)>;
+
+	CBarrage(TBarrageFunc vFunc);
 	~CBarrage();
 
+	void setLiveTime(int vTime) { _LiveTime = vTime; }
+
 private:
-	int m_BarragePattern = -1;
-	int m_LiveTime = 0;
+	int _LiveTime = 0;
+
+	TBarrageFunc _BarrageFunc;
+
+	friend class CBarrageManager;
 };

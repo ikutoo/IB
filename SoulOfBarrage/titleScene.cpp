@@ -92,7 +92,7 @@ void CTitleScene::destroyV()
 {
 	CHECK_RESULT(DxLib::StopMusic());
 
-	this->destroyChilds();
+	this->removeAllChilds();
 
 	CScene::destroyV();
 }

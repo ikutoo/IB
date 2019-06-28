@@ -1,7 +1,9 @@
 #pragma once
-#include "common.h"
 
-namespace move_pattern
+class CBullet;
+
+class CMovePattern
 {
-	void movePattern001(SBullet& vioBullet);
-}
+public:
+	static void movePattern001(CBullet* vioBullet);
+};

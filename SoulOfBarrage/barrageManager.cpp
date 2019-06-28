@@ -1,18 +1,19 @@
 #include "stdafx.h"
 #include "barrageManager.h"
+#include "bullet.h"
+#include "barrage.h"
+#include "math.h"
+#include "node.h"
 
-CBarrageManager::CBarrageManager()
-{
-}
-
-CBarrageManager::~CBarrageManager()
-{
-}
+using namespace DxEngine;
 
 //*********************************************************************
 //FUNCTION:
-bool CBarrageManager::init()
+bool CBarrageManager::init(DxEngine::CNode* vContainer)
 {
+	_ASSERTE(vContainer);
+	m_pContainer = vContainer;
+
 	return true;
 }
 
@@ -34,36 +35,34 @@ void CBarrageManager::update()
 {
 	for (auto iter = m_ActiveBarrages.begin(); iter != m_ActiveBarrages.end();)
 	{
-		auto& Barrage = *iter;
+		auto pBarrage = *iter;
 
-		if (Barrage.counter > Barrage.liveTime)
+		if (pBarrage->_Counter > pBarrage->_LiveTime)
 		{
+			m_pContainer->removeChild(pBarrage);
 			iter = m_ActiveBarrages.erase(iter);
 		}
 		else
 		{
-			TBarrageFunc GenBarrage = m_ID2BarrageFuncMap[Barrage.barragePattern];
-			GenBarrage(Barrage.x, Barrage.y, Barrage.counter);
-			Barrage.counter++;
+			auto pBarrageFunc = pBarrage->_BarrageFunc;
+			pBarrageFunc(pBarrage->_Position.x, pBarrage->_Position.y, pBarrage->_Counter);
 			iter++;
 		}
 	}
 
 	for (auto iter = m_Bullets.begin(); iter != m_Bullets.end();)
 	{
-		auto& Bullet = *iter;
+		auto pBullet = *iter;
 
-		if (__isBulletDead(Bullet))
+		if (__isBulletDead(pBullet))
 		{
+			m_pContainer->removeChild(pBullet);
 			iter = m_Bullets.erase(iter);
 		}
 		else
 		{
-			TMoveFunc Move = m_ID2MoveFuncMap[Bullet.movePattern];
-			Move(Bullet);
-			Bullet.counter++;
-
-			CHECK_RESULT(DxLib::DrawGraph(Bullet.x, Bullet.y, m_BulletType2ImageMap[Bullet.bulletType], TRUE));
+			auto MoveFunc = pBullet->_MoveFunc;
+			MoveFunc(pBullet);
 			iter++;
 		}
 	}
@@ -78,18 +77,17 @@ void CBarrageManager::destroy()
 		CHECK_RESULT(DxLib::DeleteGraph(iter->second));
 	}
 
+	m_pContainer->removeAllChilds();
+
 	m_Bullets.clear();
 	m_ActiveBarrages.clear();
 	m_BulletType2ImageMap.clear();
-	m_ID2BarrageFuncMap.clear();
-	m_ID2MoveFuncMap.clear();
 }
 
 //*********************************************************************
 //FUNCTION:
-bool CBarrageManager::__isBulletDead(const SBullet& vBullet) const
+bool CBarrageManager::__isBulletDead(const CBullet* vBullet) const
 {
-	if (vBullet.x < -100 || vBullet.x > WIDTH + 100 || vBullet.y < -100 || vBullet.y > HEIGHT + 100) return true;
-
-	return false;
+	if (intersects(vBullet->_Position, rectf{ -100, -100, WIDTH + 100, HEIGHT + 100 })) return false;
+	return true;
 }

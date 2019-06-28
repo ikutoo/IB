@@ -1,23 +1,25 @@
 #include "stdafx.h"
 #include "common.h"
 #include "barragePattern.h"
+#include "movePattern.h"
 #include "barrageManager.h"
+#include "bullet.h"
 
 //*********************************************************************
 //FUNCTION:
-void barrage_pattern::barragePattern001(int x, int y, int vCounter)
+void CBarragePattern::barragePattern001(int x, int y, int vCounter)
 {
 	//if (vCounter % 2 != 0) return;
 
 	for (int i = 0; i < 360; i += 6)
 	{
-		SBullet Bullet;
-		Bullet.x = x;
-		Bullet.y = y;
-		Bullet.bulletType = 1;
-		Bullet.movePattern = 1;
-		Bullet.angle = (i + vCounter) * PI / 180;
-		Bullet.speed = 5.0;
-		CBarrageManager::getInstance()->addBullet(Bullet);
+		CBullet* pBullet = new CBullet;
+		pBullet->_Position.x = x;
+		pBullet->_Position.y = y;
+		pBullet->_BulletType = 1;
+		pBullet->_MoveFunc = CMovePattern::movePattern001;
+		pBullet->_Angle = (i + vCounter) * PI / 180;
+		pBullet->_Speed = 5.0;
+		CBarrageManager::getInstance()->addBullet(pBullet);
 	}
 }

@@ -1,8 +1,7 @@
 #pragma once
 
-#define BARRAGE_PATTHERN_001 0
-
-namespace barrage_pattern
+class CBarragePattern
 {
-	void barragePattern001(int x, int y, int vCounter);
-}
+public:
+	static void barragePattern001(int x, int y, int vCounter);
+};

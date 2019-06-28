@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include <list>
 #include "math.h"
 
 namespace DxEngine
@@ -21,10 +21,10 @@ namespace DxEngine
 		float getLocalZ() const { return _LocalZ; }
 
 		void addChild(CNode* vNode, float vLocalZ = 0.0f) { _ASSERT(vNode); vNode->setLocalZ(vLocalZ); _Childs.emplace_back(vNode); }
-		void destroyChilds() { for (auto pChild : _Childs) delete pChild; }
+		void removeChild(CNode* vNode, bool vDestroyChild = true);
+		void removeAllChilds(bool vDestroyChilds = true);
 
 		uint32_t getNumChilds() const { return _Childs.size(); }
-		CNode* getChildAt(uint32_t vIndex) { _ASSERT(vIndex < _Childs.size()); return _Childs[vIndex]; }
 
 		uint32_t getCounter() const { return _Counter; }
 
@@ -32,7 +32,7 @@ namespace DxEngine
 		vec2f _Position;
 		float _LocalZ = 0.0;
 
-		std::vector<CNode*> _Childs;
+		std::list<CNode*> _Childs;
 
 		uint32_t _Counter = 0;
 	};

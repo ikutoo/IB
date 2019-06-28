@@ -9,7 +9,4 @@ public:
 	~CGameoverScene();
 
 	virtual void updateV(double vDeltaTime) override;
-
-private:
-	SLabel m_TitleLabel;
 };
