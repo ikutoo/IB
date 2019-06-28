@@ -22,7 +22,7 @@ void CLevelScene::updateV(double vDeltaTime)
 {
 	CScene::updateV(vDeltaTime);
 
-	if (DxLib::CheckHitKey(KEY_INPUT_Z)) CEngine::getInstance()->setActiveScene(new CGameScene);
+	if (GET_KEY_STATE(KEY_INPUT_Z) == 1) CEngine::getInstance()->setActiveScene(new CGameScene);
 	else if (DxLib::CheckHitKey(KEY_INPUT_X)) CEngine::getInstance()->setActiveScene(new CTitleScene);
 }
 

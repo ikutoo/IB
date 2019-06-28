@@ -11,7 +11,7 @@ int CEngine::run()
 {
 	if (!__init()) return EXIT_FAILURE;
 
-	while (0 == DxLib::ProcessMessage())
+	while (0 == DxLib::ProcessMessage() && !m_IsMainLoopDone)
 	{
 		__update();
 		__render();
@@ -86,7 +86,7 @@ void CEngine::__render()
 void CEngine::__destroy()
 {
 	m_pActiveScene->destroyV();
-
+	SAFE_DELETE(m_pActiveScene);
 	CHECK_RESULT(DxLib::DxLib_End());
 }
 

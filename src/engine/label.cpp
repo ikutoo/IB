@@ -5,15 +5,16 @@
 
 using namespace DxEngine;
 
-DxEngine::CImageLabel::CImageLabel(const char* vImageFile)
+DxEngine::CImageLabel::CImageLabel(const std::string& vImageFile) : m_ImageFile(vImageFile)
 {
-	m_ImageHandle = CResourceManager::getInstance()->getImageHandle(vImageFile);
+	m_ImageHandle = CResourceManager::getInstance()->loadImage(vImageFile);
 	_ASSERT(m_ImageHandle != -1);
 	CHECK_RESULT(DxLib::GetGraphSize(m_ImageHandle, &m_Size.x, &m_Size.y));
 }
 
 DxEngine::CImageLabel::~CImageLabel()
 {
+	CResourceManager::getInstance()->deleteImage(m_ImageFile);
 }
 
 //*********************************************************************

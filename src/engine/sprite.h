@@ -8,11 +8,12 @@ namespace DxEngine
 	{
 	public:
 		CSprite(const std::string& vImageFile);
-		virtual ~CSprite() = default;
+		virtual ~CSprite();
 
 		void drawV() override;
 
 	private:
 		int m_ImageHandle = -1;
+		std::string m_ImageFile = {};
 	};
 }

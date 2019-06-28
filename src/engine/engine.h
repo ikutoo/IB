@@ -23,6 +23,8 @@ namespace DxEngine
 
 		void displayStatus(bool vValue) { m_DisplayStatus = vValue; }
 
+		void end() { m_IsMainLoopDone = true; }
+
 	private:
 		CEngine() = default;
 		~CEngine() = default;
@@ -34,6 +36,7 @@ namespace DxEngine
 		std::vector<std::function<void()>> m_InitFuncs;
 		std::vector<std::function<void()>> m_UpdateFuncs;
 
+		bool	m_IsMainLoopDone = false;
 		bool	m_DisplayStatus = false;
 		int		m_TimeCounter = 0;
 		float	m_FPS = 0.0;

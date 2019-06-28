@@ -5,10 +5,15 @@
 
 using namespace DxEngine;
 
-CSprite::CSprite(const std::string& vImageFile)
+CSprite::CSprite(const std::string& vImageFile) : m_ImageFile(vImageFile)
 {
 	m_ImageHandle = CResourceManager::getInstance()->loadImage(vImageFile);
 	_ASSERTE(m_ImageHandle != -1);
+}
+
+CSprite::~CSprite()
+{
+	CResourceManager::getInstance()->deleteImage(m_ImageFile);
 }
 
 //*********************************************************************

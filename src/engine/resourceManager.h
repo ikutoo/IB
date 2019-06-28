@@ -6,6 +6,12 @@
 
 namespace DxEngine
 {
+	struct SResDesc
+	{
+		int ResHandle = -1;
+		int RefCount = 0;
+	};
+
 	class CResourceManager
 	{
 	public:
@@ -14,14 +20,14 @@ namespace DxEngine
 		void addFileSearchPath(const std::string& vPath) { m_FileSearchPathSet.insert(vPath); }
 
 		int loadImage(const std::string& vImageFile);
-		int getImageHandle(const std::string& vImageFile) const { return m_ImageFile2HandleMap.at(vImageFile); }
+		void deleteImage(const std::string& vImageFile);
 
 	private:
-		CResourceManager() = default;
-		~CResourceManager() = default;
+		CResourceManager();
+		~CResourceManager();
 
 		std::set<std::string> m_FileSearchPathSet;
 
-		std::map<std::string, int> m_ImageFile2HandleMap;
+		std::map<std::string, SResDesc> m_ImageResMap;
 	};
 }
