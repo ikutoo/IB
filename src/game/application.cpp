@@ -11,7 +11,6 @@ void preInit()
 	CHECK_RESULT(DxLib::ChangeWindowMode(true));
 	CHECK_RESULT(DxLib::SetGraphMode(WIDTH, HEIGHT, 32));
 	CHECK_RESULT(DxLib::SetWindowText("SOB - Lost Doll"));
-	CHECK_RESULT(DxLib::SetBackgroundColor(50, 50, 50));
 }
 
 void init()

@@ -12,6 +12,6 @@ namespace DxEngine
 
 		virtual bool initV() { return true; }
 		virtual void updateV(double vDeltaTime) override { CNode::updateV(vDeltaTime); }
-		virtual void destroyV() {}
+		virtual void destroyV() { this->removeAllChilds(); }
 	};
 }

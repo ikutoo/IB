@@ -16,6 +16,8 @@ bool CTitleScene::initV()
 {
 	if (!CScene::initV()) return false;
 
+	CHECK_RESULT(DxLib::SetBackgroundColor(50, 50, 50));
+
 	auto pBgLabel = new CImageLabel(LOCATE_IMAGE("bg_01.png"));
 	pBgLabel->setPosition(1100, 150);
 	this->addChild(pBgLabel);
@@ -56,25 +58,25 @@ void CTitleScene::updateV(double vDeltaTime)
 	m_pFlagLabel->setPosition(m_pFlagLabel->getPosition().x, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y + 10);
 
 	bool IndexChanged = false;
-	if (1 == GET_KEY_STATE(KEY_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }
-	else if (1 == GET_KEY_STATE(KEY_INPUT_UP)) { m_SelectedLabelIndex--; IndexChanged = true; }
+	if (CHECK_HIT_KEY(KEY_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }
+	else if (CHECK_HIT_KEY(KEY_INPUT_UP)) { m_SelectedLabelIndex--; IndexChanged = true; }
 
 	if (IndexChanged) CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_SOUND("se_select_01.mp3"), DX_PLAYTYPE_BACK));
 
 	if (m_SelectedLabelIndex < 0) m_SelectedLabelIndex = m_MenuLabels.size() - 1;
 	else if (m_SelectedLabelIndex >= m_MenuLabels.size()) m_SelectedLabelIndex = 0;
 
-	if (DxLib::CheckHitKey(KEY_INPUT_Z) || DxLib::CheckHitKey(KEY_INPUT_RETURN))
+	if (CHECK_HIT_KEY(KEY_INPUT_Z) || CHECK_HIT_KEY(KEY_INPUT_RETURN))
 	{
 		switch (m_SelectedLabelIndex)
 		{
-		case 0: //开始游戏
+		case 0:
 			CEngine::getInstance()->setActiveScene(new CLevelScene);
 			break;
-		case 1: //操作说明
+		case 1:
 			CEngine::getInstance()->setActiveScene(new CHelpScene);
 			break;
-		case 2: //退出游戏
+		case 2:
 			CEngine::getInstance()->end();
 			break;
 		default:
@@ -91,8 +93,6 @@ void CTitleScene::updateV(double vDeltaTime)
 void CTitleScene::destroyV()
 {
 	CHECK_RESULT(DxLib::StopMusic());
-
-	this->removeAllChilds();
 
 	CScene::destroyV();
 }
