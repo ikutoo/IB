@@ -77,7 +77,8 @@ void CLevelScene::updateV(double vDeltaTime)
 void CLevelScene::drawV()
 {
 	CScene::drawV();
-	CHECK_RESULT(DxLib::DrawLine(WIDTH*0.382, 20, WIDTH*0.382, HEIGHT - 20, 0xffffff, 3));
+	CHECK_RESULT(DxLib::DrawLine(100, 100, WIDTH - 100, 100, 0x666666, 10));
+	CHECK_RESULT(DxLib::DrawLine(WIDTH*0.382, 100, WIDTH*0.382, HEIGHT, 0x666666, 6));
 }
 
 //*********************************************************************
