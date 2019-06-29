@@ -27,11 +27,11 @@ bool CTitleScene::initV()
 	this->addChild(pTitleLabel);
 
 	auto pPlayLabel = new CImageLabel(LOCATE_IMAGE("play.png"));
-	pPlayLabel->setPosition((WIDTH - pPlayLabel->getSize().x) / 2, 600);
+	pPlayLabel->setPosition((WIDTH - pPlayLabel->getSize().x) / 2 - 40, 600);
 	m_MenuLabels.emplace_back(pPlayLabel);
 
 	auto pHelpLabel = new CImageLabel(LOCATE_IMAGE("help.png"));
-	pHelpLabel->setPosition((WIDTH - pHelpLabel->getSize().x) / 2, 700);
+	pHelpLabel->setPosition((WIDTH - pHelpLabel->getSize().x) / 2 - 20, 700);
 	m_MenuLabels.emplace_back(pHelpLabel);
 
 	auto pExitLabel = new CImageLabel(LOCATE_IMAGE("exit.png"));
@@ -41,7 +41,6 @@ bool CTitleScene::initV()
 	for (auto pLabel : m_MenuLabels) this->addChild(pLabel);
 
 	m_pFlagLabel = new CImageLabel(LOCATE_IMAGE("flag.png"));
-	m_pFlagLabel->setPosition(750, m_MenuLabels[0]->getPosition().y);
 	this->addChild(m_pFlagLabel);
 
 	CHECK_RESULT(DxLib::PlayMusic(LOCATE_SOUND("bgm_01.mp3"), DX_PLAYTYPE_BACK));
@@ -55,7 +54,7 @@ void CTitleScene::updateV(double vDeltaTime)
 {
 	CScene::updateV(vDeltaTime);
 
-	m_pFlagLabel->setPosition(m_pFlagLabel->getPosition().x, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y + 10);
+	m_pFlagLabel->setPosition(m_MenuLabels[m_SelectedLabelIndex]->getPosition().x - 100, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y + 10);
 
 	bool IndexChanged = false;
 	if (CHECK_HIT_KEY(KEY_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }

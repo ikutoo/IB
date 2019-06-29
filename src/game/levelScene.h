@@ -1,8 +1,14 @@
 #pragma once
 #include <vector>
 #include "engine/scene.h"
-#include "engine/label.h"
 #include "common.h"
+
+namespace DxEngine
+{
+	class CImageLabel;
+	class CTextLabel;
+	class CSprite;
+}
 
 class CLevelScene : public  DxEngine::CScene
 {
@@ -15,9 +21,15 @@ public:
 private:
 	std::vector<DxEngine::CTextLabel*> m_MenuLabels;
 	DxEngine::CImageLabel* m_pFlagLabel = nullptr;
+
 	DxEngine::CImageLabel* m_pImageLabel = nullptr;
+	DxEngine::CTextLabel* m_pDescLabel = nullptr;
+
+	DxEngine::CSprite* m_pDoll = nullptr;
 
 	int m_SelectedLabelIndex = 0;
+	float m_DollSpeed = 0.1;
 
 	void __updateSelectedLabel();
+	void __updateDollPosition(double vDeltaTime);
 };

@@ -8,8 +8,15 @@ using namespace DxEngine;
 
 void preInit()
 {
+	int ScreenWidth = GetSystemMetrics(SM_CXSCREEN);
+	int ScreenHeight = GetSystemMetrics(SM_CYSCREEN);
+	int WindowWidth = ScreenWidth * 0.8;
+	int WindowHeight = WindowWidth * 9.0 / 16.0;
+
 	CHECK_RESULT(DxLib::ChangeWindowMode(true));
 	CHECK_RESULT(DxLib::SetGraphMode(WIDTH, HEIGHT, 32));
+	CHECK_RESULT(DxLib::SetWindowPosition((ScreenWidth - WindowWidth) / 2, (ScreenHeight - WindowHeight) / 2));
+	CHECK_RESULT(DxLib::SetWindowSize(WindowWidth, WindowHeight));
 	CHECK_RESULT(DxLib::SetWindowText("SOB - Lost Doll"));
 }
 

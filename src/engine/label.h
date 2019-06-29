@@ -25,7 +25,7 @@ namespace DxEngine
 	class CTextLabel : public CNode
 	{
 	public:
-		CTextLabel(const std::string& vText, int vFontSize = 20, int vFontType = 0, int vFontColor = 0xffffff, int vEdgeColor = 0xffffff);
+		CTextLabel(const std::string& vText = "", int vFontSize = 20, int vFontType = 0, int vFontColor = 0xffffff, int vEdgeColor = 0xffffff);
 		~CTextLabel() = default;
 
 		void setText(const std::string& vText) { m_Text = vText; }
