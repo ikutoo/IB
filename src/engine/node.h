@@ -17,6 +17,10 @@ namespace DxEngine
 		void setPosition(float vPosX, float vPosY) { _Position.x = vPosX; _Position.y = vPosY; }
 		void setLocalZ(float vLocalZ) { _LocalZ = vLocalZ; }
 
+		void setScale(float vScaleX, float vScaleY) { _Scale.x = vScaleX; _Scale.y = vScaleY; }
+
+		void setColor(vec3i vColor) { _Color = vColor; }
+
 		const vec2f& getPosition() const { return _Position; }
 		float getLocalZ() const { return _LocalZ; }
 
@@ -29,7 +33,11 @@ namespace DxEngine
 		uint32_t getCounter() const { return _Counter; }
 
 	protected:
-		vec2f _Position;
+		vec2f _Position = { 0.0, 0.0 };
+		vec2f _Scale = { 1.0, 1.0 };
+		float _Rotation = 0.0;
+
+		vec3i _Color = { 255, 255, 255 };
 		float _LocalZ = 0.0;
 
 		std::list<CNode*> _Childs;

@@ -12,7 +12,9 @@ using namespace DxEngine;
 namespace
 {
 	const int MENU_FONT_COLOE_NORMAL = 0x222222;
+	const int MENU_FONT_EDGE_COLOE_NORMAL = 0x000000;
 	const int MENU_FONT_COLOR_SELECTED = 0xffffff;
+	const int MENU_FONT_EDGE_COLOR_SELECTED = 0xffee55;
 
 	const std::vector<std::vector<std::string>> LEVEL_DESC =
 	{
@@ -37,7 +39,7 @@ bool CLevelScene::initV()
 
 	for (int i = 0; i < 7; ++i)
 	{
-		auto pLabel = new CTextLabel(LEVEL_DESC[i][0], 32, DX_FONTTYPE_ANTIALIASING_4X4, MENU_FONT_COLOE_NORMAL);
+		auto pLabel = new CTextLabel(LEVEL_DESC[i][0], 32, DX_FONTTYPE_ANTIALIASING_EDGE, MENU_FONT_COLOE_NORMAL, MENU_FONT_EDGE_COLOE_NORMAL);
 		pLabel->setPosition(200, 200 + i * 100);
 
 		m_MenuLabels.emplace_back(pLabel);
@@ -48,17 +50,19 @@ bool CLevelScene::initV()
 	m_pFlagLabel->setPosition(100, m_MenuLabels[0]->getPosition().y - 10);
 	this->addChild(m_pFlagLabel);
 
-	m_pImageLabel = new CImageLabel(LOCATE_IMAGE("alice.png"));
-	m_pImageLabel->setSize(450, 600);
+	m_pImageLabel = new CImageLabel(LOCATE_IMAGE("alice_01.png"));
 	m_pImageLabel->setPosition(WIDTH - m_pImageLabel->getSize().x, HEIGHT - m_pImageLabel->getSize().y);
+	m_pImageLabel->setColor(vec3i{ 200, 200, 200 });
 	this->addChild(m_pImageLabel);
 
-	m_pDescLabel = new CTextLabel;
+	m_pDescLabel = new CTextLabel("", 20, DX_FONTTYPE_NORMAL, GetColor(228, 231, 152), 0, 10);
 	m_pDescLabel->setPosition(800, 200);
 	this->addChild(m_pDescLabel);
 
 	m_pDoll = new CSprite(LOCATE_IMAGE("shanghai.png"));
 	m_pDoll->setPosition(-50, 0);
+	m_pDoll->setScale(0.6, 0.6);
+	m_pDoll->setColor(vec3i{ 150, 150, 150 });
 	this->addChild(m_pDoll);
 
 	return true;
@@ -92,8 +96,8 @@ void CLevelScene::drawV()
 {
 	CScene::drawV();
 	int TopY = 128;
-	CHECK_RESULT(DxLib::DrawLine(100, TopY, WIDTH - 100, TopY, 0x666666, 10));
-	CHECK_RESULT(DxLib::DrawLine(WIDTH*0.382, TopY, WIDTH*0.382, HEIGHT - 50, 0x666666, 6));
+	CHECK_RESULT(DxLib::SetDrawBright(255, 255, 255));
+	CHECK_RESULT(DxLib::DrawBox(WIDTH*0.382, TopY, WIDTH*0.382 + 6, HEIGHT - 50, 0xffee55, FALSE));
 }
 
 //*********************************************************************
@@ -119,9 +123,15 @@ void CLevelScene::__updateSelectedLabel()
 	for (int i = 0; i < m_MenuLabels.size(); ++i)
 	{
 		if (i == m_SelectedLabelIndex)
+		{
 			m_MenuLabels[i]->setFontColor(MENU_FONT_COLOR_SELECTED);
+			m_MenuLabels[i]->setEdgeColor(MENU_FONT_EDGE_COLOR_SELECTED);
+		}
 		else
+		{
 			m_MenuLabels[i]->setFontColor(MENU_FONT_COLOE_NORMAL);
+			m_MenuLabels[i]->setEdgeColor(MENU_FONT_EDGE_COLOE_NORMAL);
+		}
 	}
 
 	m_pFlagLabel->setPosition(m_pFlagLabel->getPosition().x, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y - 10);

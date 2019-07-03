@@ -21,6 +21,11 @@ namespace DxEngine
 
 		bool setActiveScene(CScene* vScene);
 
+		void setWindowSize(int vWidth, int vHeight);
+		void setGraphSize(int vWidth, int vHeight);
+
+		vec2i getGraphSize() const { return m_GraphSize; }
+
 		void displayStatus(bool vValue) { m_DisplayStatus = vValue; }
 
 		void end() { m_IsMainLoopDone = true; }
@@ -35,6 +40,9 @@ namespace DxEngine
 		std::vector<std::function<void()>> m_PreInitFuncs;
 		std::vector<std::function<void()>> m_InitFuncs;
 		std::vector<std::function<void()>> m_UpdateFuncs;
+
+		vec2i m_WindowSize = {};
+		vec2i m_GraphSize = {};
 
 		bool	m_IsMainLoopDone = false;
 		bool	m_DisplayStatus = false;

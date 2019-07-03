@@ -21,8 +21,9 @@ CSprite::~CSprite()
 //FUNCTION:
 void CSprite::drawV()
 {
-	auto& DrawGraph = m_IsFliped ? DxLib::DrawTurnGraph : DxLib::DrawGraph;
-	CHECK_RESULT(DrawGraph(_Position.x, _Position.y, m_ImageHandle, TRUE));
+	DxLib::SetDrawBright(_Color.x, _Color.y, _Color.z);
+	CHECK_RESULT(DxLib::DrawRotaGraphFast3(_Position.x, _Position.y, m_Anchor.x, m_Anchor.y, _Scale.x, _Scale.y, _Rotation, m_ImageHandle, TRUE, m_IsFliped));
+	CNode::drawV();
 }
 
 ////*********************************************************************

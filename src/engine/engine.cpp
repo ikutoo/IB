@@ -101,3 +101,21 @@ void CEngine::__drawStatus()
 	sprintf(Buf, " FPS: %6.1f \n", m_FPS);
 	CHECK_RESULT(DxLib::DrawString(10, 10, Buf, Color));
 }
+
+//*********************************************************************
+//FUNCTION:
+void CEngine::setWindowSize(int vWidth, int vHeight)
+{
+	m_WindowSize.x = vWidth;
+	m_WindowSize.y = vHeight;
+	CHECK_RESULT(DxLib::SetWindowSize(vWidth, vHeight));
+}
+
+//*********************************************************************
+//FUNCTION:
+void CEngine::setGraphSize(int vWidth, int vHeight)
+{
+	m_GraphSize.x = vWidth;
+	m_GraphSize.y = vHeight;
+	CHECK_RESULT(DxLib::SetGraphMode(vWidth, vHeight, 32));
+}

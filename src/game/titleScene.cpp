@@ -10,32 +10,43 @@
 
 using namespace DxEngine;
 
+namespace
+{
+	const vec3i MENU_COLOR_NORMAL = { 50, 50, 50 };
+	const vec3i MENU_COLOR_SELECTED = { 255, 255, 255 };
+}
+
 //*********************************************************************
 //FUNCTION:
 bool CTitleScene::initV()
 {
 	if (!CScene::initV()) return false;
 
-	CHECK_RESULT(DxLib::SetBackgroundColor(50, 50, 50));
+	CHECK_RESULT(DxLib::SetBackgroundColor(0, 0, 0));
+	CHECK_RESULT(DxLib::ChangeFont("simkai"));
 
 	auto pBgLabel = new CImageLabel(LOCATE_IMAGE("bg_01.png"));
-	pBgLabel->setPosition(1100, 150);
+	pBgLabel->setPosition(1100, 100);
+	pBgLabel->setSize(800, 1200);
+	pBgLabel->setColor(vec3i{ 22, 22, 22 });
 	this->addChild(pBgLabel);
+
+	__initPartices();
 
 	auto pTitleLabel = new CImageLabel(LOCATE_IMAGE("title.png"));
 	pTitleLabel->setPosition((WIDTH - pTitleLabel->getSize().x) / 2, 100);
 	this->addChild(pTitleLabel);
 
-	auto pPlayLabel = new CImageLabel(LOCATE_IMAGE("play.png"));
-	pPlayLabel->setPosition((WIDTH - pPlayLabel->getSize().x) / 2 - 40, 600);
+	auto pPlayLabel = new CTextLabel("开始游戏", 50, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, 0xffffff, 0xffff00);
+	pPlayLabel->setPosition(800, 600);
 	m_MenuLabels.emplace_back(pPlayLabel);
 
-	auto pHelpLabel = new CImageLabel(LOCATE_IMAGE("help.png"));
-	pHelpLabel->setPosition((WIDTH - pHelpLabel->getSize().x) / 2 - 20, 700);
+	auto pHelpLabel = new CTextLabel("操作说明", 50, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, 0xffffff, 0xffff00);
+	pHelpLabel->setPosition(800, 700);
 	m_MenuLabels.emplace_back(pHelpLabel);
 
-	auto pExitLabel = new CImageLabel(LOCATE_IMAGE("exit.png"));
-	pExitLabel->setPosition((WIDTH - pExitLabel->getSize().x) / 2, 800);
+	auto pExitLabel = new CTextLabel("退出游戏", 50, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, 0xffffff, 0xffff00);
+	pExitLabel->setPosition(800, 800);
 	m_MenuLabels.emplace_back(pExitLabel);
 
 	for (auto pLabel : m_MenuLabels) this->addChild(pLabel);
@@ -54,7 +65,9 @@ void CTitleScene::updateV(double vDeltaTime)
 {
 	CScene::updateV(vDeltaTime);
 
-	m_pFlagLabel->setPosition(m_MenuLabels[m_SelectedLabelIndex]->getPosition().x - 100, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y + 10);
+	__updateParticles();
+
+	m_pFlagLabel->setPosition(m_MenuLabels[m_SelectedLabelIndex]->getPosition().x - 100, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y);
 
 	bool IndexChanged = false;
 	if (CHECK_HIT_KEY(KEY_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }
@@ -64,6 +77,14 @@ void CTitleScene::updateV(double vDeltaTime)
 
 	if (m_SelectedLabelIndex < 0) m_SelectedLabelIndex = m_MenuLabels.size() - 1;
 	else if (m_SelectedLabelIndex >= m_MenuLabels.size()) m_SelectedLabelIndex = 0;
+
+	for (int i = 0; i < m_MenuLabels.size(); ++i)
+	{
+		if (i == m_SelectedLabelIndex)
+			m_MenuLabels[i]->setColor(MENU_COLOR_SELECTED);
+		else
+			m_MenuLabels[i]->setColor(MENU_COLOR_NORMAL);
+	}
 
 	if (CHECK_HIT_KEY(KEY_INPUT_Z) || CHECK_HIT_KEY(KEY_INPUT_RETURN))
 	{
@@ -94,4 +115,41 @@ void CTitleScene::destroyV()
 	CHECK_RESULT(DxLib::StopMusic());
 
 	CScene::destroyV();
+}
+
+//*********************************************************************
+//FUNCTION:
+void CTitleScene::__initPartices()
+{
+	for (int i = 0; i < 400; ++i)
+	{
+		CSprite* pParticle = new CSprite(LOCATE_IMAGE("bullet01.png"));
+		pParticle->setScale(0.3 + 0.3 * randf(), 0.3 + 0.3 * randf());
+		pParticle->setColor(vec3i{ 100 + rand() % 50, 100 + rand() % 50, 0 });
+		float PosX = rand() % WIDTH;
+		float PosY = rand() % HEIGHT + HEIGHT;
+		pParticle->setPosition(vec2f{ PosX, PosY });
+
+		float SpeedX = -0.2 + 0.4 * randf();
+		float SpeedY = -0.3 - 0.2 * randf();
+
+		m_Particles.emplace_back(SParticle{ pParticle, SpeedX, SpeedY });
+		this->addChild(pParticle);
+	}
+}
+
+//*********************************************************************
+//FUNCTION:
+void CTitleScene::__updateParticles()
+{
+	for (auto pParticle : m_Particles)
+	{
+		if (_Counter % 100 == 0) pParticle.SpeedX = -0.2 + 0.4 * randf();
+		float PosX = pParticle.pSprite->getPosition().x + pParticle.SpeedX;
+		float PosY = pParticle.pSprite->getPosition().y + pParticle.SpeedY;
+
+		if (PosY < 0) { PosX = rand() % WIDTH; PosY = HEIGHT; };
+
+		pParticle.pSprite->setPosition(PosX, PosY);
+	}
 }

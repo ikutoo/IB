@@ -2,6 +2,7 @@
 #include <DXLib/DxLib.h>
 #include "common.h"
 #include "resourceManager.h"
+#include "engine.h"
 
 using namespace DxEngine;
 
@@ -25,6 +26,7 @@ DxEngine::CImageLabel::~CImageLabel()
 //FUNCTION:
 void DxEngine::CImageLabel::drawV()
 {
+	DxLib::SetDrawBright(_Color.x, _Color.y, _Color.z);
 	CHECK_RESULT(DxLib::DrawExtendGraph(_Position.x, _Position.y, _Position.x + m_Size.x, _Position.y + m_Size.y, m_ImageHandle, TRUE));
 	CNode::drawV();
 }
@@ -42,17 +44,41 @@ void DxEngine::CImageLabel::setImageFile(const std::string& vImageFile)
 
 //*********************************************************************
 //FUNCTION:
-DxEngine::CTextLabel::CTextLabel(const std::string& vText, int vFontSize, int vFontType, int vFontColor, int vEdgeColor)
-	: m_Text(vText), m_FontSize(vFontSize), m_FontType(vFontType), m_FontColor(vFontColor), m_EdgeColor(vEdgeColor)
+DxEngine::CTextLabel::CTextLabel(const std::string& vText, int vFontSize, int vFontType, int vFontColor, int vEdgeColor, int vFontThickness)
+	: m_Text(vText), m_FontSize(vFontSize), m_FontType(vFontType), m_FontColor(vFontColor), m_EdgeColor(vEdgeColor), m_FontThickness(vFontThickness)
 {
+	auto GraphSize = CEngine::getInstance()->getGraphSize();
+	m_TextGraphHandle = DxLib::MakeScreen(GraphSize.x, GraphSize.y, TRUE);
+	_ASSERTE(m_TextGraphHandle != -1);
+}
+
+//*********************************************************************
+//FUNCTION:
+CTextLabel::~CTextLabel()
+{
+	CHECK_RESULT(DxLib::DeleteGraph(m_TextGraphHandle));
 }
 
 //*********************************************************************
 //FUNCTION:
 void DxEngine::CTextLabel::drawV()
 {
-	DxLib::SetFontSize(m_FontSize);
-	DxLib::ChangeFontType(m_FontType);
-	DxLib::DrawString(_Position.x, _Position.y, m_Text.c_str(), m_FontColor, m_EdgeColor);
+	if (m_IsChanged)
+	{
+		CHECK_RESULT(DxLib::SetDrawBright(_Color.x, _Color.y, _Color.z));
+		CHECK_RESULT(DxLib::SetFontSize(m_FontSize));
+		CHECK_RESULT(DxLib::SetFontThickness(m_FontThickness));
+		CHECK_RESULT(DxLib::ChangeFontType(m_FontType));
+
+		CHECK_RESULT(DxLib::SetDrawScreen(m_TextGraphHandle));
+		CHECK_RESULT(DxLib::ClearDrawScreen());
+		DxLib::DrawString(_Position.x, _Position.y, m_Text.c_str(), m_FontColor, m_EdgeColor);
+		CHECK_RESULT(DxLib::SetDrawScreen(DX_SCREEN_BACK));
+	}
+
+	DxLib::DrawGraph(0, 0, m_TextGraphHandle, TRUE);
+
 	CNode::drawV();
+
+	m_IsChanged = false;
 }
