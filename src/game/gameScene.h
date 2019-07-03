@@ -16,6 +16,7 @@ public:
 	virtual bool initV() override;
 	virtual void updateV(double vDeltaTime) override;
 	virtual void destroyV() override;
+	virtual void drawV() override;
 
 private:
 	void __updateBarrage();

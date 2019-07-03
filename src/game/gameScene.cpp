@@ -18,6 +18,8 @@ bool CGameScene::initV()
 {
 	if (!CScene::initV()) return false;
 
+	CHECK_RESULT(DxLib::SetBackgroundColor(255, 255, 255));
+
 	CBarrageManager::getInstance()->init(this);
 
 	return true;
@@ -53,4 +55,16 @@ void CGameScene::__updateBarrage()
 		pBarrage->setLiveTime(3000);
 		CBarrageManager::getInstance()->startBarrage(pBarrage);
 	}
+}
+
+//***********************************************************************************************
+//FUNCTION:
+void CGameScene::drawV()
+{
+	int BoxSize = 1000;
+	int x = (WIDTH - BoxSize) / 2;
+	int y = (HEIGHT - BoxSize) / 2;
+	DxLib::DrawBox(x, y, x + BoxSize, y + BoxSize, 0x000000, TRUE);
+
+	CScene::drawV();
 }
