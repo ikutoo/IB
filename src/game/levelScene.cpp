@@ -7,6 +7,7 @@
 #include "levelScene.h"
 #include "titleScene.h"
 #include "gameScene.h"
+#include "transparentWindow.h"
 
 using namespace DxEngine;
 
@@ -38,33 +39,10 @@ bool CLevelScene::initV()
 	CHECK_RESULT(DxLib::SetBackgroundColor(0, 0, 0));
 	CHECK_RESULT(DxLib::ChangeFont("simkai"));
 
-	for (int i = 0; i < 7; ++i)
-	{
-		auto pLabel = new CTextLabel(LEVEL_DESC[i][0], 32, DX_FONTTYPE_ANTIALIASING_EDGE, MENU_FONT_COLOE_NORMAL, MENU_FONT_EDGE_COLOE_NORMAL);
-		pLabel->setPosition(200, 200 + i * 100);
+	__initUI();
 
-		m_MenuLabels.emplace_back(pLabel);
-		this->addChild(pLabel);
-	}
-
-	m_pFlagLabel = new CImageLabel("flag.png");
-	m_pFlagLabel->setPosition(100, m_MenuLabels[0]->getPosition().y - 10);
-	this->addChild(m_pFlagLabel);
-
-	m_pImageLabel = new CImageLabel("alice_01.png");
-	m_pImageLabel->setPosition(GRAPH_SIZE_X - m_pImageLabel->getSize().x, GRAPH_SIZE_Y - m_pImageLabel->getSize().y);
-	m_pImageLabel->setColor(vec3i{ 200, 200, 200 });
-	this->addChild(m_pImageLabel);
-
-	m_pDescLabel = new CTextLabel("", 20, DX_FONTTYPE_NORMAL, GetColor(228, 231, 152), 0, 10);
-	m_pDescLabel->setPosition(800, 200);
-	this->addChild(m_pDescLabel);
-
-	m_pDoll = new CSprite("shanghai.png");
-	m_pDoll->setPosition(-50, 0);
-	m_pDoll->setScale(0.6, 0.6);
-	m_pDoll->setColor(vec3i{ 150, 150, 150 });
-	this->addChild(m_pDoll);
+	m_pWindow = new CTransparentWindow;
+	SetActiveWindow(DxLib::GetMainWindowHandle());
 
 	return true;
 }
@@ -105,7 +83,44 @@ void CLevelScene::drawV()
 //FUNCTION:
 void CLevelScene::destroyV()
 {
+	SAFE_DELETE(m_pWindow);
+	SetActiveWindow(DxLib::GetMainWindowHandle());
 	CScene::destroyV();
+}
+
+//*********************************************************************
+//FUNCTION:
+bool CLevelScene::__initUI()
+{
+	for (int i = 0; i < 7; ++i)
+	{
+		auto pLabel = new CTextLabel(LEVEL_DESC[i][0], 32, DX_FONTTYPE_ANTIALIASING_EDGE, MENU_FONT_COLOE_NORMAL, MENU_FONT_EDGE_COLOE_NORMAL);
+		pLabel->setPosition(200, 200 + i * 100);
+
+		m_MenuLabels.emplace_back(pLabel);
+		this->addChild(pLabel);
+	}
+
+	m_pFlagLabel = new CImageLabel("flag.png");
+	m_pFlagLabel->setPosition(100, m_MenuLabels[0]->getPosition().y - 10);
+	this->addChild(m_pFlagLabel);
+
+	m_pImageLabel = new CImageLabel("alice_01.png");
+	m_pImageLabel->setPosition(GRAPH_SIZE_X - m_pImageLabel->getSize().x, GRAPH_SIZE_Y - m_pImageLabel->getSize().y);
+	m_pImageLabel->setColor(vec3i{ 200, 200, 200 });
+	this->addChild(m_pImageLabel);
+
+	m_pDescLabel = new CTextLabel("", 20, DX_FONTTYPE_NORMAL, GetColor(228, 231, 152), 0, 10);
+	m_pDescLabel->setPosition(800, 200);
+	this->addChild(m_pDescLabel);
+
+	m_pDoll = new CSprite("shanghai.png");
+	m_pDoll->setPosition(-50, 0);
+	m_pDoll->setScale(0.6, 0.6);
+	m_pDoll->setColor(vec3i{ 150, 150, 150 });
+	this->addChild(m_pDoll);
+
+	return true;
 }
 
 //*********************************************************************

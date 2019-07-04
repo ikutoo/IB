@@ -29,6 +29,7 @@ namespace DxEngine
 		vec2i getGraphSize() const { return m_GraphSize; }
 
 		void displayStatus(bool vValue) { m_DisplayStatus = vValue; }
+		void updateStatus(const std::string& vDesc, float vValue) { m_AppStatusMap[vDesc] = vValue; }
 
 		void end() { m_IsMainLoopDone = true; }
 
@@ -44,6 +45,8 @@ namespace DxEngine
 
 		vec2i m_GraphSize = {};
 		SDisplayInfo m_DisplayInfo = {};
+
+		std::map<std::string, float> m_AppStatusMap;
 
 		bool	m_IsInitialized = false;
 		bool	m_IsMainLoopDone = false;

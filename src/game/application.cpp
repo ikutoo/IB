@@ -3,6 +3,7 @@
 #include "engine/resourceManager.h"
 #include "barrageManager.h"
 #include "titleScene.h"
+#include "transparentWindow.h"
 
 using namespace DxEngine;
 
@@ -26,6 +27,7 @@ void init()
 void update()
 {
 	CBarrageManager::getInstance()->update();
+	CEngine::getInstance()->updateStatus("Bullets Num", CBarrageManager::getInstance()->getNumBullets());
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)

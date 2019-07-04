@@ -10,6 +10,8 @@ namespace DxEngine
 	class CSprite;
 }
 
+class CTransparentWindow;
+
 class CLevelScene : public  DxEngine::CScene
 {
 public:
@@ -27,8 +29,12 @@ private:
 
 	DxEngine::CSprite* m_pDoll = nullptr;
 
+	CTransparentWindow* m_pWindow = nullptr;
+
 	int m_SelectedLabelIndex = 0;
 	float m_DollSpeed = 0.1;
+
+	bool __initUI();
 
 	void __updateSelectedLabel();
 	void __updateDollPosition(double vDeltaTime);

@@ -1,4 +1,5 @@
 #include "engine.h"
+#include <chrono>
 #include <DXLib/DxLib.h>
 #include "inputManager.h"
 #include "scene.h"
@@ -69,8 +70,9 @@ void CEngine::__update()
 	m_FPS = 1000.0f / DeltaTime;
 	m_TimeCounter = GetNowCount();
 
-	m_pActiveScene->updateV(DeltaTime);
+	updateStatus("FPS", m_FPS);
 
+	m_pActiveScene->updateV(DeltaTime);
 	for (auto UpdateFunc : m_UpdateFuncs) UpdateFunc();
 }
 
@@ -99,12 +101,17 @@ void CEngine::__destroy()
 //FUNCTION:
 void CEngine::__drawStatus()
 {
-	CHECK_RESULT(DxLib::SetFontSize(20));
-
-	char Buf[0xff];
 	unsigned int Color = 0x00ff00;
-	sprintf(Buf, " FPS: %6.1f \n", m_FPS);
-	CHECK_RESULT(DxLib::DrawString(10, 10, Buf, Color));
+	CHECK_RESULT(DxLib::SetFontSize(20));
+	int y = 10;
+
+	for (auto & iter : m_AppStatusMap)
+	{
+		char Buf[0xff];
+		sprintf(Buf, " %s: %6.1f \n", iter.first.c_str(), iter.second);
+		CHECK_RESULT(DxLib::DrawString(10, y, Buf, Color));
+		y += 20;
+	}
 }
 
 //***********************************************************************************************

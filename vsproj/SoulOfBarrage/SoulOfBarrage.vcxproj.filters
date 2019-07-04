@@ -15,6 +15,9 @@
     <Filter Include="Source Files\scenes">
       <UniqueIdentifier>{1caa4866-9d7c-4e74-b93e-24666b85ec73}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\window">
+      <UniqueIdentifier>{3039cd1a-9418-4d4f-8e1d-4d03b886dfa6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\game\application.cpp">
@@ -52,6 +55,9 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\transparentWindow.cpp">
+      <Filter>Source Files\window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +99,9 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\transparentWindow.h">
+      <Filter>Source Files\window</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
