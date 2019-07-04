@@ -41,7 +41,7 @@ bool CLevelScene::initV()
 
 	__initUI();
 
-	m_pWindow = new CTransparentWindow;
+	m_pTransWindow = new CTransparentWindow;
 	SetActiveWindow(DxLib::GetMainWindowHandle());
 
 	return true;
@@ -53,7 +53,8 @@ void CLevelScene::updateV(double vDeltaTime)
 {
 	CScene::updateV(vDeltaTime);
 
-	__updateDollPosition(vDeltaTime);
+	if (_Counter % 5 == 0) m_pTransWindow->update(vDeltaTime);
+
 	__updateSelectedLabel();
 
 	m_pDescLabel->setText(LEVEL_DESC[m_SelectedLabelIndex][1]);
@@ -83,7 +84,7 @@ void CLevelScene::drawV()
 //FUNCTION:
 void CLevelScene::destroyV()
 {
-	SAFE_DELETE(m_pWindow);
+	SAFE_DELETE(m_pTransWindow);
 	SetActiveWindow(DxLib::GetMainWindowHandle());
 	CScene::destroyV();
 }
@@ -113,12 +114,6 @@ bool CLevelScene::__initUI()
 	m_pDescLabel = new CTextLabel("", 20, DX_FONTTYPE_NORMAL, GetColor(228, 231, 152), 0, 10);
 	m_pDescLabel->setPosition(800, 200);
 	this->addChild(m_pDescLabel);
-
-	m_pDoll = new CSprite("shanghai.png");
-	m_pDoll->setPosition(-50, 0);
-	m_pDoll->setScale(0.6, 0.6);
-	m_pDoll->setColor(vec3i{ 150, 150, 150 });
-	this->addChild(m_pDoll);
 
 	return true;
 }
@@ -151,17 +146,4 @@ void CLevelScene::__updateSelectedLabel()
 	}
 
 	m_pFlagLabel->setPosition(m_pFlagLabel->getPosition().x, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y - 10);
-}
-
-//***********************************************************************************************
-//FUNCTION:
-void CLevelScene::__updateDollPosition(double vDeltaTime)
-{
-	int MinX = -100 - m_pDoll->getSize().x;
-	int MaxX = GRAPH_SIZE_X + 100;
-
-	int PosX = m_pDoll->getPosition().x;
-	if (PosX > MaxX || PosX < MinX) { m_DollSpeed *= -1; m_pDoll->flip(); }
-
-	m_pDoll->setPosition(PosX + m_DollSpeed * vDeltaTime, m_pDoll->getPosition().y);
 }

@@ -10,6 +10,8 @@
 
 #define CHECK_RESULT(call) if (0 != call) _ASSERTE(false);
 
+#define LOCATE_FILE(file) (CResourceManager::getInstance()->locateFile(file)).c_str()
+
 namespace DxEngine
 {
 	struct SDisplayInfo

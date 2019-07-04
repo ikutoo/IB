@@ -1,15 +1,23 @@
 #include "stdafx.h"
 #include <objidl.h>
 #include <gdiplus.h>
+#include "engine/resourceManager.h"
 #include "transparentWindow.h"
+#include "common.h"
 
 #pragma comment (lib,"Gdiplus.lib")
+
+const WCHAR* DOLL_IMAGE_PATH = L"../../res/images/shanghai.png";
+
+vec2f CTransparentWindow::m_DollPos = {};
+Gdiplus::Image* CTransparentWindow::m_pDollImage = nullptr;
 
 //*********************************************************************
 //FUNCTION:
 CTransparentWindow::CTransparentWindow(HINSTANCE hInstance)
 {
 	__createWindow(hInstance);
+	m_DollPos = { -200, 100 };
 }
 
 //*********************************************************************
@@ -21,22 +29,32 @@ CTransparentWindow::~CTransparentWindow()
 
 //*********************************************************************
 //FUNCTION:
-void __onPaint(HDC hdc)
+void CTransparentWindow::update(double vDeltaTime)
 {
-	Gdiplus::Graphics graphics(hdc);
-	Gdiplus::SolidBrush brush(Gdiplus::Color(255, 0, 255, 0));
-	Gdiplus::SolidBrush brush2(Gdiplus::Color(255, 255, 255, 0));
+	const float MoveSpeed = 0.15;
+	m_DollPos.x += vDeltaTime * MoveSpeed;
 
-	Gdiplus::Rect rect;
-	graphics.GetVisibleClipBounds(&rect);
-
-	graphics.FillRectangle(&brush, rect);
-	graphics.FillRectangle(&brush2, 100, 100, 200, 200);
+	RedrawWindow(m_hWnd, nullptr, nullptr, RDW_INVALIDATE | RDW_INTERNALPAINT);
 }
 
 //*********************************************************************
 //FUNCTION:
-LRESULT CALLBACK __windowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+void CTransparentWindow::__onPaint(HDC hdc)
+{
+	if (!m_pDollImage) m_pDollImage = new Gdiplus::Image(DOLL_IMAGE_PATH);
+
+	Gdiplus::Graphics graphics(hdc);
+	Gdiplus::SolidBrush brush(Gdiplus::Color(255, 0, 0, 0));
+
+	Gdiplus::Rect rect;
+	graphics.GetVisibleClipBounds(&rect);
+	graphics.FillRectangle(&brush, rect);
+	graphics.DrawImage(m_pDollImage, m_DollPos.x, m_DollPos.y);
+}
+
+//*********************************************************************
+//FUNCTION:
+LRESULT CALLBACK CTransparentWindow::__windowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	HDC          hdc;
 	PAINTSTRUCT  ps;
@@ -61,7 +79,7 @@ LRESULT CALLBACK __windowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 void CTransparentWindow::__createWindow(HINSTANCE hInstance)
 {
 	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
-	Gdiplus::GdiplusStartup(&m_gdiplusToken, &gdiplusStartupInput, nullptr);
+	Gdiplus::GdiplusStartup(&m_GdiToken, &gdiplusStartupInput, nullptr);
 
 	WNDCLASSEX wc;
 	ZeroMemory(&wc, sizeof(WNDCLASSEX));
@@ -78,17 +96,17 @@ void CTransparentWindow::__createWindow(HINSTANCE hInstance)
 		wc.lpszClassName,    // name of the window class
 		nullptr,
 		WS_POPUP | WS_CHILD,    // window style
-		100,    // x-position
-		100,    // y-position
-		3240,    // width
-		1240,    // height
+		0,    // x-position
+		0,    // y-position
+		GetSystemMetrics(SM_CXSCREEN),    // width
+		GetSystemMetrics(SM_CYSCREEN),    // height
 		DxLib::GetMainWindowHandle(),
 		nullptr,
 		hInstance,
 		nullptr);
 
 	SetWindowLong(m_hWnd, GWL_EXSTYLE, GetWindowLong(m_hWnd, GWL_EXSTYLE) | WS_EX_LAYERED);
-	::SetLayeredWindowAttributes(m_hWnd, RGB(0, 255, 0), 100, LWA_COLORKEY);
+	::SetLayeredWindowAttributes(m_hWnd, RGB(0, 0, 0), 100, LWA_COLORKEY);
 
 	ShowWindow(m_hWnd, 10); //TODO
 }
@@ -97,6 +115,7 @@ void CTransparentWindow::__createWindow(HINSTANCE hInstance)
 //FUNCTION:
 void CTransparentWindow::__destroyWindow()
 {
-	Gdiplus::GdiplusShutdown(m_gdiplusToken);
+	SAFE_DELETE(m_pDollImage);
+	Gdiplus::GdiplusShutdown(m_GdiToken);
 	DestroyWindow(m_hWnd);
 }
