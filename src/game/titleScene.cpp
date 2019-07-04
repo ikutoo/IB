@@ -7,6 +7,7 @@
 #include "engine/utility.h"
 #include "engine/inputManager.h"
 #include "engine/engine.h"
+#include "engine/resourceManager.h"
 
 using namespace DxEngine;
 
@@ -25,16 +26,16 @@ bool CTitleScene::initV()
 	CHECK_RESULT(DxLib::SetBackgroundColor(0, 0, 0));
 	CHECK_RESULT(DxLib::ChangeFont("simkai"));
 
-	auto pBgLabel = new CImageLabel(LOCATE_IMAGE("bg_01.png"));
+	auto pBgLabel = new CImageLabel("bg_01.png");
 	pBgLabel->setPosition(1100, 100);
 	pBgLabel->setSize(800, 1200);
-	pBgLabel->setColor(vec3i{ 22, 22, 22 });
+	pBgLabel->setColor(vec3i{ 50, 50, 50 });
 	this->addChild(pBgLabel);
 
 	__initPartices();
 
-	auto pTitleLabel = new CImageLabel(LOCATE_IMAGE("title.png"));
-	pTitleLabel->setPosition((WIDTH - pTitleLabel->getSize().x) / 2, 100);
+	auto pTitleLabel = new CImageLabel("title.png");
+	pTitleLabel->setPosition((GRAPH_SIZE_X - pTitleLabel->getSize().x) / 2, 100);
 	this->addChild(pTitleLabel);
 
 	auto pPlayLabel = new CTextLabel("¿ªÊ¼ÓÎÏ·", 50, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, 0xffffff, 0xffff00);
@@ -51,10 +52,10 @@ bool CTitleScene::initV()
 
 	for (auto pLabel : m_MenuLabels) this->addChild(pLabel);
 
-	m_pFlagLabel = new CImageLabel(LOCATE_IMAGE("flag.png"));
+	m_pFlagLabel = new CImageLabel("flag.png");
 	this->addChild(m_pFlagLabel);
 
-	CHECK_RESULT(DxLib::PlayMusic(LOCATE_SOUND("bgm_01.mp3"), DX_PLAYTYPE_BACK));
+	CHECK_RESULT(DxLib::PlayMusic(LOCATE_FILE("bgm_01.mp3"), DX_PLAYTYPE_BACK));
 
 	return true;
 }
@@ -73,7 +74,7 @@ void CTitleScene::updateV(double vDeltaTime)
 	if (CHECK_HIT_KEY(KEY_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }
 	else if (CHECK_HIT_KEY(KEY_INPUT_UP)) { m_SelectedLabelIndex--; IndexChanged = true; }
 
-	if (IndexChanged) CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_SOUND("se_select_01.mp3"), DX_PLAYTYPE_BACK));
+	if (IndexChanged) CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_select_01.mp3"), DX_PLAYTYPE_BACK));
 
 	if (m_SelectedLabelIndex < 0) m_SelectedLabelIndex = m_MenuLabels.size() - 1;
 	else if (m_SelectedLabelIndex >= m_MenuLabels.size()) m_SelectedLabelIndex = 0;
@@ -104,7 +105,7 @@ void CTitleScene::updateV(double vDeltaTime)
 			break;
 		}
 
-		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_SOUND("se_ok_01.mp3"), DX_PLAYTYPE_BACK));
+		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_ok_01.mp3"), DX_PLAYTYPE_BACK));
 	}
 }
 
@@ -123,11 +124,11 @@ void CTitleScene::__initPartices()
 {
 	for (int i = 0; i < 400; ++i)
 	{
-		CSprite* pParticle = new CSprite(LOCATE_IMAGE("bullet01.png"));
+		CSprite* pParticle = new CSprite("bullet01.png");
 		pParticle->setScale(0.3 + 0.3 * randf(), 0.3 + 0.3 * randf());
 		pParticle->setColor(vec3i{ 100 + rand() % 50, 100 + rand() % 50, 0 });
-		float PosX = rand() % WIDTH;
-		float PosY = rand() % HEIGHT + HEIGHT;
+		float PosX = rand() % GRAPH_SIZE_X;
+		float PosY = rand() % GRAPH_SIZE_Y + GRAPH_SIZE_Y;
 		pParticle->setPosition(vec2f{ PosX, PosY });
 
 		float SpeedX = -0.2 + 0.4 * randf();
@@ -148,7 +149,7 @@ void CTitleScene::__updateParticles()
 		float PosX = pParticle.pSprite->getPosition().x + pParticle.SpeedX;
 		float PosY = pParticle.pSprite->getPosition().y + pParticle.SpeedY;
 
-		if (PosY < 0) { PosX = rand() % WIDTH; PosY = HEIGHT; };
+		if (PosY < 0) { PosX = rand() % GRAPH_SIZE_X; PosY = GRAPH_SIZE_Y; };
 
 		pParticle.pSprite->setPosition(PosX, PosY);
 	}

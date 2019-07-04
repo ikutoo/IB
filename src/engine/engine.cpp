@@ -35,6 +35,8 @@ bool CEngine::setActiveScene(CScene* vScene)
 	}
 
 	m_pActiveScene = vScene;
+
+	if (!m_IsInitialized) return true;
 	if (!m_pActiveScene->initV()) return false;
 
 	return true;
@@ -44,14 +46,17 @@ bool CEngine::setActiveScene(CScene* vScene)
 //FUNCTION:
 bool CEngine::__init()
 {
-	for (auto PreInitFunc : m_PreInitFuncs) PreInitFunc();
+	for (auto InitFunc : m_InitFuncs) InitFunc();
+
+	__initWindowInfo();
 
 	CHECK_RESULT(DxLib::DxLib_Init());
 	CHECK_RESULT(DxLib::SetDrawScreen(DX_SCREEN_BACK));
 
-	for (auto InitFunc : m_InitFuncs) InitFunc();
+	if (!m_pActiveScene->initV()) return false;
 
-	return true;
+	m_IsInitialized = true;
+	return m_IsInitialized;
 }
 
 //***********************************************************************************************
@@ -102,20 +107,20 @@ void CEngine::__drawStatus()
 	CHECK_RESULT(DxLib::DrawString(10, 10, Buf, Color));
 }
 
-//*********************************************************************
+//***********************************************************************************************
 //FUNCTION:
-void CEngine::setWindowSize(int vWidth, int vHeight)
+bool CEngine::__initWindowInfo()
 {
-	m_WindowSize.x = vWidth;
-	m_WindowSize.y = vHeight;
-	CHECK_RESULT(DxLib::SetWindowSize(vWidth, vHeight));
-}
+	CHECK_RESULT(DxLib::SetWindowSize(m_DisplayInfo.WindowSize.x, m_DisplayInfo.WindowSize.y));
+	CHECK_RESULT(DxLib::SetGraphMode(m_GraphSize.x, m_GraphSize.y, 32));
 
-//*********************************************************************
-//FUNCTION:
-void CEngine::setGraphSize(int vWidth, int vHeight)
-{
-	m_GraphSize.x = vWidth;
-	m_GraphSize.y = vHeight;
-	CHECK_RESULT(DxLib::SetGraphMode(vWidth, vHeight, 32));
+	m_DisplayInfo.ScreenSize = { GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN) };
+	m_DisplayInfo.WindowPosition.x = (m_DisplayInfo.ScreenSize.x - m_DisplayInfo.WindowSize.x) / 2;
+	m_DisplayInfo.WindowPosition.y = (m_DisplayInfo.ScreenSize.y - m_DisplayInfo.WindowSize.y) / 2;
+
+	CHECK_RESULT(DxLib::ChangeWindowMode(!m_DisplayInfo.IsFullscreen));
+	CHECK_RESULT(DxLib::SetWindowPosition(m_DisplayInfo.WindowPosition.x, m_DisplayInfo.WindowPosition.y));
+	CHECK_RESULT(DxLib::SetWindowText(m_DisplayInfo.WindowTitle.c_str()));
+
+	return true;
 }

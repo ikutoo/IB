@@ -1,4 +1,5 @@
 #include "resourceManager.h"
+#include <filesystem>
 #include <DXLib/DxLib.h>
 
 using namespace DxEngine;
@@ -23,7 +24,7 @@ int CResourceManager::loadImage(const std::string& vImageFile)
 	}
 	else
 	{
-		auto ImageHandle = DxLib::LoadGraph(vImageFile.c_str());
+		auto ImageHandle = DxLib::LoadGraph(locateFile(vImageFile.c_str()).c_str());
 		_ASSERTE(ImageHandle != -1);
 		m_ImageResMap[vImageFile] = SResDesc{ ImageHandle, 1 };
 		return ImageHandle;
@@ -44,4 +45,17 @@ void DxEngine::CResourceManager::deleteImage(const std::string& vImageFile)
 		CHECK_RESULT(DxLib::DeleteGraph(m_ImageResMap[vImageFile].ResHandle));
 		m_ImageResMap.erase(vImageFile);
 	}
+}
+
+//***********************************************************************************************
+//FUNCTION:
+std::string DxEngine::CResourceManager::locateFile(const std::string& vFileName)
+{
+	for (auto& SearchPath : m_FileSearchPathSet)
+	{
+		auto FullPath = SearchPath + "/" + vFileName;
+		if (std::filesystem::exists(FullPath)) return FullPath;
+	}
+
+	return "";
 }

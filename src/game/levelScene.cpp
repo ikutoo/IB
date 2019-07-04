@@ -3,6 +3,7 @@
 #include "engine/inputManager.h"
 #include "engine/label.h"
 #include "engine/sprite.h"
+#include "engine/resourceManager.h"
 #include "levelScene.h"
 #include "titleScene.h"
 #include "gameScene.h"
@@ -46,12 +47,12 @@ bool CLevelScene::initV()
 		this->addChild(pLabel);
 	}
 
-	m_pFlagLabel = new CImageLabel(LOCATE_IMAGE("flag.png"));
+	m_pFlagLabel = new CImageLabel("flag.png");
 	m_pFlagLabel->setPosition(100, m_MenuLabels[0]->getPosition().y - 10);
 	this->addChild(m_pFlagLabel);
 
-	m_pImageLabel = new CImageLabel(LOCATE_IMAGE("alice_01.png"));
-	m_pImageLabel->setPosition(WIDTH - m_pImageLabel->getSize().x, HEIGHT - m_pImageLabel->getSize().y);
+	m_pImageLabel = new CImageLabel("alice_01.png");
+	m_pImageLabel->setPosition(GRAPH_SIZE_X - m_pImageLabel->getSize().x, GRAPH_SIZE_Y - m_pImageLabel->getSize().y);
 	m_pImageLabel->setColor(vec3i{ 200, 200, 200 });
 	this->addChild(m_pImageLabel);
 
@@ -59,7 +60,7 @@ bool CLevelScene::initV()
 	m_pDescLabel->setPosition(800, 200);
 	this->addChild(m_pDescLabel);
 
-	m_pDoll = new CSprite(LOCATE_IMAGE("shanghai.png"));
+	m_pDoll = new CSprite("shanghai.png");
 	m_pDoll->setPosition(-50, 0);
 	m_pDoll->setScale(0.6, 0.6);
 	m_pDoll->setColor(vec3i{ 150, 150, 150 });
@@ -82,7 +83,7 @@ void CLevelScene::updateV(double vDeltaTime)
 	if (CHECK_HIT_KEY(KEY_INPUT_Z) || CHECK_HIT_KEY(KEY_INPUT_RETURN))
 	{
 		CEngine::getInstance()->setActiveScene(new CGameScene);
-		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_SOUND("se_ok_01.mp3"), DX_PLAYTYPE_BACK));
+		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_ok_01.mp3"), DX_PLAYTYPE_BACK));
 	}
 	else if (CHECK_HIT_KEY(KEY_INPUT_X))
 	{
@@ -97,7 +98,7 @@ void CLevelScene::drawV()
 	CScene::drawV();
 	int TopY = 128;
 	CHECK_RESULT(DxLib::SetDrawBright(255, 255, 255));
-	CHECK_RESULT(DxLib::DrawBox(WIDTH*0.382, TopY, WIDTH*0.382 + 6, HEIGHT - 50, 0xffee55, FALSE));
+	CHECK_RESULT(DxLib::DrawBox(GRAPH_SIZE_X*0.382, TopY, GRAPH_SIZE_X*0.382 + 6, GRAPH_SIZE_Y - 50, 0xffee55, FALSE));
 }
 
 //*********************************************************************
@@ -115,7 +116,7 @@ void CLevelScene::__updateSelectedLabel()
 	if (CHECK_HIT_KEY(KEY_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }
 	else if (CHECK_HIT_KEY(KEY_INPUT_UP)) { m_SelectedLabelIndex--; IndexChanged = true; }
 
-	if (IndexChanged) CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_SOUND("se_select_01.mp3"), DX_PLAYTYPE_BACK));
+	if (IndexChanged) CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_select_01.mp3"), DX_PLAYTYPE_BACK));
 
 	if (m_SelectedLabelIndex < 0) m_SelectedLabelIndex = m_MenuLabels.size() - 1;
 	else if (m_SelectedLabelIndex >= m_MenuLabels.size()) m_SelectedLabelIndex = 0;
@@ -142,7 +143,7 @@ void CLevelScene::__updateSelectedLabel()
 void CLevelScene::__updateDollPosition(double vDeltaTime)
 {
 	int MinX = -100 - m_pDoll->getSize().x;
-	int MaxX = WIDTH + 100;
+	int MaxX = GRAPH_SIZE_X + 100;
 
 	int PosX = m_pDoll->getPosition().x;
 	if (PosX > MaxX || PosX < MinX) { m_DollSpeed *= -1; m_pDoll->flip(); }

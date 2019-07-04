@@ -9,3 +9,15 @@
 #define SAFE_DELETE(p) if (p) { delete p; p = nullptr;}
 
 #define CHECK_RESULT(call) if (0 != call) _ASSERTE(false);
+
+namespace DxEngine
+{
+	struct SDisplayInfo
+	{
+		vec2i WindowSize = {};
+		vec2i WindowPosition = {};
+		vec2i ScreenSize = {};
+		std::string WindowTitle = "";
+		bool IsFullscreen = false;
+	};
+}

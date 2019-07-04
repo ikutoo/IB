@@ -13,7 +13,7 @@ void CBarragePattern::barragePattern001(float x, float y, int vCounter)
 
 	for (int i = 0; i < 360; i += 6)
 	{
-		CBullet* pBullet = new CBullet(LOCATE_IMAGE("bullet01.png"));
+		CBullet* pBullet = new CBullet("bullet01.png");
 		pBullet->_Position.x = x;
 		pBullet->_Position.y = y;
 		pBullet->_MoveFunc = CMovePattern::movePattern001;

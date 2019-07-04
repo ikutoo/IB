@@ -51,7 +51,7 @@ void CGameScene::__updateBarrage()
 	if (m_Counter == 100)
 	{
 		CBarrage* pBarrage = new CBarrage(CBarragePattern::barragePattern001);
-		pBarrage->setPosition(WIDTH / 2, HEIGHT / 2);
+		pBarrage->setPosition(GRAPH_SIZE_X / 2, GRAPH_SIZE_Y / 2);
 		pBarrage->setLiveTime(3000);
 		CBarrageManager::getInstance()->startBarrage(pBarrage);
 	}
@@ -62,8 +62,8 @@ void CGameScene::__updateBarrage()
 void CGameScene::drawV()
 {
 	int BoxSize = 1000;
-	int x = (WIDTH - BoxSize) / 2;
-	int y = (HEIGHT - BoxSize) / 2;
+	int x = (GRAPH_SIZE_X - BoxSize) / 2;
+	int y = (GRAPH_SIZE_Y - BoxSize) / 2;
 	DxLib::DrawBox(x, y, x + BoxSize, y + BoxSize, 0x000000, TRUE);
 
 	CScene::drawV();

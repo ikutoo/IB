@@ -70,6 +70,6 @@ void CBarrageManager::destroy()
 //FUNCTION:
 bool CBarrageManager::__isBulletDead(const CBullet* vBullet) const
 {
-	if (intersects(vBullet->_Position, rectf{ -100, -100, WIDTH + 100, HEIGHT + 100 })) return false;
+	if (intersects(vBullet->_Position, rectf{ -100, -100, GRAPH_SIZE_X + 100, GRAPH_SIZE_Y + 100 })) return false;
 	return true;
 }

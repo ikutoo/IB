@@ -22,6 +22,8 @@ namespace DxEngine
 		int loadImage(const std::string& vImageFile);
 		void deleteImage(const std::string& vImageFile);
 
+		std::string locateFile(const std::string& vFileName);
+
 	private:
 		CResourceManager();
 		~CResourceManager();
