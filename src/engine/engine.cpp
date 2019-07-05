@@ -1,5 +1,6 @@
 #include "engine.h"
 #include <chrono>
+#include <thread>
 #include <DXLib/DxLib.h>
 #include "inputManager.h"
 #include "scene.h"
@@ -12,10 +13,17 @@ int CEngine::run()
 {
 	if (!__init()) return EXIT_FAILURE;
 
+	CCPUTimer Timer;
 	while (0 == DxLib::ProcessMessage() && !m_IsMainLoopDone)
 	{
+		Timer.start();
+
 		__update();
 		__render();
+
+		while (1000.0 / m_ExpectedFPS - Timer.getTimestamp() > 0.0) {};
+
+		Timer.stop();
 	}
 
 	__destroy();
@@ -56,9 +64,10 @@ bool CEngine::__init()
 
 	if (!m_pActiveScene->initV()) return false;
 
-	m_IsInitialized = true;
-
 	m_Timer.start();
+
+	m_IsInitialized = true;
+	DxLib::LogFileAdd("Success to initialize DxEngine.\n");
 
 	return m_IsInitialized;
 }
@@ -96,6 +105,8 @@ void CEngine::__destroy()
 	m_pActiveScene->destroyV();
 	SAFE_DELETE(m_pActiveScene);
 	CHECK_RESULT(DxLib::DxLib_End());
+
+	DxLib::LogFileAdd("Success to destroy DxEngine.\n");
 }
 
 //*********************************************************************

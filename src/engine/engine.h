@@ -27,6 +27,8 @@ namespace DxEngine
 
 		void setGraphSize(int vWidth, int vHeight) { _ASSERTE(!m_IsInitialized); m_GraphSize = { vWidth, vHeight }; }
 
+		void setExpectedFPS(float vExpectedFPS) { m_ExpectedFPS = vExpectedFPS; }
+
 		vec2i getGraphSize() const { return m_GraphSize; }
 
 		void displayStatus(bool vValue) { m_DisplayStatus = vValue; }
