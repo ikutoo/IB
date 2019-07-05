@@ -22,12 +22,11 @@ private:
 
 	ULONG_PTR m_GdiToken = {};
 
-	static Gdiplus::Image* m_pDollImage;
-	static vec2f m_DollPos;
+	Gdiplus::Image* m_pDollImage = nullptr;
+	vec2f m_DollPos = {};
+	float m_DollSpeed = 0.05f;
 
-	void __createWindow(HINSTANCE hInstance = NULL);
-	void __destroyWindow();
+	HWND __createWindow(HINSTANCE hInstance = NULL);
 
-	static void __onPaint(HWND hWnd, HDC hdc);
-	static LRESULT CALLBACK __windowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	void __onPaint(HWND hWnd, HDC hdc);
 };

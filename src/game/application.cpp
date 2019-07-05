@@ -3,7 +3,6 @@
 #include "engine/resourceManager.h"
 #include "barrageManager.h"
 #include "titleScene.h"
-#include "transparentWindow.h"
 
 using namespace DxEngine;
 
@@ -23,6 +22,7 @@ void init()
 	CEngine::getInstance()->setActiveScene(new CTitleScene);
 	CEngine::getInstance()->setDisplayStatusHint();
 	CEngine::getInstance()->setShowConsoleHint();
+	CEngine::getInstance()->setExpectedFPS(100);
 }
 
 void update()

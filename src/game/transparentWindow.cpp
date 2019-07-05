@@ -8,33 +8,43 @@
 #pragma comment (lib,"Gdiplus.lib")
 
 const WCHAR* DOLL_IMAGE_PATH = L"../../res/images/shanghai.png";
-
-vec2f CTransparentWindow::m_DollPos = {};
-Gdiplus::Image* CTransparentWindow::m_pDollImage = nullptr;
+const float HIDDEN_DISTANCE = 400.0;
 
 //*********************************************************************
 //FUNCTION:
 CTransparentWindow::CTransparentWindow(HINSTANCE hInstance)
 {
-	__createWindow(hInstance);
-	m_DollPos = { -200, 100 };
+	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
+	Gdiplus::GdiplusStartup(&m_GdiToken, &gdiplusStartupInput, nullptr);
+
+	m_hWnd = __createWindow(hInstance);
 	m_DC = GetDC(m_hWnd);
+	m_pDollImage = new Gdiplus::Image(DOLL_IMAGE_PATH);
+	m_DollPos = { -HIDDEN_DISTANCE, 0 };
 }
 
 //*********************************************************************
 //FUNCTION:
 CTransparentWindow::~CTransparentWindow()
 {
-	__destroyWindow();
+	SAFE_DELETE(m_pDollImage);
+	Gdiplus::GdiplusShutdown(m_GdiToken);
+	DestroyWindow(m_hWnd);
 }
 
 //*********************************************************************
 //FUNCTION:
 void CTransparentWindow::update(double vDeltaTime)
 {
-	//TODO: Ð§ÂÊµÍ
-	const float MoveSpeed = 0.05;
-	m_DollPos.x += vDeltaTime * MoveSpeed;
+	m_DollPos.x += vDeltaTime * m_DollSpeed;
+
+	int ScreenWidth = GetSystemMetrics(SM_CXSCREEN);
+	if (m_DollPos.x < -HIDDEN_DISTANCE || m_DollPos.x > ScreenWidth + HIDDEN_DISTANCE)
+	{
+		m_DollPos.x = m_DollPos.x < -HIDDEN_DISTANCE ? -HIDDEN_DISTANCE : ScreenWidth + HIDDEN_DISTANCE;
+		m_pDollImage->RotateFlip(Gdiplus::RotateFlipType::RotateNoneFlipX);
+		m_DollSpeed = -m_DollSpeed;
+	}
 
 	__onPaint(m_hWnd, m_DC);
 }
@@ -43,11 +53,6 @@ void CTransparentWindow::update(double vDeltaTime)
 //FUNCTION:
 void CTransparentWindow::__onPaint(HWND hWnd, HDC hdc)
 {
-	if (!m_pDollImage)
-	{
-		m_pDollImage = new Gdiplus::Image(DOLL_IMAGE_PATH);
-	}
-
 	RECT rcClient;
 	GetClientRect(hWnd, &rcClient);
 
@@ -71,18 +76,10 @@ void CTransparentWindow::__onPaint(HWND hWnd, HDC hdc)
 
 //*********************************************************************
 //FUNCTION:
-LRESULT CALLBACK CTransparentWindow::__windowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK __windowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
-	case WM_PAINT:
-	{
-		PAINTSTRUCT  ps;
-		HDC hdc = BeginPaint(hWnd, &ps);
-		__onPaint(hWnd, hdc);
-		EndPaint(hWnd, &ps);
-		break;
-	}
 	case WM_DESTROY:
 		DestroyWindow(hWnd);
 		break;
@@ -93,11 +90,8 @@ LRESULT CALLBACK CTransparentWindow::__windowProc(HWND hWnd, UINT message, WPARA
 
 //*********************************************************************
 //FUNCTION:
-void CTransparentWindow::__createWindow(HINSTANCE hInstance)
+HWND CTransparentWindow::__createWindow(HINSTANCE hInstance)
 {
-	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
-	Gdiplus::GdiplusStartup(&m_GdiToken, &gdiplusStartupInput, nullptr);
-
 	WNDCLASSEX wc;
 	ZeroMemory(&wc, sizeof(WNDCLASSEX));
 	wc.cbSize = sizeof(WNDCLASSEX);
@@ -109,30 +103,23 @@ void CTransparentWindow::__createWindow(HINSTANCE hInstance)
 	wc.lpszClassName = "TransparentWindowClass1";
 	RegisterClassEx(&wc);
 
-	m_hWnd = CreateWindowEx(NULL,
+	auto hWnd = CreateWindowEx(NULL,
 		wc.lpszClassName,    // name of the window class
 		nullptr,
 		WS_POPUP | WS_CHILD,    // window style
 		0,    // x-position
-		0,    // y-position
+		100,    // y-position
 		GetSystemMetrics(SM_CXSCREEN),    // width
-		GetSystemMetrics(SM_CYSCREEN),    // height
+		200,    // height
 		DxLib::GetMainWindowHandle(),
 		nullptr,
 		hInstance,
 		nullptr);
 
-	SetWindowLong(m_hWnd, GWL_EXSTYLE, GetWindowLong(m_hWnd, GWL_EXSTYLE) | WS_EX_LAYERED);
-	::SetLayeredWindowAttributes(m_hWnd, RGB(0, 0, 0), 100, LWA_COLORKEY);
+	SetWindowLong(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) | WS_EX_LAYERED);
+	::SetLayeredWindowAttributes(hWnd, RGB(0, 0, 0), 255, LWA_COLORKEY);
 
-	ShowWindow(m_hWnd, 10); //TODO
-}
+	ShowWindow(hWnd, 10); //TODO
 
-//*********************************************************************
-//FUNCTION:
-void CTransparentWindow::__destroyWindow()
-{
-	SAFE_DELETE(m_pDollImage);
-	Gdiplus::GdiplusShutdown(m_GdiToken);
-	DestroyWindow(m_hWnd);
+	return hWnd;
 }
