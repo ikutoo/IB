@@ -1,6 +1,4 @@
 #include "engine.h"
-#include <chrono>
-#include <thread>
 #include <DXLib/DxLib.h>
 #include "inputManager.h"
 #include "scene.h"

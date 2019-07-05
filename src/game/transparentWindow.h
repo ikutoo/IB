@@ -28,6 +28,6 @@ private:
 	void __createWindow(HINSTANCE hInstance = NULL);
 	void __destroyWindow();
 
-	static void __onPaint(HDC hdc);
+	static void __onPaint(HWND hWnd, HDC hdc);
 	static LRESULT CALLBACK __windowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 };

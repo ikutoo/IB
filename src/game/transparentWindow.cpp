@@ -32,25 +32,41 @@ CTransparentWindow::~CTransparentWindow()
 //FUNCTION:
 void CTransparentWindow::update(double vDeltaTime)
 {
-	//TODO: 双缓冲； 效率低
+	//TODO: 效率低
 	const float MoveSpeed = 0.05;
 	m_DollPos.x += vDeltaTime * MoveSpeed;
 
-	__onPaint(m_DC);
+	__onPaint(m_hWnd, m_DC);
 }
 
 //*********************************************************************
 //FUNCTION:
-void CTransparentWindow::__onPaint(HDC hdc)
+void CTransparentWindow::__onPaint(HWND hWnd, HDC hdc)
 {
 	if (!m_pDollImage)
 	{
 		m_pDollImage = new Gdiplus::Image(DOLL_IMAGE_PATH);
 	}
 
-	Gdiplus::Graphics graphics(hdc);
+	RECT rcClient;
+	GetClientRect(hWnd, &rcClient);
+
+	HDC hdcMem = CreateCompatibleDC(hdc);
+	const int nMemDC = SaveDC(hdcMem);
+
+	HBITMAP hBitmap = CreateCompatibleBitmap(hdc, rcClient.right - rcClient.left, rcClient.bottom - rcClient.top);
+	SelectObject(hdcMem, hBitmap);
+
+	Gdiplus::Graphics graphics(hdcMem);
 	graphics.Clear(Gdiplus::Color(255, 0, 0, 0));
 	graphics.DrawImage(m_pDollImage, m_DollPos.x, m_DollPos.y);
+
+	RECT rcClip;
+	GetClipBox(hdc, &rcClip);
+	BitBlt(hdc, rcClip.left, rcClip.top, rcClip.right - rcClip.left, rcClip.bottom - rcClip.top, hdcMem, rcClip.left, rcClip.top, SRCCOPY);
+
+	RestoreDC(hdcMem, nMemDC);
+	DeleteObject(hBitmap);
 }
 
 //*********************************************************************
@@ -63,7 +79,7 @@ LRESULT CALLBACK CTransparentWindow::__windowProc(HWND hWnd, UINT message, WPARA
 	{
 		PAINTSTRUCT  ps;
 		HDC hdc = BeginPaint(hWnd, &ps);
-		__onPaint(hdc);
+		__onPaint(hWnd, hdc);
 		EndPaint(hWnd, &ps);
 		break;
 	}
