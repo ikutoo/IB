@@ -53,7 +53,7 @@ void CLevelScene::updateV(double vDeltaTime)
 {
 	CScene::updateV(vDeltaTime);
 
-	if (_Counter % 2 == 0) m_pTransWindow->update(vDeltaTime);
+	m_pTransWindow->update(vDeltaTime);
 
 	__updateSelectedLabel();
 

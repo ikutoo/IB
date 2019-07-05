@@ -21,7 +21,8 @@ void init()
 	CEngine::getInstance()->setGraphSize(GRAPH_SIZE_X, GRAPH_SIZE_Y);
 
 	CEngine::getInstance()->setActiveScene(new CTitleScene);
-	CEngine::getInstance()->displayStatus(true);
+	CEngine::getInstance()->setDisplayStatusHint();
+	CEngine::getInstance()->setShowConsoleHint();
 }
 
 void update()

@@ -18,6 +18,7 @@ CTransparentWindow::CTransparentWindow(HINSTANCE hInstance)
 {
 	__createWindow(hInstance);
 	m_DollPos = { -200, 100 };
+	m_DC = GetDC(m_hWnd);
 }
 
 //*********************************************************************
@@ -31,24 +32,24 @@ CTransparentWindow::~CTransparentWindow()
 //FUNCTION:
 void CTransparentWindow::update(double vDeltaTime)
 {
-	const float MoveSpeed = 0.15;
+	//TODO: Ë«»º³å£» Ð§ÂÊµÍ
+	const float MoveSpeed = 0.05;
 	m_DollPos.x += vDeltaTime * MoveSpeed;
 
-	RedrawWindow(m_hWnd, nullptr, nullptr, RDW_INVALIDATE | RDW_INTERNALPAINT);
+	__onPaint(m_DC);
 }
 
 //*********************************************************************
 //FUNCTION:
 void CTransparentWindow::__onPaint(HDC hdc)
 {
-	if (!m_pDollImage) m_pDollImage = new Gdiplus::Image(DOLL_IMAGE_PATH);
+	if (!m_pDollImage)
+	{
+		m_pDollImage = new Gdiplus::Image(DOLL_IMAGE_PATH);
+	}
 
 	Gdiplus::Graphics graphics(hdc);
-	Gdiplus::SolidBrush brush(Gdiplus::Color(255, 0, 0, 0));
-
-	Gdiplus::Rect rect;
-	graphics.GetVisibleClipBounds(&rect);
-	graphics.FillRectangle(&brush, rect);
+	graphics.Clear(Gdiplus::Color(255, 0, 0, 0));
 	graphics.DrawImage(m_pDollImage, m_DollPos.x, m_DollPos.y);
 }
 
@@ -56,16 +57,16 @@ void CTransparentWindow::__onPaint(HDC hdc)
 //FUNCTION:
 LRESULT CALLBACK CTransparentWindow::__windowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	HDC          hdc;
-	PAINTSTRUCT  ps;
-
 	switch (message)
 	{
 	case WM_PAINT:
-		hdc = BeginPaint(hWnd, &ps);
+	{
+		PAINTSTRUCT  ps;
+		HDC hdc = BeginPaint(hWnd, &ps);
 		__onPaint(hdc);
 		EndPaint(hWnd, &ps);
 		break;
+	}
 	case WM_DESTROY:
 		DestroyWindow(hWnd);
 		break;

@@ -57,6 +57,7 @@ bool CEngine::__init()
 {
 	for (auto InitFunc : m_InitFuncs) InitFunc();
 
+	__allocConsoleIfNeccessary();
 	__initWindowInfo();
 
 	CHECK_RESULT(DxLib::DxLib_Init());
@@ -91,7 +92,7 @@ void CEngine::__render()
 	CHECK_RESULT(ClearDrawScreen());
 
 	m_pActiveScene->drawV();
-	if (m_DisplayStatus) __drawStatus();
+	if (m_DisplayStatusHint) __drawStatus();
 
 	CHECK_RESULT(DxLib::ScreenFlip());
 }
@@ -107,6 +108,8 @@ void CEngine::__destroy()
 	CHECK_RESULT(DxLib::DxLib_End());
 
 	DxLib::LogFileAdd("Success to destroy DxEngine.\n");
+
+	__freeConsoleIfNecessary();
 }
 
 //*********************************************************************
@@ -157,4 +160,31 @@ double DxEngine::CEngine::__updateFPS()
 	updateStatus("FPS", m_FPS);
 
 	return DeltaTime;
+}
+
+//***********************************************************************************************
+//FUNCTION:
+void DxEngine::CEngine::__allocConsoleIfNeccessary()
+{
+#ifdef _DEBUG
+	if (m_ShowConsoleHint)
+	{
+		AllocConsole();
+		freopen("CONIN$", "r", stdin);
+		freopen("CONOUT$", "w", stdout);
+		freopen("CONOUT$", "w", stderr);
+	}
+#endif
+}
+
+//***********************************************************************************************
+//FUNCTION:
+void DxEngine::CEngine::__freeConsoleIfNecessary()
+{
+#ifdef _DEBUG
+	if (m_ShowConsoleHint)
+	{
+		FreeConsole();
+	}
+#endif
 }

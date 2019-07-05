@@ -98,7 +98,7 @@ void CTitleScene::updateV(double vDeltaTime)
 			CEngine::getInstance()->setActiveScene(new CHelpScene);
 			break;
 		case 2:
-			CEngine::getInstance()->end();
+			CEngine::getInstance()->stop();
 			break;
 		default:
 			_ASSERT(false);

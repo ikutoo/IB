@@ -18,6 +18,7 @@ public:
 
 private:
 	HWND m_hWnd = nullptr;
+	HDC	 m_DC = nullptr;
 
 	ULONG_PTR m_GdiToken = {};
 

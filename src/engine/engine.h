@@ -14,27 +14,24 @@ namespace DxEngine
 	public:
 		SINGLETION(CEngine);
 
-		int run();
+		int		run();
+		void	stop() { m_IsMainLoopDone = true; }
 
 		void registerInitFunc(std::function<void()> vFunc) { _ASSERTE(vFunc); m_InitFuncs.emplace_back(vFunc); }
 		void registerUpdateFunc(std::function<void()> vFunc) { _ASSERTE(vFunc); m_UpdateFuncs.emplace_back(vFunc); }
 
 		bool setActiveScene(CScene* vScene);
-
 		void setWindowSize(int vWidth, int vHeight) { _ASSERTE(!m_IsInitialized); m_DisplayInfo.WindowSize = { vWidth, vHeight }; }
 		void setWindowPosition(int vPosX, int vPosY) { _ASSERTE(!m_IsInitialized); m_DisplayInfo.WindowPosition = { vPosX, vPosY }; }
 		void setWindowTitle(const std::string& vTitle) { _ASSERTE(!m_IsInitialized); m_DisplayInfo.WindowTitle = vTitle; }
-
 		void setGraphSize(int vWidth, int vHeight) { _ASSERTE(!m_IsInitialized); m_GraphSize = { vWidth, vHeight }; }
-
 		void setExpectedFPS(float vExpectedFPS) { m_ExpectedFPS = vExpectedFPS; }
+		void setDisplayStatusHint() { m_DisplayStatusHint = true; }
+		void setShowConsoleHint() { m_ShowConsoleHint = true; }
 
 		vec2i getGraphSize() const { return m_GraphSize; }
 
-		void displayStatus(bool vValue) { m_DisplayStatus = vValue; }
 		void updateStatus(const std::string& vDesc, float vValue) { m_AppStatusMap[vDesc] = vValue; }
-
-		void end() { m_IsMainLoopDone = true; }
 
 	private:
 		CEngine() = default;
@@ -56,7 +53,8 @@ namespace DxEngine
 
 		bool	m_IsInitialized = false;
 		bool	m_IsMainLoopDone = false;
-		bool	m_DisplayStatus = false;
+		bool	m_DisplayStatusHint = false;
+		bool	m_ShowConsoleHint = false;
 		float	m_FPS = 0.0;
 		float	m_ExpectedFPS = 60.0;
 
@@ -69,5 +67,7 @@ namespace DxEngine
 
 		bool __initWindowInfo();
 		double __updateFPS();
+		void __allocConsoleIfNeccessary();
+		void __freeConsoleIfNecessary();
 	};
 }
