@@ -57,6 +57,9 @@ bool CEngine::__init()
 	if (!m_pActiveScene->initV()) return false;
 
 	m_IsInitialized = true;
+
+	m_Timer.start();
+
 	return m_IsInitialized;
 }
 
@@ -66,11 +69,7 @@ void CEngine::__update()
 {
 	CInputManager::getInstance()->update();
 
-	int DeltaTime = GetNowCount() - m_TimeCounter;
-	m_FPS = 1000.0f / DeltaTime;
-	m_TimeCounter = GetNowCount();
-
-	updateStatus("FPS", m_FPS);
+	double DeltaTime = __updateFPS();
 
 	m_pActiveScene->updateV(DeltaTime);
 	for (auto UpdateFunc : m_UpdateFuncs) UpdateFunc();
@@ -92,6 +91,8 @@ void CEngine::__render()
 //FUNCTION:
 void CEngine::__destroy()
 {
+	m_Timer.stop();
+
 	m_pActiveScene->destroyV();
 	SAFE_DELETE(m_pActiveScene);
 	CHECK_RESULT(DxLib::DxLib_End());
@@ -130,4 +131,19 @@ bool CEngine::__initWindowInfo()
 	CHECK_RESULT(DxLib::SetWindowText(m_DisplayInfo.WindowTitle.c_str()));
 
 	return true;
+}
+
+//***********************************************************************************************
+//FUNCTION:
+double DxEngine::CEngine::__updateFPS()
+{
+	double t = m_Timer.getTimestamp();
+	double DeltaTime = t - m_CurrentTime;
+	m_CurrentTime = t;
+
+	m_FPS = 1000.0f / DeltaTime;
+
+	updateStatus("FPS", m_FPS);
+
+	return DeltaTime;
 }

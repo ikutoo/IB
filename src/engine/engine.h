@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include "common.h"
+#include "cpuTimer.h"
 
 namespace DxEngine
 {
@@ -48,18 +49,23 @@ namespace DxEngine
 
 		std::map<std::string, float> m_AppStatusMap;
 
+		CCPUTimer	m_Timer;
+		double		m_CurrentTime = 0.0;
+
 		bool	m_IsInitialized = false;
 		bool	m_IsMainLoopDone = false;
 		bool	m_DisplayStatus = false;
-		int		m_TimeCounter = 0;
 		float	m_FPS = 0.0;
+		float	m_ExpectedFPS = 60.0;
 
 		void __drawStatus();
 
 		bool __init();
-		bool __initWindowInfo();
 		void __update();
 		void __render();
 		void __destroy();
+
+		bool __initWindowInfo();
+		double __updateFPS();
 	};
 }

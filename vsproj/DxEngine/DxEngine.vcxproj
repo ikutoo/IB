@@ -158,6 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\engine\common.h" />
+    <ClInclude Include="..\..\src\engine\cpuTimer.h" />
     <ClInclude Include="..\..\src\engine\engine.h" />
     <ClInclude Include="..\..\src\engine\inputManager.h" />
     <ClInclude Include="..\..\src\engine\label.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="..\..\src\engine\utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\engine\cpuTimer.cpp" />
     <ClCompile Include="..\..\src\engine\engine.cpp" />
     <ClCompile Include="..\..\src\engine\inputManager.cpp" />
     <ClCompile Include="..\..\src\engine\label.cpp" />
