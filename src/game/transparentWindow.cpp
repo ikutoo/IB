@@ -99,18 +99,18 @@ HWND CTransparentWindow::__createWindow(HINSTANCE hInstance)
 	wc.lpfnWndProc = __windowProc;
 	wc.hInstance = hInstance;
 	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
+	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);;
 	wc.lpszClassName = "TransparentWindowClass1";
 	RegisterClassEx(&wc);
 
 	auto hWnd = CreateWindowEx(NULL,
-		wc.lpszClassName,    // name of the window class
+		wc.lpszClassName,
 		nullptr,
-		WS_POPUP | WS_CHILD,    // window style
-		0,    // x-position
-		100,    // y-position
-		GetSystemMetrics(SM_CXSCREEN),    // width
-		200,    // height
+		WS_POPUP | WS_CHILD | WS_EX_NOACTIVATE,
+		0,
+		100,
+		GetSystemMetrics(SM_CXSCREEN),
+		200,
 		DxLib::GetMainWindowHandle(),
 		nullptr,
 		hInstance,
@@ -119,7 +119,7 @@ HWND CTransparentWindow::__createWindow(HINSTANCE hInstance)
 	SetWindowLong(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) | WS_EX_LAYERED);
 	::SetLayeredWindowAttributes(hWnd, RGB(0, 0, 0), 255, LWA_COLORKEY);
 
-	ShowWindow(hWnd, 10); //TODO
+	ShowWindow(hWnd, 10);
 
 	return hWnd;
 }

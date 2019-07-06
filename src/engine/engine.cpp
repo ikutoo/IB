@@ -3,6 +3,8 @@
 #include "inputManager.h"
 #include "scene.h"
 
+#pragma comment (lib, "imm32.lib")
+
 using namespace DxEngine;
 
 //*********************************************************************
@@ -60,6 +62,8 @@ bool CEngine::__init()
 
 	CHECK_RESULT(DxLib::DxLib_Init());
 	CHECK_RESULT(DxLib::SetDrawScreen(DX_SCREEN_BACK));
+
+	if (m_DisableCNInputHint) ImmAssociateContext(DxLib::GetMainWindowHandle(), nullptr);
 
 	if (!m_pActiveScene->initV()) return false;
 

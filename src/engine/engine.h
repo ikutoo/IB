@@ -28,6 +28,7 @@ namespace DxEngine
 		void setExpectedFPS(float vExpectedFPS) { m_ExpectedFPS = vExpectedFPS; }
 		void setDisplayStatusHint() { m_DisplayStatusHint = true; }
 		void setShowConsoleHint() { m_ShowConsoleHint = true; }
+		void setDisableCNInputHint() { m_DisableCNInputHint = true; }
 
 		vec2i getGraphSize() const { return m_GraphSize; }
 
@@ -55,6 +56,7 @@ namespace DxEngine
 		bool	m_IsMainLoopDone = false;
 		bool	m_DisplayStatusHint = false;
 		bool	m_ShowConsoleHint = false;
+		bool	m_DisableCNInputHint = false;
 		float	m_FPS = 0.0;
 		float	m_ExpectedFPS = 60.0;
 

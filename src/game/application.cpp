@@ -22,6 +22,7 @@ void init()
 	CEngine::getInstance()->setActiveScene(new CTitleScene);
 	CEngine::getInstance()->setDisplayStatusHint();
 	CEngine::getInstance()->setShowConsoleHint();
+	CEngine::getInstance()->setDisableCNInputHint();
 	CEngine::getInstance()->setExpectedFPS(100);
 }
 
