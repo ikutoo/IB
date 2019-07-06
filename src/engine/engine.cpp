@@ -118,7 +118,7 @@ void CEngine::__destroy()
 //FUNCTION:
 void CEngine::__drawStatus()
 {
-	unsigned int Color = 0x00ff00;
+	unsigned int Color = 0xffff00;
 	CHECK_RESULT(DxLib::SetFontSize(20));
 	int y = 10;
 

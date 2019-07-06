@@ -1,5 +1,6 @@
-#include <algorithm>
 #include "node.h"
+#include <algorithm>
+#include <DXLib/DxLib.h>
 
 using namespace DxEngine;
 
@@ -7,7 +8,9 @@ using namespace DxEngine;
 //FUNCTION:
 void CNode::drawV()
 {
-	//std::sort(_Childs.begin(), _Childs.end(), [](const CNode* p1, const CNode* p2) { return p1->getLocalZ() < p2->getLocalZ(); });
+	DxLib::SetDrawBright(_BrightnessColor.x, _BrightnessColor.y, _BrightnessColor.z);
+
+	_Childs.sort([](const CNode* l, const CNode* r) {return l->getLocalZ() < r->getLocalZ(); });
 	for (auto pChild : _Childs) pChild->drawV();
 }
 

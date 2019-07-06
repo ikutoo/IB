@@ -34,7 +34,7 @@ namespace DxEngine
 		void setFontColor(int vFontColor) { if (vFontColor != m_FontColor) { m_FontColor = vFontColor; m_IsChanged = true; } }
 		void setEdgeColor(int vEdgeColor) { if (vEdgeColor != m_EdgeColor) { m_EdgeColor = vEdgeColor; m_IsChanged = true; } }
 
-		void setColor(vec3i vColor) { if (_Color != vColor) { CNode::setColor(vColor); m_IsChanged = true; } }
+		void setBrightness(vec3i vColor) { if (_BrightnessColor != vColor) { CNode::setBrightness(vColor); m_IsChanged = true; } }
 
 		void drawV() override;
 

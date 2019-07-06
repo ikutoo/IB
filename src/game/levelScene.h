@@ -17,7 +17,6 @@ class CLevelScene : public  DxEngine::CScene
 public:
 	bool initV() override;
 	void updateV(double vDeltaTime) override;
-	void drawV() override;
 	void destroyV() override;
 
 private:

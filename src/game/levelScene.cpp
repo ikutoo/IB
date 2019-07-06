@@ -4,6 +4,7 @@
 #include "engine/label.h"
 #include "engine/sprite.h"
 #include "engine/resourceManager.h"
+#include "engine/graphics2d.h"
 #include "levelScene.h"
 #include "titleScene.h"
 #include "gameScene.h"
@@ -72,16 +73,6 @@ void CLevelScene::updateV(double vDeltaTime)
 
 //*********************************************************************
 //FUNCTION:
-void CLevelScene::drawV()
-{
-	CScene::drawV();
-	int TopY = 128;
-	CHECK_RESULT(DxLib::SetDrawBright(255, 255, 255));
-	CHECK_RESULT(DxLib::DrawBox(GRAPH_SIZE_X*0.382, TopY, GRAPH_SIZE_X*0.382 + 6, GRAPH_SIZE_Y - 50, 0xffee55, FALSE));
-}
-
-//*********************************************************************
-//FUNCTION:
 void CLevelScene::destroyV()
 {
 	SAFE_DELETE(m_pTransWindow);
@@ -106,14 +97,18 @@ bool CLevelScene::__initUI()
 	m_pFlagLabel->setPosition(100, m_MenuLabels[0]->getPosition().y - 10);
 	this->addChild(m_pFlagLabel);
 
-	m_pImageLabel = new CImageLabel("alice_01.png");
+	m_pImageLabel = new CImageLabel("alice_00.png");
 	m_pImageLabel->setPosition(GRAPH_SIZE_X - m_pImageLabel->getSize().x, GRAPH_SIZE_Y - m_pImageLabel->getSize().y);
-	m_pImageLabel->setColor(vec3i{ 200, 200, 200 });
+	m_pImageLabel->setBrightness(vec3i{ 200, 200, 200 });
 	this->addChild(m_pImageLabel);
 
 	m_pDescLabel = new CTextLabel("", 20, DX_FONTTYPE_NORMAL, GetColor(228, 231, 152), 0, 10);
 	m_pDescLabel->setPosition(800, 200);
 	this->addChild(m_pDescLabel);
+
+	int TopY = 128;
+	auto pBox = new CBox2D(recti{ (int)(GRAPH_SIZE_X*0.382), TopY, 6, GRAPH_SIZE_Y - TopY - 50 }, 0xffee55, false);
+	this->addChild(pBox);
 
 	return true;
 }

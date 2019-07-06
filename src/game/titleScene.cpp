@@ -13,7 +13,7 @@ using namespace DxEngine;
 
 namespace
 {
-	const vec3i MENU_COLOR_NORMAL = { 50, 50, 50 };
+	const vec3i MENU_COLOR_NORMAL = { 100, 100, 100 };
 	const vec3i MENU_COLOR_SELECTED = { 255, 255, 255 };
 }
 
@@ -26,10 +26,10 @@ bool CTitleScene::initV()
 	CHECK_RESULT(DxLib::SetBackgroundColor(0, 0, 0));
 	CHECK_RESULT(DxLib::ChangeFont("simkai"));
 
-	auto pBgLabel = new CImageLabel("bg_01.png");
+	auto pBgLabel = new CImageLabel("bg_00.png");
 	pBgLabel->setPosition(1100, 100);
 	pBgLabel->setSize(800, 1200);
-	pBgLabel->setColor(vec3i{ 50, 50, 50 });
+	pBgLabel->setBrightness(vec3i{ 50, 50, 50 });
 	this->addChild(pBgLabel);
 
 	__initPartices();
@@ -82,9 +82,9 @@ void CTitleScene::updateV(double vDeltaTime)
 	for (int i = 0; i < m_MenuLabels.size(); ++i)
 	{
 		if (i == m_SelectedLabelIndex)
-			m_MenuLabels[i]->setColor(MENU_COLOR_SELECTED);
+			m_MenuLabels[i]->setBrightness(MENU_COLOR_SELECTED);
 		else
-			m_MenuLabels[i]->setColor(MENU_COLOR_NORMAL);
+			m_MenuLabels[i]->setBrightness(MENU_COLOR_NORMAL);
 	}
 
 	if (CHECK_HIT_KEY(KEY_INPUT_Z) || CHECK_HIT_KEY(KEY_INPUT_RETURN))
@@ -126,7 +126,7 @@ void CTitleScene::__initPartices()
 	{
 		CSprite* pParticle = new CSprite("bullet01.png");
 		pParticle->setScale(0.3 + 0.3 * randf(), 0.3 + 0.3 * randf());
-		pParticle->setColor(vec3i{ 100 + rand() % 50, 100 + rand() % 50, 0 });
+		pParticle->setBrightness(vec3i{ 100 + rand() % 50, 100 + rand() % 50, 0 });
 		float PosX = rand() % GRAPH_SIZE_X;
 		float PosY = rand() % GRAPH_SIZE_Y + GRAPH_SIZE_Y;
 		pParticle->setPosition(vec2f{ PosX, PosY });
