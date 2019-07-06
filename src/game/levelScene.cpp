@@ -9,6 +9,7 @@
 #include "titleScene.h"
 #include "gameScene.h"
 #include "transparentWindow.h"
+#include "common.h"
 
 using namespace DxEngine;
 
@@ -62,7 +63,10 @@ void CLevelScene::updateV(double vDeltaTime)
 
 	if (CHECK_HIT_KEY(KEY_INPUT_Z) || CHECK_HIT_KEY(KEY_INPUT_RETURN))
 	{
-		CEngine::getInstance()->setActiveScene(new CGameScene);
+		char ScriptFileName[0xff];
+		sprintf(ScriptFileName, "%slevel%d.lua", RES_SCR_ROOT.c_str(), m_SelectedLabelIndex);
+		CEngine::getInstance()->setActiveScene(new CGameScene(ScriptFileName));
+
 		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_ok_01.mp3"), DX_PLAYTYPE_BACK));
 	}
 	else if (CHECK_HIT_KEY(KEY_INPUT_X))

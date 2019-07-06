@@ -17,6 +17,8 @@ namespace DxEngine
 		void setPosition(float vPosX, float vPosY) { _Position.x = vPosX; _Position.y = vPosY; }
 		void setLocalZ(float vLocalZ) { _LocalZ = vLocalZ; }
 
+		void setRotation(float vRotation) { _Rotation = vRotation; }
+
 		void setScale(float vScaleX, float vScaleY) { _Scale.x = vScaleX; _Scale.y = vScaleY; }
 
 		void setBrightness(vec3i vBrightnessColor) { _BrightnessColor = vBrightnessColor; }

@@ -124,7 +124,7 @@ void CTitleScene::__initPartices()
 {
 	for (int i = 0; i < 400; ++i)
 	{
-		CSprite* pParticle = new CSprite("bullet01.png");
+		CSprite* pParticle = new CSprite("particle_00.png");
 		pParticle->setScale(0.3 + 0.3 * randf(), 0.3 + 0.3 * randf());
 		pParticle->setBrightness(vec3i{ 100 + rand() % 50, 100 + rand() % 50, 0 });
 		float PosX = rand() % GRAPH_SIZE_X;

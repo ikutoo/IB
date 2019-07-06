@@ -37,6 +37,9 @@
     <ClCompile Include="..\..\src\engine\graphics2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\luaGlue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\engine\common.h">
@@ -73,6 +76,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\engine\graphics2d.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\engine\luaGlue.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

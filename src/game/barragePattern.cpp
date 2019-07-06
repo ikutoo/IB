@@ -9,15 +9,15 @@
 //FUNCTION:
 void CBarragePattern::barragePattern001(float x, float y, int vCounter)
 {
-	//if (vCounter % 2 != 0) return;
+	if (vCounter % 4 != 0) return;
 
-	for (int i = 0; i < 360; i += 6)
+	for (int i = 0; i < 360; i += 30)
 	{
-		CBullet* pBullet = new CBullet("bullet01.png");
-		pBullet->_Position.x = x;
-		pBullet->_Position.y = y;
+		CBullet* pBullet = new CBullet("bullet_01.png");
 		pBullet->_MoveFunc = CMovePattern::movePattern001;
-		pBullet->_Angle = (i + vCounter) * PI / 180;
+		pBullet->_Rotation = (i + vCounter) * PI / 180;
+		pBullet->_Position.x = x + 20 * sin(pBullet->_Rotation);
+		pBullet->_Position.y = y - 20 * cos(pBullet->_Rotation);
 		pBullet->_Speed = 5.0;
 		CBarrageManager::getInstance()->addBullet(pBullet);
 	}

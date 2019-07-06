@@ -92,6 +92,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>../../lib;</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,6 +128,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>../../lib;</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -163,6 +165,7 @@
     <ClInclude Include="..\..\src\engine\graphics2d.h" />
     <ClInclude Include="..\..\src\engine\inputManager.h" />
     <ClInclude Include="..\..\src\engine\label.h" />
+    <ClInclude Include="..\..\src\engine\luaGlue.h" />
     <ClInclude Include="..\..\src\engine\math.h" />
     <ClInclude Include="..\..\src\engine\node.h" />
     <ClInclude Include="..\..\src\engine\resourceManager.h" />
@@ -176,6 +179,7 @@
     <ClCompile Include="..\..\src\engine\graphics2d.cpp" />
     <ClCompile Include="..\..\src\engine\inputManager.cpp" />
     <ClCompile Include="..\..\src\engine\label.cpp" />
+    <ClCompile Include="..\..\src\engine\luaGlue.cpp" />
     <ClCompile Include="..\..\src\engine\node.cpp" />
     <ClCompile Include="..\..\src\engine\resourceManager.cpp" />
     <ClCompile Include="..\..\src\engine\scene.cpp" />

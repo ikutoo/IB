@@ -7,3 +7,4 @@
 
 const std::string RES_IMG_ROOT = "../../res/images/";
 const std::string RES_SND_ROOT = "../../res/sounds/";
+const std::string RES_SCR_ROOT = "../../res/scripts/";

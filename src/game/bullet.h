@@ -9,7 +9,6 @@ public:
 	~CBullet() = default;
 
 private:
-	double	_Angle = 0.0;
 	double	_Speed = 0.0;
 
 	std::function<void(CBullet*)> _MoveFunc;
