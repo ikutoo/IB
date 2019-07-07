@@ -75,7 +75,7 @@ void CTitleScene::updateV(double vDeltaTime)
 	if (CHECK_HIT_KEY(KEY_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }
 	else if (CHECK_HIT_KEY(KEY_INPUT_UP)) { m_SelectedLabelIndex--; IndexChanged = true; }
 
-	if (IndexChanged) CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_select_01.mp3"), DX_PLAYTYPE_BACK));
+	if (IndexChanged) CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_select_00.wav"), DX_PLAYTYPE_BACK));
 
 	if (m_SelectedLabelIndex < 0) m_SelectedLabelIndex = m_MenuLabels.size() - 1;
 	else if (m_SelectedLabelIndex >= m_MenuLabels.size()) m_SelectedLabelIndex = 0;
@@ -88,7 +88,7 @@ void CTitleScene::updateV(double vDeltaTime)
 			m_MenuLabels[i]->setBrightness(MENU_COLOR_NORMAL);
 	}
 
-	if (CHECK_HIT_KEY(KEY_INPUT_Z) || CHECK_HIT_KEY(KEY_INPUT_RETURN))
+	if (CHECK_HIT_KEY(KEY_INPUT_Z))
 	{
 		switch (m_SelectedLabelIndex)
 		{
@@ -106,7 +106,13 @@ void CTitleScene::updateV(double vDeltaTime)
 			break;
 		}
 
-		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_ok_01.mp3"), DX_PLAYTYPE_BACK));
+		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_ok_00.wav"), DX_PLAYTYPE_BACK));
+	}
+
+	if (CHECK_HIT_KEY(KEY_INPUT_X))
+	{
+		m_SelectedLabelIndex = m_MenuLabels.size() - 1;
+		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_cancel_00.wav"), DX_PLAYTYPE_BACK));
 	}
 }
 

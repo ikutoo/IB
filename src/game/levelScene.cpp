@@ -61,17 +61,18 @@ void CLevelScene::updateV(double vDeltaTime)
 
 	m_pDescLabel->setText(LEVEL_DESC[m_SelectedLabelIndex][1]);
 
-	if (CHECK_HIT_KEY(KEY_INPUT_Z) || CHECK_HIT_KEY(KEY_INPUT_RETURN))
+	if (CHECK_HIT_KEY(KEY_INPUT_Z))
 	{
 		char ScriptFileName[0xff];
 		sprintf(ScriptFileName, "%slevel%d.lua", RES_SCR_ROOT.c_str(), m_SelectedLabelIndex);
 		CEngine::getInstance()->setActiveScene(new CGameScene(ScriptFileName));
 
-		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_ok_01.mp3"), DX_PLAYTYPE_BACK));
+		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_ok_00.wav"), DX_PLAYTYPE_BACK));
 	}
 	else if (CHECK_HIT_KEY(KEY_INPUT_X))
 	{
 		CEngine::getInstance()->setActiveScene(new CTitleScene);
+		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_cancel_00.wav"), DX_PLAYTYPE_BACK));
 	}
 }
 
@@ -125,7 +126,7 @@ void CLevelScene::__updateSelectedLabel()
 	if (CHECK_HIT_KEY(KEY_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }
 	else if (CHECK_HIT_KEY(KEY_INPUT_UP)) { m_SelectedLabelIndex--; IndexChanged = true; }
 
-	if (IndexChanged) CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_select_01.mp3"), DX_PLAYTYPE_BACK));
+	if (IndexChanged) CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_select_00.wav"), DX_PLAYTYPE_BACK));
 
 	if (m_SelectedLabelIndex < 0) m_SelectedLabelIndex = m_MenuLabels.size() - 1;
 	else if (m_SelectedLabelIndex >= m_MenuLabels.size()) m_SelectedLabelIndex = 0;
