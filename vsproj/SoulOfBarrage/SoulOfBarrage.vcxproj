@@ -164,11 +164,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DxEngine\DxEngine.vcxproj">
-      <Project>{fc51f53e-8a1d-4801-a8ca-620e46accccc}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\src\game\application.cpp" />
     <ClCompile Include="..\..\src\game\barrage.cpp" />
     <ClCompile Include="..\..\src\game\barrageManager.cpp" />
@@ -198,6 +193,11 @@
     <ClInclude Include="..\..\src\game\transparentWindow.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DxEngine\DxEngine.vcxproj">
+      <Project>{fc51f53e-8a1d-4801-a8ca-620e46accccc}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

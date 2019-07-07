@@ -29,7 +29,8 @@ private:
 	void __setScriptSource(const char* vFilePath);
 
 	LUAGLUE __setBackgroundImage(lua_State* vioLuaState);
-	LUAGLUE __setCharaterImage(lua_State* vioLuaState);
+	LUAGLUE __setLCharaterImage(lua_State* vioLuaState);
+	LUAGLUE __setRCharaterImage(lua_State* vioLuaState);
 	LUAGLUE __beginDialogue(lua_State* vioLuaState);
 	LUAGLUE __endDialogue(lua_State* vioLuaState);
 	LUAGLUE __setDialogue(lua_State* vioLuaState);
@@ -39,8 +40,9 @@ private:
 	std::vector<std::string> m_ScriptActions;
 	unsigned m_ActionIndex = 0;
 
-	CSprite* m_pChSprite = nullptr;
-	CSprite* m_pBgSprite = nullptr;
+	CSprite* m_pLCharacter = nullptr;
+	CSprite* m_pRCharacter = nullptr;
+	CSprite* m_pBackground = nullptr;
 
 	CTextLabel* m_pDialogueLabel = nullptr;
 	CSprite*	m_pDialogBackground = nullptr;

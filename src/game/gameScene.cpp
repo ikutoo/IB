@@ -64,14 +64,20 @@ void CGameScene::destroyV()
 //FUNCTION:
 bool CGameScene::__initUI()
 {
-	m_pBgSprite = new CSprite;
-	m_pBgSprite->setBrightness({ 50, 50, 50 });
-	this->addChild(m_pBgSprite, 1);
+	m_pBackground = new CSprite;
+	m_pBackground->setBrightness({ 50, 50, 50 });
+	this->addChild(m_pBackground, 1);
 
-	m_pChSprite = new CSprite;
-	m_pChSprite->setPosition(-50, 250);
-	m_pChSprite->setScale(0.9, 0.9);
-	this->addChild(m_pChSprite, 1);
+	m_pLCharacter = new CSprite;
+	m_pLCharacter->setPosition(-50, 250);
+	m_pLCharacter->setScale(0.9, 0.9);
+	this->addChild(m_pLCharacter, 1);
+
+	m_pRCharacter = new CSprite;
+	m_pRCharacter->setPosition(1500, 250);
+	m_pRCharacter->setScale(0.9, 0.9);
+	m_pRCharacter->flip();
+	this->addChild(m_pRCharacter, 1);
 
 	float PosX = 1450;
 	m_HiScoreLabel.first = new CTextLabel("HI-SCORE", 40, DX_FONTTYPE_ANTIALIASING_EDGE, 0xffff00);
@@ -125,7 +131,7 @@ bool CGameScene::__initUI()
 
 	m_pDialogBackground = new CSprite;
 	m_pDialogBackground->setPosition(500, 800);
-	m_pDialogBackground->setBrightness({200, 220, 100});
+	m_pDialogBackground->setBrightness({ 200, 220, 100 });
 	this->addChild(m_pDialogBackground, 1);
 
 	m_pDialogueLabel = new CTextLabel;
@@ -183,7 +189,8 @@ void CGameScene::__registerLuaGlue()
 	lua_register(m_pLuaState, "setNodeRotation", luaGlue::setNodeRotation);
 
 	lua_registry_member_function(m_pLuaState, "setBackground", this, &CGameScene::__setBackgroundImage);
-	lua_registry_member_function(m_pLuaState, "setCharacter", this, &CGameScene::__setCharaterImage);
+	lua_registry_member_function(m_pLuaState, "setLCharacter", this, &CGameScene::__setLCharaterImage);
+	lua_registry_member_function(m_pLuaState, "setRCharacter", this, &CGameScene::__setRCharaterImage);
 	lua_registry_member_function(m_pLuaState, "setDialogue", this, &CGameScene::__setDialogue);
 	lua_registry_member_function(m_pLuaState, "beginDialogue", this, &CGameScene::__beginDialogue);
 	lua_registry_member_function(m_pLuaState, "endDialogue", this, &CGameScene::__endDialogue);
@@ -202,16 +209,25 @@ void CGameScene::__performLuaScript(const char* vScript)
 LUAGLUE CGameScene::__setBackgroundImage(lua_State* vioLuaState)
 {
 	auto FilePath = lua_tostring(vioLuaState, 1);
-	m_pBgSprite->setImageFile(FilePath);
+	m_pBackground->setImageFile(FilePath);
 	return 0;
 }
 
 //*********************************************************************
 //FUNCTION:
-LUAGLUE CGameScene::__setCharaterImage(lua_State* vioLuaState)
+LUAGLUE CGameScene::__setLCharaterImage(lua_State* vioLuaState)
 {
 	auto FilePath = lua_tostring(vioLuaState, 1);
-	m_pChSprite->setImageFile(FilePath);
+	m_pLCharacter->setImageFile(FilePath);
+	return 0;
+}
+
+//***********************************************************************************************
+//FUNCTION:
+LUAGLUE CGameScene::__setRCharaterImage(lua_State* vioLuaState)
+{
+	auto FilePath = lua_tostring(vioLuaState, 1);
+	m_pRCharacter->setImageFile(FilePath);
 	return 0;
 }
 
@@ -228,7 +244,7 @@ LUAGLUE CGameScene::__beginDialogue(lua_State* vioLuaState)
 LUAGLUE CGameScene::__endDialogue(lua_State* vioLuaState)
 {
 	m_pDialogBackground->setImageFile("");
-	m_pChSprite->setImageFile("");
+	m_pLCharacter->setImageFile("");
 	m_pDialogueLabel->setText("");
 	return 0;
 }
