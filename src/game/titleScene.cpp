@@ -32,7 +32,8 @@ bool CTitleScene::initV()
 	pBgLabel->setBrightness(vec3i{ 50, 50, 50 });
 	this->addChild(pBgLabel);
 
-	__initPartices();
+	m_pParticles = new CParticle01(recti{ 0, 0, GRAPH_SIZE_X, GRAPH_SIZE_Y }, 2.0);
+	this->addChild(m_pParticles);
 
 	auto pTitleLabel = new CImageLabel("title.png");
 	pTitleLabel->setPosition((GRAPH_SIZE_X - pTitleLabel->getSize().x) / 2, 100);
@@ -66,7 +67,7 @@ void CTitleScene::updateV(double vDeltaTime)
 {
 	CScene::updateV(vDeltaTime);
 
-	__updateParticles();
+	m_pParticles->update();
 
 	m_pFlagLabel->setPosition(m_MenuLabels[m_SelectedLabelIndex]->getPosition().x - 100, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y);
 
@@ -116,41 +117,4 @@ void CTitleScene::destroyV()
 	CHECK_RESULT(DxLib::StopMusic());
 
 	CScene::destroyV();
-}
-
-//*********************************************************************
-//FUNCTION:
-void CTitleScene::__initPartices()
-{
-	for (int i = 0; i < 400; ++i)
-	{
-		CSprite* pParticle = new CSprite("particle_00.png");
-		pParticle->setScale(0.3 + 0.3 * randf(), 0.3 + 0.3 * randf());
-		pParticle->setBrightness(vec3i{ 100 + rand() % 50, 100 + rand() % 50, 0 });
-		float PosX = rand() % GRAPH_SIZE_X;
-		float PosY = rand() % GRAPH_SIZE_Y + GRAPH_SIZE_Y;
-		pParticle->setPosition(vec2f{ PosX, PosY });
-
-		float SpeedX = -0.2 + 0.4 * randf();
-		float SpeedY = -0.3 - 0.2 * randf();
-
-		m_Particles.emplace_back(SParticle{ pParticle, SpeedX, SpeedY });
-		this->addChild(pParticle);
-	}
-}
-
-//*********************************************************************
-//FUNCTION:
-void CTitleScene::__updateParticles()
-{
-	for (auto pParticle : m_Particles)
-	{
-		if (_Counter % 100 == 0) pParticle.SpeedX = -0.2 + 0.4 * randf();
-		float PosX = pParticle.pSprite->getPosition().x + pParticle.SpeedX;
-		float PosY = pParticle.pSprite->getPosition().y + pParticle.SpeedY;
-
-		if (PosY < 0) { PosX = rand() % GRAPH_SIZE_X; PosY = GRAPH_SIZE_Y; };
-
-		pParticle.pSprite->setPosition(PosX, PosY);
-	}
 }

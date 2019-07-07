@@ -4,8 +4,17 @@
 #include "engine/scene.h"
 #include "engine/sprite.h"
 #include "engine/label.h"
+#include "particles.h"
 
 using namespace DxEngine;
+
+enum class EGameState : char
+{
+	UNDEFINED = 0,
+	NORMAL,
+	PAUSED,
+	IN_DIALOGUE
+};
 
 class CGameScene : public CScene
 {
@@ -34,6 +43,9 @@ private:
 	LUAGLUE __beginDialogue(lua_State* vioLuaState);
 	LUAGLUE __endDialogue(lua_State* vioLuaState);
 	LUAGLUE __setDialogue(lua_State* vioLuaState);
+	LUAGLUE __setCharacterName(lua_State* vioLuaState);
+
+	EGameState m_GameState = EGameState::UNDEFINED;
 
 	lua_State* m_pLuaState = nullptr;
 	std::string m_ScriptSource = "";
@@ -44,8 +56,12 @@ private:
 	CSprite* m_pRCharacter = nullptr;
 	CSprite* m_pBackground = nullptr;
 
+	CTextLabel* m_pChNameLabel = nullptr;
 	CTextLabel* m_pDialogueLabel = nullptr;
 	CSprite*	m_pDialogBackground = nullptr;
+
+	CParticle01* m_pLParticles = nullptr;
+	CParticle01* m_pRParticles = nullptr;
 
 	std::pair<CTextLabel*, CTextLabel*> m_HiScoreLabel;
 	std::pair<CTextLabel*, CTextLabel*> m_ScoreLabel;

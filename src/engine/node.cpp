@@ -26,7 +26,7 @@ void CNode::updateV(double vDeltaTime)
 //FUNCTION:
 void CNode::removeAllChilds(bool vDestroyChilds)
 {
-	if (vDestroyChilds) { for (auto pChild : _Childs) delete pChild; }
+	if (vDestroyChilds) { for (auto pChild : _Childs) { pChild->removeAllChilds(); delete pChild; } }
 	_Childs.clear();
 }
 
