@@ -41,3 +41,14 @@ void CNode::removeChild(CNode* vNode, bool vDestroyChild /*= true*/)
 	_Childs.remove(vNode);
 	if (vDestroyChild) delete vNode;
 }
+
+//*********************************************************************
+//FUNCTION:
+CNode* CNode::findChild(const std::string& vName)
+{
+	for (auto pChild : _Childs)
+	{
+		if (pChild->getName() == vName) return pChild;
+	}
+	return nullptr;
+}

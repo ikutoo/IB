@@ -8,6 +8,7 @@
 #include "engine/inputManager.h"
 #include "engine/engine.h"
 #include "engine/resourceManager.h"
+#include "engine/jsonUtil.h"
 
 using namespace DxEngine;
 
@@ -24,35 +25,17 @@ bool CTitleScene::_initV()
 	CHECK_RESULT(DxLib::SetBackgroundColor(0, 0, 0));
 	CHECK_RESULT(DxLib::ChangeFont("simkai"));
 
-	auto pBgLabel = new CSprite("ui.png", recti{ 0, 256, 220, 350 });
-	pBgLabel->setPosition(1100, 100);
-	pBgLabel->setScale(3.7, 3.7);
-	pBgLabel->setBrightness(vec3i{ 50, 50, 50 });
-	this->addChild(pBgLabel);
-
 	m_pParticles = new CParticle01(recti{ 0, 0, GRAPH_SIZE_X, GRAPH_SIZE_Y }, 2.0);
 	this->addChild(m_pParticles);
 
-	auto pTitleLabel = new CSprite("ui.png", recti{ 0, 0, 1750, 230 });
-	pTitleLabel->setPosition((GRAPH_SIZE_X - pTitleLabel->getSize().x) / 2, 100);
-	this->addChild(pTitleLabel);
+	CJsonReader JsonReader("title_scene.ui");
+	auto pUIRoot = JsonReader.getRootNode();
+	this->addChild(pUIRoot);
 
-	auto pPlayLabel = new CLabel("开始游戏", 50, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, 0xffffff, 0xffff00);
-	pPlayLabel->setPosition(800, 600);
-	m_MenuLabels.emplace_back(pPlayLabel);
-
-	auto pHelpLabel = new CLabel("操作说明", 50, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, 0xffffff, 0xffff00);
-	pHelpLabel->setPosition(800, 700);
-	m_MenuLabels.emplace_back(pHelpLabel);
-
-	auto pExitLabel = new CLabel("退出游戏", 50, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, 0xffffff, 0xffff00);
-	pExitLabel->setPosition(800, 800);
-	m_MenuLabels.emplace_back(pExitLabel);
-
-	for (auto pLabel : m_MenuLabels) this->addChild(pLabel);
-
-	m_pFlagSprite = new CSprite("ui.png", recti{ 64, 640, 74, 54 });
-	this->addChild(m_pFlagSprite);
+	m_MenuLabels.emplace_back(pUIRoot->findChild("playLabel"));
+	m_MenuLabels.emplace_back(pUIRoot->findChild("helpLabel"));
+	m_MenuLabels.emplace_back(pUIRoot->findChild("exitLabel"));
+	m_pFlagSprite = dynamic_cast<CSprite*>(pUIRoot->findChild("flagSprite"));
 
 	CHECK_RESULT(DxLib::PlayMusic(LOCATE_FILE("bgm_01.mp3"), DX_PLAYTYPE_BACK));
 

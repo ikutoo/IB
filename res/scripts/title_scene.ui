@@ -1,0 +1,57 @@
+{
+	"bgSprite":
+	{
+		"type": "sprite",
+		"position": [1100.0, 100.0],
+		"localZ": -1.0,
+		"scale": [3.7, 3.7],
+		"brightness": [50, 50, 50],
+		"file": "ui.png",
+		"rect": [0, 256, 220, 350]
+	},
+	"titleSprite":
+	{
+		"type": "sprite",
+		"position": [85.0, 100.0],
+		"localZ": -1.0,
+		"file": "ui.png",
+		"rect": [0, 0, 1750, 230]
+	},
+	"playLabel":
+	{
+		"type": "label",
+		"position": [800, 600],
+		"localZ": 1.0,
+		"text": "开始游戏",
+		"fontSize": 50,
+		"fontType": 19,
+		"edgeColor": [255, 255, 0]
+	},
+	"helpLabel":
+	{
+		"type": "label",
+		"position": [800, 700],
+		"localZ": 1.0,
+		"text": "操作说明",
+		"fontSize": 50,
+		"fontType": 19,
+		"edgeColor": [255, 255, 0]
+	},
+	"exitLabel":
+	{
+		"type": "label",
+		"position": [800, 800],
+		"localZ": 1.0,
+		"text": "退出游戏",
+		"fontSize": 50,
+		"fontType": 19,
+		"edgeColor": [255, 255, 0]
+	},
+	"flagSprite":
+	{
+		"type": "sprite",
+		"localZ": 1.0,
+		"file": "ui.png",
+		"rect": [64, 640, 74, 54]
+	}
+}

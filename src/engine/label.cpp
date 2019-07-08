@@ -25,6 +25,20 @@ CLabel::~CLabel()
 
 //*********************************************************************
 //FUNCTION:
+void DxEngine::CLabel::setFontColor(vec3i vFontColor)
+{
+	setFontColor(DxLib::GetColor(vFontColor.x, vFontColor.y, vFontColor.z));
+}
+
+//*********************************************************************
+//FUNCTION:
+void DxEngine::CLabel::setEdgeColor(vec3i vEdgeColor)
+{
+	setEdgeColor(DxLib::GetColor(vEdgeColor.x, vEdgeColor.y, vEdgeColor.z));
+}
+
+//*********************************************************************
+//FUNCTION:
 void DxEngine::CLabel::drawV()
 {
 	CNode::drawV();

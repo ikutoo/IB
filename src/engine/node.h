@@ -16,18 +16,24 @@ namespace DxEngine
 		void pause() { _IsPaused = true; }
 		void resume() { _IsPaused = false; }
 
-		void setPosition(vec2f vPos) { _Position = vPos; }
+		void setPosition(const vec2f& vPos) { _Position = vPos; }
 		void setPosition(float vPosX, float vPosY) { _Position.x = vPosX; _Position.y = vPosY; }
 		void setLocalZ(float vLocalZ) { _LocalZ = vLocalZ; }
 
 		void setRotation(float vRotation) { _Rotation = vRotation; }
 
+		void setScale(const vec2f& vScale) { _Scale = vScale; }
 		void setScale(float vScaleX, float vScaleY) { _Scale.x = vScaleX; _Scale.y = vScaleY; }
 
-		void setBrightness(vec3i vBrightnessColor) { _BrightnessColor = vBrightnessColor; }
+		void setBrightness(const vec3i& vBrightnessColor) { _BrightnessColor = vBrightnessColor; }
+
+		void setName(const std::string& vName) { m_Name = vName; }
+
+		CNode* findChild(const std::string& vName);
 
 		const vec2f& getPosition() const { return _Position; }
 		float getLocalZ() const { return _LocalZ; }
+		const std::string& getName() const { return m_Name; }
 
 		void addChild(CNode* vNode, float vLocalZ = 0.0f) { _ASSERT(vNode); vNode->setLocalZ(vLocalZ); _Childs.emplace_back(vNode); }
 		void removeChild(CNode* vNode, bool vDestroyChild = true);
@@ -41,6 +47,8 @@ namespace DxEngine
 		vec2f _Position = { 0.0, 0.0 };
 		vec2f _Scale = { 1.0, 1.0 };
 		float _Rotation = 0.0;
+
+		std::string m_Name = "";
 
 		vec3i _BrightnessColor = { 255, 255, 255 };
 		float _LocalZ = 0.0;
