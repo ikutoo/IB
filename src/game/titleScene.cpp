@@ -19,10 +19,8 @@ namespace
 
 //*********************************************************************
 //FUNCTION:
-bool CTitleScene::initV()
+bool CTitleScene::_initV()
 {
-	if (!CScene::initV()) return false;
-
 	CHECK_RESULT(DxLib::SetBackgroundColor(0, 0, 0));
 	CHECK_RESULT(DxLib::ChangeFont("simkai"));
 
@@ -63,11 +61,9 @@ bool CTitleScene::initV()
 
 //*********************************************************************
 //FUNCTION:
-void CTitleScene::updateV(double vDeltaTime)
+void CTitleScene::_updateV(double vDeltaTime)
 {
-	CScene::updateV(vDeltaTime);
-
-	m_pParticles->update();
+	m_pParticles->updateV();
 
 	m_pFlagLabel->setPosition(m_MenuLabels[m_SelectedLabelIndex]->getPosition().x - 100, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y);
 
@@ -93,9 +89,11 @@ void CTitleScene::updateV(double vDeltaTime)
 		switch (m_SelectedLabelIndex)
 		{
 		case 0:
+			CEngine::getInstance()->pushScene(this);
 			CEngine::getInstance()->setActiveScene(new CLevelScene);
 			break;
 		case 1:
+			CEngine::getInstance()->pushScene(this);
 			CEngine::getInstance()->setActiveScene(new CHelpScene);
 			break;
 		case 2:
@@ -105,8 +103,6 @@ void CTitleScene::updateV(double vDeltaTime)
 			_ASSERT(false);
 			break;
 		}
-
-		CEngine::getInstance()->pushScene(this);
 
 		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_ok_00.wav"), DX_PLAYTYPE_BACK));
 	}
@@ -120,9 +116,7 @@ void CTitleScene::updateV(double vDeltaTime)
 
 //***********************************************************************************************
 //FUNCTION:
-void CTitleScene::destroyV()
+void CTitleScene::_destroyV()
 {
 	CHECK_RESULT(DxLib::StopMusic());
-
-	CScene::destroyV();
 }

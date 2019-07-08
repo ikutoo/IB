@@ -37,17 +37,11 @@ bool CEngine::setActiveScene(CScene* vScene)
 {
 	_ASSERT(vScene);
 
-	if (m_pActiveScene && !m_pActiveScene->_IsCached)
-	{
-		m_pActiveScene->destroyV();
-		SAFE_DELETE(m_pActiveScene);
-	}
+	if (m_pActiveScene) m_pActiveScene->destroy();
 
 	m_pActiveScene = vScene;
 
-	if (!m_IsInitialized) return true;
-
-	if (!vScene->initV()) return false;
+	if (m_IsInitialized) { return m_pActiveScene->init(); }
 
 	return true;
 }
@@ -66,7 +60,7 @@ bool CEngine::__init()
 
 	if (m_DisableCNInputHint) ImmAssociateContext(DxLib::GetMainWindowHandle(), nullptr);
 
-	if (!m_pActiveScene->initV()) return false;
+	if (!m_pActiveScene->init()) return false;
 
 	m_Timer.start();
 
@@ -84,7 +78,7 @@ void CEngine::__update()
 
 	double DeltaTime = __updateFPS();
 
-	m_pActiveScene->updateV(DeltaTime);
+	m_pActiveScene->update(DeltaTime);
 	for (auto UpdateFunc : m_UpdateFuncs) UpdateFunc();
 }
 
@@ -106,15 +100,12 @@ void CEngine::__destroy()
 {
 	m_Timer.stop();
 
-	m_pActiveScene->destroyV();
-	SAFE_DELETE(m_pActiveScene);
+	m_pActiveScene->destroy();
 
 	while (!m_CachedScenes.empty())
 	{
-		auto pScene = m_CachedScenes.top();
-		m_CachedScenes.pop();
-		pScene->destroyV();
-		SAFE_DELETE(pScene);
+		auto pScene = popScene();
+		pScene->destroy();
 	}
 
 	CHECK_RESULT(DxLib::DxLib_End());
@@ -165,7 +156,7 @@ void DxEngine::CEngine::pushScene(CScene* vScene)
 {
 	_ASSERT(vScene);
 	vScene->pause();
-	vScene->_IsCached = true;
+	vScene->m_IsCached = true;
 	m_CachedScenes.push(vScene);
 }
 
@@ -178,7 +169,7 @@ DxEngine::CScene* DxEngine::CEngine::popScene()
 
 	_ASSERT(pScene);
 	pScene->resume();
-	pScene->_IsCached = false;
+	pScene->m_IsCached = false;
 	return pScene;
 }
 

@@ -15,9 +15,9 @@ class CTransparentWindow;
 class CLevelScene : public  DxEngine::CScene
 {
 public:
-	bool initV() override;
-	void updateV(double vDeltaTime) override;
-	void destroyV() override;
+	bool _initV() override;
+	void _updateV(double vDeltaTime) override;
+	void _destroyV() override;
 
 private:
 	std::vector<DxEngine::CTextLabel*> m_MenuLabels;

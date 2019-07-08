@@ -18,10 +18,8 @@ CGameScene::CGameScene(const char* vScriptFile)
 
 //*********************************************************************
 //FUNCTION:
-bool CGameScene::initV()
+bool CGameScene::_initV()
 {
-	if (!CScene::initV()) return false;
-
 	CHECK_RESULT(DxLib::SetBackgroundColor(0, 0, 0));
 
 	CBarrageManager::getInstance()->init(this);
@@ -36,14 +34,12 @@ bool CGameScene::initV()
 
 //***********************************************************************************************
 //FUNCTION:
-void CGameScene::updateV(double vDeltaTime)
+void CGameScene::_updateV(double vDeltaTime)
 {
-	CScene::updateV(vDeltaTime);
-
 	__updateBarrage();
 
-	m_pLParticles->update();
-	m_pRParticles->update();
+	m_pLParticles->updateV();
+	m_pRParticles->updateV();
 
 	if (CHECK_HIT_KEY(KEY_INPUT_Z))
 	{
@@ -56,11 +52,10 @@ void CGameScene::updateV(double vDeltaTime)
 
 //*********************************************************************
 //FUNCTION:
-void CGameScene::destroyV()
+void CGameScene::_destroyV()
 {
 	__closeLuaEvn();
 	CBarrageManager::getInstance()->destroy();
-	CScene::destroyV();
 }
 
 //*********************************************************************

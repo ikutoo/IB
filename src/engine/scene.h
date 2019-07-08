@@ -10,13 +10,18 @@ namespace DxEngine
 		CScene() = default;
 		virtual ~CScene() = default;
 
-		virtual bool initV() { return true; }
-		virtual void updateV(double vDeltaTime) override { CNode::updateV(vDeltaTime); }
-		virtual void destroyV() { this->removeAllChilds(); }
+		bool init();
+		void update(double vDeltaTime);
+		void destroy();
 
 	protected:
-		bool _IsCached = false;
-		bool _IsInitialized = false;
+		virtual bool _initV() { return true; }
+		virtual void _updateV(double vDeltaTime) {}
+		virtual void _destroyV() {}
+
+	private:
+		bool m_IsCached = false;
+		bool m_IsIntialized = false;
 
 		friend class CEngine;
 	};

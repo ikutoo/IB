@@ -17,10 +17,8 @@ CHelpScene::~CHelpScene()
 
 //***********************************************************************************************
 //FUNCTION:
-void CHelpScene::updateV(double vDeltaTime)
+void CHelpScene::_updateV(double vDeltaTime)
 {
-	CScene::updateV(vDeltaTime);
-
 	if (CheckHitKey(KEY_INPUT_X))
 	{
 		auto pScene = CEngine::getInstance()->popScene();

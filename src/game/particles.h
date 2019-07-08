@@ -17,7 +17,7 @@ class CParticle01 : public CNode
 public:
 	CParticle01(const recti& vArea, float vDensity);
 
-	void update();
+	void updateV();
 
 private:
 	std::vector<SParticle> m_Particles;

@@ -22,9 +22,9 @@ public:
 	CGameScene(const char* vScriptFile);
 	~CGameScene() = default;
 
-	virtual bool initV() override;
-	virtual void updateV(double vDeltaTime) override;
-	virtual void destroyV() override;
+	virtual bool _initV() override;
+	virtual void _updateV(double vDeltaTime) override;
+	virtual void _destroyV() override;
 
 private:
 	bool __initUI();

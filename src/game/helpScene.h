@@ -7,5 +7,5 @@ public:
 	CHelpScene();
 	~CHelpScene();
 
-	virtual void updateV(double vDeltaTime) override;
+	virtual void _updateV(double vDeltaTime) override;
 };

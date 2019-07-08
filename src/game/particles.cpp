@@ -26,7 +26,7 @@ CParticle01::CParticle01(const recti& vArea, float vDensity) : m_Area(vArea)
 
 //*********************************************************************
 //FUNCTION:
-void CParticle01::update()
+void CParticle01::updateV()
 {
 	for (auto pParticle : m_Particles)
 	{

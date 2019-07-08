@@ -8,9 +8,9 @@
 class CTitleScene : public  DxEngine::CScene
 {
 public:
-	virtual bool initV() override;
-	virtual void updateV(double vDeltaTime) override;
-	virtual void destroyV() override;
+	virtual bool _initV() override;
+	virtual void _updateV(double vDeltaTime) override;
+	virtual void _destroyV() override;
 
 private:
 	DxEngine::CImageLabel* m_pFlagLabel = nullptr;

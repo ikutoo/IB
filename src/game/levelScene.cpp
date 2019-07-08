@@ -33,10 +33,8 @@ namespace
 
 //*********************************************************************
 //FUNCTION:
-bool CLevelScene::initV()
+bool CLevelScene::_initV()
 {
-	if (!CScene::initV()) return false;
-
 	CHECK_RESULT(DxLib::SetBackgroundColor(0, 0, 0));
 	CHECK_RESULT(DxLib::ChangeFont("simkai"));
 
@@ -50,10 +48,8 @@ bool CLevelScene::initV()
 
 //*********************************************************************
 //FUNCTION:
-void CLevelScene::updateV(double vDeltaTime)
+void CLevelScene::_updateV(double vDeltaTime)
 {
-	CScene::updateV(vDeltaTime);
-
 	m_pTransWindow->update(vDeltaTime);
 
 	__updateSelectedLabel();
@@ -66,6 +62,7 @@ void CLevelScene::updateV(double vDeltaTime)
 		sprintf(ScriptFileName, "%slevel%d.lua", RES_SCR_ROOT.c_str(), m_SelectedLabelIndex);
 		CEngine::getInstance()->setActiveScene(new CGameScene(ScriptFileName));
 
+		CHECK_RESULT(DxLib::StopMusic());
 		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_ok_00.wav"), DX_PLAYTYPE_BACK));
 	}
 	else if (CHECK_HIT_KEY(KEY_INPUT_X))
@@ -78,11 +75,10 @@ void CLevelScene::updateV(double vDeltaTime)
 
 //*********************************************************************
 //FUNCTION:
-void CLevelScene::destroyV()
+void CLevelScene::_destroyV()
 {
 	SAFE_DELETE(m_pTransWindow);
 	SetActiveWindow(DxLib::GetMainWindowHandle());
-	CScene::destroyV();
 }
 
 //*********************************************************************
