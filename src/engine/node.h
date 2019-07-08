@@ -39,6 +39,7 @@ namespace DxEngine
 		void removeChild(CNode* vNode, bool vDestroyChild = true);
 		void removeAllChilds(bool vDestroyChilds = true);
 
+		CNode* getLastChild() const { return _Childs.back(); }
 		uint32_t getNumChilds() const { return _Childs.size(); }
 
 		uint32_t getCounter() const { return _Counter; }

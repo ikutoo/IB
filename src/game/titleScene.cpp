@@ -32,9 +32,9 @@ bool CTitleScene::_initV()
 	auto pUIRoot = JsonReader.getRootNode();
 	this->addChild(pUIRoot);
 
-	m_MenuLabels.emplace_back(pUIRoot->findChild("playLabel"));
-	m_MenuLabels.emplace_back(pUIRoot->findChild("helpLabel"));
-	m_MenuLabels.emplace_back(pUIRoot->findChild("exitLabel"));
+	m_MenuLabels.push_back(dynamic_cast<CLabel*>(pUIRoot->findChild("playLabel")));
+	m_MenuLabels.push_back(dynamic_cast<CLabel*>(pUIRoot->findChild("helpLabel")));
+	m_MenuLabels.push_back(dynamic_cast<CLabel*>(pUIRoot->findChild("exitLabel")));
 	m_pFlagSprite = dynamic_cast<CSprite*>(pUIRoot->findChild("flagSprite"));
 
 	CHECK_RESULT(DxLib::PlayMusic(LOCATE_FILE("bgm_01.mp3"), DX_PLAYTYPE_BACK));

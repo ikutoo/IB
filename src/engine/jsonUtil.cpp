@@ -163,7 +163,8 @@ CNode* CJsonReader::getRootNode()
 		std::string Type = iter->value["type"].GetString();
 
 		if (Type == "label") pRootNode->addChild(readLabel(iter->name.GetString()));
-		if (Type == "sprite") pRootNode->addChild(readSprite(iter->name.GetString()));
+		else if (Type == "sprite") pRootNode->addChild(readSprite(iter->name.GetString()));
+		pRootNode->getLastChild()->setName(iter->name.GetString());
 	}
 
 	return pRootNode;
