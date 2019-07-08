@@ -106,6 +106,7 @@ CLabel* CJsonReader::readLabel(const std::string& vAttributName)
 	if (Obj.HasMember("text")) pLabel->setText(Obj["text"].GetString());
 	if (Obj.HasMember("fontSize")) pLabel->setFontSize(Obj["fontSize"].GetInt());
 	if (Obj.HasMember("fontColor")) pLabel->setFontColor(__parseVec3i(Obj, "fontColor"));
+	if (Obj.HasMember("fontType")) pLabel->setFontType(Obj["fontType"].GetInt());
 	if (Obj.HasMember("edgeColor")) pLabel->setEdgeColor(__parseVec3i(Obj, "edgeColor"));
 	if (Obj.HasMember("brightness")) pLabel->setBrightness(__parseVec3i(Obj, "brightness"));
 
