@@ -8,6 +8,8 @@ using namespace DxEngine;
 //FUNCTION:
 void CNode::drawV()
 {
+	if (_IsPaused) return;
+
 	DxLib::SetDrawBright(_BrightnessColor.x, _BrightnessColor.y, _BrightnessColor.z);
 
 	_Childs.sort([](const CNode* l, const CNode* r) {return l->getLocalZ() < r->getLocalZ(); });
@@ -18,6 +20,8 @@ void CNode::drawV()
 //FUNCTION:
 void CNode::updateV(double vDeltaTime)
 {
+	if (_IsPaused) return;
+
 	_Counter++;
 	for (auto pChild : _Childs) pChild->updateV(vDeltaTime);
 }

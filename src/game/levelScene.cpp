@@ -6,7 +6,6 @@
 #include "engine/resourceManager.h"
 #include "engine/graphics2d.h"
 #include "levelScene.h"
-#include "titleScene.h"
 #include "gameScene.h"
 #include "transparentWindow.h"
 #include "common.h"
@@ -71,7 +70,8 @@ void CLevelScene::updateV(double vDeltaTime)
 	}
 	else if (CHECK_HIT_KEY(KEY_INPUT_X))
 	{
-		CEngine::getInstance()->setActiveScene(new CTitleScene);
+		auto pScene = CEngine::getInstance()->popScene();
+		CEngine::getInstance()->setActiveScene(pScene);
 		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_cancel_00.wav"), DX_PLAYTYPE_BACK));
 	}
 }

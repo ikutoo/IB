@@ -13,6 +13,9 @@ namespace DxEngine
 		virtual void updateV(double vDeltaTime);
 		virtual void drawV();
 
+		void pause() { _IsPaused = true; }
+		void resume() { _IsPaused = false; }
+
 		void setPosition(vec2f vPos) { _Position = vPos; }
 		void setPosition(float vPosX, float vPosY) { _Position.x = vPosX; _Position.y = vPosY; }
 		void setLocalZ(float vLocalZ) { _LocalZ = vLocalZ; }
@@ -45,5 +48,7 @@ namespace DxEngine
 		std::list<CNode*> _Childs;
 
 		uint32_t _Counter = 0;
+
+		bool _IsPaused = false;
 	};
 }

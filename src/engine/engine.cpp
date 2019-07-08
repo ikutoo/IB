@@ -37,7 +37,7 @@ bool CEngine::setActiveScene(CScene* vScene)
 {
 	_ASSERT(vScene);
 
-	if (m_pActiveScene)
+	if (m_pActiveScene && !m_pActiveScene->_IsCached)
 	{
 		m_pActiveScene->destroyV();
 		SAFE_DELETE(m_pActiveScene);
@@ -46,7 +46,8 @@ bool CEngine::setActiveScene(CScene* vScene)
 	m_pActiveScene = vScene;
 
 	if (!m_IsInitialized) return true;
-	if (!m_pActiveScene->initV()) return false;
+
+	if (!vScene->initV()) return false;
 
 	return true;
 }
@@ -107,6 +108,15 @@ void CEngine::__destroy()
 
 	m_pActiveScene->destroyV();
 	SAFE_DELETE(m_pActiveScene);
+
+	while (!m_CachedScenes.empty())
+	{
+		auto pScene = m_CachedScenes.top();
+		m_CachedScenes.pop();
+		pScene->destroyV();
+		SAFE_DELETE(pScene);
+	}
+
 	CHECK_RESULT(DxLib::DxLib_End());
 
 	DxLib::LogFileAdd("Success to destroy DxEngine.\n");
@@ -147,6 +157,29 @@ bool CEngine::__initWindowInfo()
 	CHECK_RESULT(DxLib::SetWindowText(m_DisplayInfo.WindowTitle.c_str()));
 
 	return true;
+}
+
+//***********************************************************************************************
+//FUNCTION:
+void DxEngine::CEngine::pushScene(CScene* vScene)
+{
+	_ASSERT(vScene);
+	vScene->pause();
+	vScene->_IsCached = true;
+	m_CachedScenes.push(vScene);
+}
+
+//***********************************************************************************************
+//FUNCTION:
+DxEngine::CScene* DxEngine::CEngine::popScene()
+{
+	auto pScene = m_CachedScenes.top();
+	m_CachedScenes.pop();
+
+	_ASSERT(pScene);
+	pScene->resume();
+	pScene->_IsCached = false;
+	return pScene;
 }
 
 //***********************************************************************************************

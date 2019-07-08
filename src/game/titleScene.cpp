@@ -106,6 +106,8 @@ void CTitleScene::updateV(double vDeltaTime)
 			break;
 		}
 
+		CEngine::getInstance()->pushScene(this);
+
 		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_ok_00.wav"), DX_PLAYTYPE_BACK));
 	}
 

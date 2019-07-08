@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include <vector>
+#include <stack>
 #include <map>
 #include "common.h"
 #include "cpuTimer.h"
@@ -21,6 +22,9 @@ namespace DxEngine
 		void registerUpdateFunc(std::function<void()> vFunc) { _ASSERTE(vFunc); m_UpdateFuncs.emplace_back(vFunc); }
 
 		bool setActiveScene(CScene* vScene);
+		void pushScene(CScene* vScene);
+		CScene* popScene();
+
 		void setWindowSize(int vWidth, int vHeight) { _ASSERTE(!m_IsInitialized); m_DisplayInfo.WindowSize = { vWidth, vHeight }; }
 		void setWindowPosition(int vPosX, int vPosY) { _ASSERTE(!m_IsInitialized); m_DisplayInfo.WindowPosition = { vPosX, vPosY }; }
 		void setWindowTitle(const std::string& vTitle) { _ASSERTE(!m_IsInitialized); m_DisplayInfo.WindowTitle = vTitle; }
@@ -38,6 +42,7 @@ namespace DxEngine
 		CEngine() = default;
 		~CEngine() = default;
 
+		std::stack<CScene*> m_CachedScenes;
 		CScene* m_pActiveScene = nullptr;
 		std::map<int, CScene*> m_ID2SceneMap;
 

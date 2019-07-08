@@ -3,7 +3,6 @@
 #include "engine/engine.h"
 #include "engine/resourceManager.h"
 #include "helpScene.h"
-#include "titleScene.h"
 #include "common.h"
 
 using namespace DxEngine;
@@ -24,7 +23,8 @@ void CHelpScene::updateV(double vDeltaTime)
 
 	if (CheckHitKey(KEY_INPUT_X))
 	{
-		CEngine::getInstance()->setActiveScene(new CTitleScene);
+		auto pScene = CEngine::getInstance()->popScene();
+		CEngine::getInstance()->setActiveScene(pScene);
 		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_cancel_00.wav"), DX_PLAYTYPE_BACK));
 	}
 }
