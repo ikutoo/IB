@@ -175,6 +175,7 @@
     <ClCompile Include="..\..\src\game\levelScene.cpp" />
     <ClCompile Include="..\..\src\game\movePattern.cpp" />
     <ClCompile Include="..\..\src\game\particles.cpp" />
+    <ClCompile Include="..\..\src\game\player.cpp" />
     <ClCompile Include="..\..\src\game\titleScene.cpp" />
     <ClCompile Include="..\..\src\game\transparentWindow.cpp" />
     <ClCompile Include="stdafx.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="..\..\src\game\levelScene.h" />
     <ClInclude Include="..\..\src\game\movePattern.h" />
     <ClInclude Include="..\..\src\game\particles.h" />
+    <ClInclude Include="..\..\src\game\player.h" />
     <ClInclude Include="..\..\src\game\titleScene.h" />
     <ClInclude Include="..\..\src\game\transparentWindow.h" />
     <ClInclude Include="stdafx.h" />

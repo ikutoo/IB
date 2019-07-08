@@ -24,16 +24,16 @@ bool CTitleScene::_initV()
 	CHECK_RESULT(DxLib::SetBackgroundColor(0, 0, 0));
 	CHECK_RESULT(DxLib::ChangeFont("simkai"));
 
-	auto pBgLabel = new CImageLabel("bg_00.png");
+	auto pBgLabel = new CSprite("ui.png", recti{ 0, 256, 220, 350 });
 	pBgLabel->setPosition(1100, 100);
-	pBgLabel->setSize(800, 1200);
+	pBgLabel->setScale(3.7, 3.7);
 	pBgLabel->setBrightness(vec3i{ 50, 50, 50 });
 	this->addChild(pBgLabel);
 
 	m_pParticles = new CParticle01(recti{ 0, 0, GRAPH_SIZE_X, GRAPH_SIZE_Y }, 2.0);
 	this->addChild(m_pParticles);
 
-	auto pTitleLabel = new CImageLabel("title.png");
+	auto pTitleLabel = new CSprite("ui.png", recti{ 0, 0, 1750, 230 });
 	pTitleLabel->setPosition((GRAPH_SIZE_X - pTitleLabel->getSize().x) / 2, 100);
 	this->addChild(pTitleLabel);
 
@@ -51,8 +51,8 @@ bool CTitleScene::_initV()
 
 	for (auto pLabel : m_MenuLabels) this->addChild(pLabel);
 
-	m_pFlagLabel = new CImageLabel("flag.png");
-	this->addChild(m_pFlagLabel);
+	m_pFlagSprite = new CSprite("ui.png", recti{ 64, 640, 74, 54 });
+	this->addChild(m_pFlagSprite);
 
 	CHECK_RESULT(DxLib::PlayMusic(LOCATE_FILE("bgm_01.mp3"), DX_PLAYTYPE_BACK));
 
@@ -65,7 +65,7 @@ void CTitleScene::_updateV(double vDeltaTime)
 {
 	m_pParticles->updateV();
 
-	m_pFlagLabel->setPosition(m_MenuLabels[m_SelectedLabelIndex]->getPosition().x - 100, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y);
+	m_pFlagSprite->setPosition(m_MenuLabels[m_SelectedLabelIndex]->getPosition().x - 100, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y);
 
 	bool IndexChanged = false;
 	if (CHECK_HIT_KEY(KEY_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }

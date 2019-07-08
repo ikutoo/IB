@@ -88,36 +88,36 @@ bool CGameScene::__initUI()
 
 	const int FontSizeL = 35, FontSizeM = 25;
 	float PosX = 1450;
-	m_HiScoreLabel.first = new CTextLabel("HI-SCORE", FontSizeL, DX_FONTTYPE_ANTIALIASING_EDGE, 0xffff00);
+	m_HiScoreLabel.first = new CSprite("ui.png", recti{ 850, 480, 164, 34 });
 	m_HiScoreLabel.first->setPosition(PosX, 20);
 	this->addChild(m_HiScoreLabel.first, 1);
 
-	m_ScoreLabel.first = new CTextLabel("SCORE", FontSizeL, DX_FONTTYPE_ANTIALIASING_EDGE, 0xffff00);
+	m_ScoreLabel.first = new CSprite("ui.png", recti{ 850, 529, 123, 34 });
 	m_ScoreLabel.first->setPosition(PosX, 70);
 	this->addChild(m_ScoreLabel.first, 1);
 
-	m_PlayerNumLabel.first = new CTextLabel("Player", FontSizeM, DX_FONTTYPE_ANTIALIASING_EDGE, 0xffff00);
+	m_PlayerNumLabel.first = new CSprite("ui.png", recti{ 850, 581, 71, 22 });
 	m_PlayerNumLabel.first->setPosition(PosX, 150);
 	this->addChild(m_PlayerNumLabel.first, 1);
 
-	m_BombNumLabel.first = new CTextLabel("Bomb", FontSizeM, DX_FONTTYPE_ANTIALIASING_EDGE, 0xffff00);
-	m_BombNumLabel.first->setPosition(PosX, 200);
+	m_BombNumLabel.first = new CSprite("ui.png", recti{ 850, 620, 64, 20 });
+	m_BombNumLabel.first->setPosition(PosX, 190);
 	this->addChild(m_BombNumLabel.first, 1);
 
-	m_PowerLabel.first = new CTextLabel("Power", FontSizeM, DX_FONTTYPE_ANTIALIASING_EDGE, 0xffff00);
-	m_PowerLabel.first->setPosition(PosX, 270);
+	m_PowerLabel.first = new CSprite("ui.png", recti{ 849, 664, 70, 21 });
+	m_PowerLabel.first->setPosition(PosX, 250);
 	this->addChild(m_PowerLabel.first, 1);
 
-	m_GrazeLabel.first = new CTextLabel("Graze", FontSizeM, DX_FONTTYPE_ANTIALIASING_EDGE, 0xffff00);
-	m_GrazeLabel.first->setPosition(PosX, 320);
+	m_GrazeLabel.first = new CSprite("ui.png", recti{ 849, 709, 69, 21 });
+	m_GrazeLabel.first->setPosition(PosX, 290);
 	this->addChild(m_GrazeLabel.first, 1);
 
-	float OffsetX = 300;
-	m_HiScoreLabel.second = new CTextLabel("000000", FontSizeL, DX_FONTTYPE_ANTIALIASING);
+	float OffsetX = 200;
+	m_HiScoreLabel.second = new CTextLabel("00000000", FontSizeL, DX_FONTTYPE_ANTIALIASING);
 	m_HiScoreLabel.second->setPosition(PosX + OffsetX, m_HiScoreLabel.first->getPosition().y);
 	this->addChild(m_HiScoreLabel.second, 1);
 
-	m_ScoreLabel.second = new CTextLabel("000000", FontSizeL, DX_FONTTYPE_ANTIALIASING);
+	m_ScoreLabel.second = new CTextLabel("00000000", FontSizeL, DX_FONTTYPE_ANTIALIASING);
 	m_ScoreLabel.second->setPosition(PosX + OffsetX, m_ScoreLabel.first->getPosition().y);
 	this->addChild(m_ScoreLabel.second, 1);
 
@@ -246,7 +246,7 @@ LUAGLUE CGameScene::__setRCharaterImage(lua_State* vioLuaState)
 LUAGLUE CGameScene::__beginDialogue(lua_State* vioLuaState)
 {
 	m_GameState = EGameState::IN_DIALOGUE;
-	m_pDialogBackground->setImageFile("dialogue.png");
+	m_pDialogBackground->setImageFile("ui.png", recti{ 1024, 256, 920, 184 });
 	return 0;
 }
 

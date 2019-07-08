@@ -9,8 +9,8 @@ CParticle01::CParticle01(const recti& vArea, float vDensity) : m_Area(vArea)
 
 	for (int i = 0; i < Num; ++i)
 	{
-		CSprite* pParticle = new CSprite("particle_00.png");
-		pParticle->setScale(0.3 + 0.3 * randf(), 0.3 + 0.3 * randf());
+		CSprite* pParticle = new CSprite("bullet_00.png", recti{ 224, 208, 32, 32 });
+		pParticle->setScale(0.2 + 0.2 * randf(), 0.2 + 0.2 * randf());
 		pParticle->setBrightness(vec3i{ 100 + rand() % 50, 100 + rand() % 50, 0 });
 		float PosX = rand() % vArea.w + vArea.x;
 		float PosY = rand() % vArea.h + vArea.y + vArea.h;

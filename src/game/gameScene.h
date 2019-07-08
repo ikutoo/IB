@@ -63,12 +63,12 @@ private:
 	CParticle01* m_pLParticles = nullptr;
 	CParticle01* m_pRParticles = nullptr;
 
-	std::pair<CTextLabel*, CTextLabel*> m_HiScoreLabel;
-	std::pair<CTextLabel*, CTextLabel*> m_ScoreLabel;
-	std::pair<CTextLabel*, CTextLabel*> m_PlayerNumLabel;
-	std::pair<CTextLabel*, CTextLabel*> m_BombNumLabel;
-	std::pair<CTextLabel*, CTextLabel*> m_PowerLabel;
-	std::pair<CTextLabel*, CTextLabel*> m_GrazeLabel;
+	std::pair<CSprite*, CTextLabel*> m_HiScoreLabel;
+	std::pair<CSprite*, CTextLabel*> m_ScoreLabel;
+	std::pair<CSprite*, CTextLabel*> m_PlayerNumLabel;
+	std::pair<CSprite*, CTextLabel*> m_BombNumLabel;
+	std::pair<CSprite*, CTextLabel*> m_PowerLabel;
+	std::pair<CSprite*, CTextLabel*> m_GrazeLabel;
 
 	int m_Counter = 0;
 };

@@ -5,7 +5,9 @@
 #include "engine/sprite.h"
 #include "particles.h"
 
-class CTitleScene : public  DxEngine::CScene
+using namespace DxEngine;
+
+class CTitleScene : public CScene
 {
 public:
 	virtual bool _initV() override;
@@ -13,8 +15,8 @@ public:
 	virtual void _destroyV() override;
 
 private:
-	DxEngine::CImageLabel* m_pFlagLabel = nullptr;
-	std::vector<DxEngine::CTextLabel*> m_MenuLabels;
+	CSprite* m_pFlagSprite = nullptr;
+	std::vector<CTextLabel*> m_MenuLabels;
 
 	CParticle01* m_pParticles = nullptr;
 

@@ -65,6 +65,9 @@
     <ClCompile Include="..\..\src\game\particles.cpp">
       <Filter>Source Files\particles</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\common.h">
@@ -111,6 +114,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\particles.h">
       <Filter>Source Files\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\player.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

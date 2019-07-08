@@ -94,11 +94,11 @@ bool CLevelScene::__initUI()
 		this->addChild(pLabel);
 	}
 
-	m_pFlagLabel = new CImageLabel("flag.png");
-	m_pFlagLabel->setPosition(100, m_MenuLabels[0]->getPosition().y - 10);
-	this->addChild(m_pFlagLabel);
+	m_pFlagSprite = new CSprite("ui.png", recti{ 64, 640, 74, 54 });
+	m_pFlagSprite->setPosition(100, m_MenuLabels[0]->getPosition().y - 10);
+	this->addChild(m_pFlagSprite);
 
-	m_pImageLabel = new CImageLabel("alice_00.png");
+	m_pImageLabel = new CSprite("ui.png", recti{ 256, 256, 480, 480 });
 	m_pImageLabel->setPosition(GRAPH_SIZE_X - m_pImageLabel->getSize().x, GRAPH_SIZE_Y - m_pImageLabel->getSize().y);
 	m_pImageLabel->setBrightness(vec3i{ 200, 200, 200 });
 	this->addChild(m_pImageLabel);
@@ -141,5 +141,5 @@ void CLevelScene::__updateSelectedLabel()
 		}
 	}
 
-	m_pFlagLabel->setPosition(m_pFlagLabel->getPosition().x, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y - 10);
+	m_pFlagSprite->setPosition(m_pFlagSprite->getPosition().x, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y - 10);
 }

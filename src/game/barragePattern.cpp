@@ -13,7 +13,7 @@ void CBarragePattern::barragePattern001(float x, float y, int vCounter)
 
 	for (int i = 0; i < 360; i += 30)
 	{
-		CBullet* pBullet = new CBullet("bullet_01.png");
+		CBullet* pBullet = new CBullet("bullet_00.png", recti{ 208, 64, 16, 16 });
 		pBullet->_MoveFunc = CMovePattern::movePattern001;
 		pBullet->_Rotation = (i + vCounter) * PI / 180;
 		pBullet->_Position.x = x + 20 * sin(pBullet->_Rotation);

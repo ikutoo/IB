@@ -2,10 +2,12 @@
 #include <functional>
 #include "engine/sprite.h"
 
-class CBullet : public DxEngine::CSprite
+using namespace DxEngine;
+
+class CBullet : public CSprite
 {
 public:
-	CBullet(const std::string& vImageFile) : DxEngine::CSprite(vImageFile) {}
+	CBullet(const std::string& vImageFile, const recti& vRect = {}) :CSprite(vImageFile, vRect) {}
 	~CBullet() = default;
 
 private:

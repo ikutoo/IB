@@ -3,6 +3,8 @@
 #include "engine/scene.h"
 #include "common.h"
 
+using namespace DxEngine;
+
 namespace DxEngine
 {
 	class CImageLabel;
@@ -12,7 +14,7 @@ namespace DxEngine
 
 class CTransparentWindow;
 
-class CLevelScene : public  DxEngine::CScene
+class CLevelScene : public  CScene
 {
 public:
 	bool _initV() override;
@@ -20,11 +22,10 @@ public:
 	void _destroyV() override;
 
 private:
-	std::vector<DxEngine::CTextLabel*> m_MenuLabels;
-	DxEngine::CImageLabel* m_pFlagLabel = nullptr;
-
-	DxEngine::CImageLabel* m_pImageLabel = nullptr;
-	DxEngine::CTextLabel* m_pDescLabel = nullptr;
+	std::vector<CTextLabel*> m_MenuLabels;
+	CTextLabel* m_pDescLabel = nullptr;
+	CSprite* m_pFlagSprite = nullptr;
+	CSprite* m_pImageLabel = nullptr;
 
 	CTransparentWindow* m_pTransWindow = nullptr;
 
