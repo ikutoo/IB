@@ -7,9 +7,9 @@ using namespace DxEngine;
 
 //*********************************************************************
 //FUNCTION:
-std::string Utility::readFileToString(const char* vFilePath)
+std::string Utility::readFileToString(const std::string& vFilePath)
 {
-	_ASSERTE(nullptr != vFilePath);
+	_ASSERTE(!vFilePath.empty());
 	std::ifstream fin(vFilePath);
 	_ASSERTE(fin.is_open());
 	std::string fileContent;
@@ -57,4 +57,13 @@ std::string Utility::gbkToUtf8(const std::string& vStrGBK)
 	delete[] pStr2;
 	pStr2 = nullptr;
 	return strOutUTF8;
+}
+
+//*********************************************************************
+//FUNCTION:
+void Utility::writeStringToFile(const std::string& vFilePath, const std::string& vContent)
+{
+	std::ofstream ofs(vFilePath);
+	_ASSERTE(ofs.is_open());
+	ofs << vContent;
 }

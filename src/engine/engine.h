@@ -26,6 +26,7 @@ namespace DxEngine
 		CScene* popScene();
 
 		void setWindowSize(int vWidth, int vHeight) { _ASSERTE(!m_IsInitialized); m_DisplayInfo.WindowSize = { vWidth, vHeight }; }
+		void setFullscreen(bool vFullscreen) { m_DisplayInfo.IsFullscreen = vFullscreen; }
 		void setWindowPosition(int vPosX, int vPosY) { _ASSERTE(!m_IsInitialized); m_DisplayInfo.WindowPosition = { vPosX, vPosY }; }
 		void setWindowTitle(const std::string& vTitle) { _ASSERTE(!m_IsInitialized); m_DisplayInfo.WindowTitle = vTitle; }
 		void setGraphSize(int vWidth, int vHeight) { _ASSERTE(!m_IsInitialized); m_GraphSize = { vWidth, vHeight }; }
@@ -35,6 +36,7 @@ namespace DxEngine
 		void setDisableCNInputHint() { m_DisableCNInputHint = true; }
 
 		vec2i getGraphSize() const { return m_GraphSize; }
+		bool  isFullScreen() const { return m_DisplayInfo.IsFullscreen; }
 
 		void updateStatus(const std::string& vDesc, float vValue) { m_AppStatusMap[vDesc] = vValue; }
 

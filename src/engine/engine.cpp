@@ -136,16 +136,18 @@ void CEngine::__drawStatus()
 //FUNCTION:
 bool CEngine::__initWindowInfo()
 {
-	CHECK_RESULT(DxLib::SetWindowSize(m_DisplayInfo.WindowSize.x, m_DisplayInfo.WindowSize.y));
 	CHECK_RESULT(DxLib::SetGraphMode(m_GraphSize.x, m_GraphSize.y, 32));
-
-	m_DisplayInfo.ScreenSize = { GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN) };
-	m_DisplayInfo.WindowPosition.x = (m_DisplayInfo.ScreenSize.x - m_DisplayInfo.WindowSize.x) / 2;
-	m_DisplayInfo.WindowPosition.y = (m_DisplayInfo.ScreenSize.y - m_DisplayInfo.WindowSize.y) / 2;
-
 	CHECK_RESULT(DxLib::ChangeWindowMode(!m_DisplayInfo.IsFullscreen));
-	CHECK_RESULT(DxLib::SetWindowPosition(m_DisplayInfo.WindowPosition.x, m_DisplayInfo.WindowPosition.y));
 	CHECK_RESULT(DxLib::SetWindowText(m_DisplayInfo.WindowTitle.c_str()));
+	m_DisplayInfo.ScreenSize = { GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN) };
+
+	if (!m_DisplayInfo.IsFullscreen)
+	{
+		CHECK_RESULT(DxLib::SetWindowSize(m_DisplayInfo.WindowSize.x, m_DisplayInfo.WindowSize.y));
+		m_DisplayInfo.WindowPosition.x = (m_DisplayInfo.ScreenSize.x - m_DisplayInfo.WindowSize.x) / 2;
+		m_DisplayInfo.WindowPosition.y = (m_DisplayInfo.ScreenSize.y - m_DisplayInfo.WindowSize.y) / 2;
+		CHECK_RESULT(DxLib::SetWindowPosition(m_DisplayInfo.WindowPosition.x, m_DisplayInfo.WindowPosition.y));
+	}
 
 	return true;
 }

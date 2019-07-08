@@ -37,15 +37,15 @@ bool CTitleScene::_initV()
 	pTitleLabel->setPosition((GRAPH_SIZE_X - pTitleLabel->getSize().x) / 2, 100);
 	this->addChild(pTitleLabel);
 
-	auto pPlayLabel = new CTextLabel("开始游戏", 50, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, 0xffffff, 0xffff00);
+	auto pPlayLabel = new CLabel("开始游戏", 50, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, 0xffffff, 0xffff00);
 	pPlayLabel->setPosition(800, 600);
 	m_MenuLabels.emplace_back(pPlayLabel);
 
-	auto pHelpLabel = new CTextLabel("操作说明", 50, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, 0xffffff, 0xffff00);
+	auto pHelpLabel = new CLabel("操作说明", 50, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, 0xffffff, 0xffff00);
 	pHelpLabel->setPosition(800, 700);
 	m_MenuLabels.emplace_back(pHelpLabel);
 
-	auto pExitLabel = new CTextLabel("退出游戏", 50, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, 0xffffff, 0xffff00);
+	auto pExitLabel = new CLabel("退出游戏", 50, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, 0xffffff, 0xffff00);
 	pExitLabel->setPosition(800, 800);
 	m_MenuLabels.emplace_back(pExitLabel);
 

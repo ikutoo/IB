@@ -16,7 +16,7 @@ public:
 
 private:
 	CSprite* m_pFlagSprite = nullptr;
-	std::vector<CTextLabel*> m_MenuLabels;
+	std::vector<CLabel*> m_MenuLabels;
 
 	CParticle01* m_pParticles = nullptr;
 

@@ -5,6 +5,7 @@
 #include "gameScene.h"
 #include "barrageManager.h"
 #include "barragePattern.h"
+#include "player.h"
 
 using namespace DxEngine;
 
@@ -26,6 +27,10 @@ bool CGameScene::_initV()
 
 	__initLuaEnv();
 	__initUI();
+
+	m_pPlayer = new CPlayer;
+	m_pPlayer->setPosition(960, 1000);
+	this->addChild(m_pPlayer);
 
 	__performLuaScript(m_ScriptActions[m_ActionIndex++].c_str());
 
@@ -113,36 +118,36 @@ bool CGameScene::__initUI()
 	this->addChild(m_GrazeLabel.first, 1);
 
 	float OffsetX = 200;
-	m_HiScoreLabel.second = new CTextLabel("00000000", FontSizeL, DX_FONTTYPE_ANTIALIASING);
+	m_HiScoreLabel.second = new CLabel("00000000", FontSizeL, DX_FONTTYPE_ANTIALIASING);
 	m_HiScoreLabel.second->setPosition(PosX + OffsetX, m_HiScoreLabel.first->getPosition().y);
 	this->addChild(m_HiScoreLabel.second, 1);
 
-	m_ScoreLabel.second = new CTextLabel("00000000", FontSizeL, DX_FONTTYPE_ANTIALIASING);
+	m_ScoreLabel.second = new CLabel("00000000", FontSizeL, DX_FONTTYPE_ANTIALIASING);
 	m_ScoreLabel.second->setPosition(PosX + OffsetX, m_ScoreLabel.first->getPosition().y);
 	this->addChild(m_ScoreLabel.second, 1);
 
-	m_PlayerNumLabel.second = new CTextLabel("000", FontSizeM, DX_FONTTYPE_ANTIALIASING);
+	m_PlayerNumLabel.second = new CLabel("000", FontSizeM, DX_FONTTYPE_ANTIALIASING);
 	m_PlayerNumLabel.second->setPosition(PosX + OffsetX, m_PlayerNumLabel.first->getPosition().y);
 	this->addChild(m_PlayerNumLabel.second, 1);
 
-	m_BombNumLabel.second = new CTextLabel("000", FontSizeM, DX_FONTTYPE_ANTIALIASING);
+	m_BombNumLabel.second = new CLabel("000", FontSizeM, DX_FONTTYPE_ANTIALIASING);
 	m_BombNumLabel.second->setPosition(PosX + OffsetX, m_BombNumLabel.first->getPosition().y);
 	this->addChild(m_BombNumLabel.second, 1);
 
-	m_PowerLabel.second = new CTextLabel("000", FontSizeM, DX_FONTTYPE_ANTIALIASING);
+	m_PowerLabel.second = new CLabel("000", FontSizeM, DX_FONTTYPE_ANTIALIASING);
 	m_PowerLabel.second->setPosition(PosX + OffsetX, m_PowerLabel.first->getPosition().y);
 	this->addChild(m_PowerLabel.second, 1);
 
-	m_GrazeLabel.second = new CTextLabel("000", FontSizeM, DX_FONTTYPE_ANTIALIASING);
+	m_GrazeLabel.second = new CLabel("000", FontSizeM, DX_FONTTYPE_ANTIALIASING);
 	m_GrazeLabel.second->setPosition(PosX + OffsetX, m_GrazeLabel.first->getPosition().y);
 	this->addChild(m_GrazeLabel.second, 1);
 
-	m_pChNameLabel = new CTextLabel("", 26);
+	m_pChNameLabel = new CLabel("", 26);
 	m_pChNameLabel->setFontColor(0xffff00);
 	m_pChNameLabel->setPosition(540, 812);
 	this->addChild(m_pChNameLabel, 1);
 
-	m_pDialogueLabel = new CTextLabel("", 22);
+	m_pDialogueLabel = new CLabel("", 22);
 	m_pDialogueLabel->setFontColor(GetColor(228, 231, 152));
 	m_pDialogueLabel->setPosition(565, 880);
 	this->addChild(m_pDialogueLabel, 1);

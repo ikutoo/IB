@@ -8,7 +8,7 @@ using namespace DxEngine;
 namespace DxEngine
 {
 	class CImageLabel;
-	class CTextLabel;
+	class CLabel;
 	class CSprite;
 }
 
@@ -22,8 +22,8 @@ public:
 	void _destroyV() override;
 
 private:
-	std::vector<CTextLabel*> m_MenuLabels;
-	CTextLabel* m_pDescLabel = nullptr;
+	std::vector<CLabel*> m_MenuLabels;
+	CLabel* m_pDescLabel = nullptr;
 	CSprite* m_pFlagSprite = nullptr;
 	CSprite* m_pImageLabel = nullptr;
 

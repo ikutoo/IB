@@ -5,40 +5,55 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Source Files\node">
+      <UniqueIdentifier>{2bd581fd-4a0e-443b-bb9c-c999d30138c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{33d37260-a84b-4a6e-b32f-974675c939fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\script">
+      <UniqueIdentifier>{c78fe013-2c2e-4ca6-90cc-a87fbbbbd216}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\manager">
+      <UniqueIdentifier>{0fe3f534-29d0-45a4-94ff-0ef733d5d108}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\engine\engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\inputManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\engine\node.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\engine\resourceManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\node</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\engine\scene.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\node</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\engine\sprite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\engine\utility.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\node</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\engine\label.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\node</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\cpuTimer.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\src\engine\utility.cpp">
+      <Filter>Source Files\utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\graphics2d.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\src\engine\jsonUtil.cpp">
+      <Filter>Source Files\utils</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\engine\luaGlue.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\cpuTimer.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\graphics2d.cpp">
+      <Filter>Source Files\node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\inputManager.cpp">
+      <Filter>Source Files\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\resourceManager.cpp">
+      <Filter>Source Files\manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -48,38 +63,41 @@
     <ClInclude Include="..\..\src\engine\engine.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\engine\inputManager.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\engine\math.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\engine\node.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\engine\resourceManager.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\engine\scene.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\node</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\engine\sprite.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\node</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\engine\utility.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="..\..\src\engine\scene.h">
+      <Filter>Source Files\node</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\engine\label.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\node</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\engine\cpuTimer.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="..\..\src\engine\utility.h">
+      <Filter>Source Files\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\engine\graphics2d.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="..\..\src\engine\jsonUtil.h">
+      <Filter>Source Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\engine\math.h">
+      <Filter>Source Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\engine\luaGlue.h">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\engine\cpuTimer.h">
+      <Filter>Source Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\engine\graphics2d.h">
+      <Filter>Source Files\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\engine\resourceManager.h">
+      <Filter>Source Files\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\engine\inputManager.h">
+      <Filter>Source Files\manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

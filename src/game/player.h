@@ -4,5 +4,6 @@
 class CPlayer : public DxEngine::CSprite
 {
 public:
-
+	CPlayer();
+	~CPlayer();
 };

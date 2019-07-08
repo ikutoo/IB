@@ -40,7 +40,8 @@ bool CLevelScene::_initV()
 
 	__initUI();
 
-	m_pTransWindow = new CTransparentWindow;
+	if (!CEngine::getInstance()->isFullScreen()) m_pTransWindow = new CTransparentWindow;
+
 	SetActiveWindow(DxLib::GetMainWindowHandle());
 
 	return true;
@@ -50,7 +51,7 @@ bool CLevelScene::_initV()
 //FUNCTION:
 void CLevelScene::_updateV(double vDeltaTime)
 {
-	m_pTransWindow->update(vDeltaTime);
+	if(!CEngine::getInstance()->isFullScreen()) m_pTransWindow->update(vDeltaTime);
 
 	__updateSelectedLabel();
 
@@ -59,7 +60,7 @@ void CLevelScene::_updateV(double vDeltaTime)
 	if (CHECK_HIT_KEY(KEY_INPUT_Z))
 	{
 		char ScriptFileName[0xff];
-		sprintf(ScriptFileName, "%slevel%d.lua", RES_SCR_ROOT.c_str(), m_SelectedLabelIndex);
+		sprintf(ScriptFileName, "%slevel%d.dialogue", RES_SCR_ROOT.c_str(), m_SelectedLabelIndex);
 		CEngine::getInstance()->setActiveScene(new CGameScene(ScriptFileName));
 
 		CHECK_RESULT(DxLib::StopMusic());
@@ -87,7 +88,7 @@ bool CLevelScene::__initUI()
 {
 	for (int i = 0; i < 7; ++i)
 	{
-		auto pLabel = new CTextLabel(LEVEL_DESC[i][0], 32, DX_FONTTYPE_ANTIALIASING_EDGE, MENU_FONT_COLOE_NORMAL, MENU_FONT_EDGE_COLOE_NORMAL);
+		auto pLabel = new CLabel(LEVEL_DESC[i][0], 32, DX_FONTTYPE_ANTIALIASING_EDGE, MENU_FONT_COLOE_NORMAL, MENU_FONT_EDGE_COLOE_NORMAL);
 		pLabel->setPosition(200, 200 + i * 100);
 
 		m_MenuLabels.emplace_back(pLabel);
@@ -103,7 +104,7 @@ bool CLevelScene::__initUI()
 	m_pImageLabel->setBrightness(vec3i{ 200, 200, 200 });
 	this->addChild(m_pImageLabel);
 
-	m_pDescLabel = new CTextLabel("", 20, DX_FONTTYPE_NORMAL, GetColor(228, 231, 152), 0, 10);
+	m_pDescLabel = new CLabel("", 20, DX_FONTTYPE_NORMAL, GetColor(228, 231, 152), 0, 10);
 	m_pDescLabel->setPosition(800, 200);
 	this->addChild(m_pDescLabel);
 

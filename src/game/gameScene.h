@@ -16,6 +16,8 @@ enum class EGameState : char
 	IN_DIALOGUE
 };
 
+class CPlayer;
+
 class CGameScene : public CScene
 {
 public:
@@ -52,23 +54,25 @@ private:
 	std::vector<std::string> m_ScriptActions;
 	unsigned m_ActionIndex = 0;
 
+	CPlayer* m_pPlayer = nullptr;
+
 	CSprite* m_pLCharacter = nullptr;
 	CSprite* m_pRCharacter = nullptr;
 	CSprite* m_pBackground = nullptr;
 
-	CTextLabel* m_pChNameLabel = nullptr;
-	CTextLabel* m_pDialogueLabel = nullptr;
+	CLabel* m_pChNameLabel = nullptr;
+	CLabel* m_pDialogueLabel = nullptr;
 	CSprite*	m_pDialogBackground = nullptr;
 
 	CParticle01* m_pLParticles = nullptr;
 	CParticle01* m_pRParticles = nullptr;
 
-	std::pair<CSprite*, CTextLabel*> m_HiScoreLabel;
-	std::pair<CSprite*, CTextLabel*> m_ScoreLabel;
-	std::pair<CSprite*, CTextLabel*> m_PlayerNumLabel;
-	std::pair<CSprite*, CTextLabel*> m_BombNumLabel;
-	std::pair<CSprite*, CTextLabel*> m_PowerLabel;
-	std::pair<CSprite*, CTextLabel*> m_GrazeLabel;
+	std::pair<CSprite*, CLabel*> m_HiScoreLabel;
+	std::pair<CSprite*, CLabel*> m_ScoreLabel;
+	std::pair<CSprite*, CLabel*> m_PlayerNumLabel;
+	std::pair<CSprite*, CLabel*> m_BombNumLabel;
+	std::pair<CSprite*, CLabel*> m_PowerLabel;
+	std::pair<CSprite*, CLabel*> m_GrazeLabel;
 
 	int m_Counter = 0;
 };

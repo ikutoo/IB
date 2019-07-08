@@ -8,7 +8,7 @@ using namespace DxEngine;
 
 //*********************************************************************
 //FUNCTION:
-DxEngine::CTextLabel::CTextLabel(const std::string& vText, int vFontSize, int vFontType, int vFontColor, int vEdgeColor, int vFontThickness)
+DxEngine::CLabel::CLabel(const std::string& vText, int vFontSize, int vFontType, int vFontColor, int vEdgeColor, int vFontThickness)
 	: m_Text(vText), m_FontSize(vFontSize), m_FontType(vFontType), m_FontColor(vFontColor), m_EdgeColor(vEdgeColor), m_FontThickness(vFontThickness)
 {
 	auto GraphSize = CEngine::getInstance()->getGraphSize();
@@ -18,14 +18,14 @@ DxEngine::CTextLabel::CTextLabel(const std::string& vText, int vFontSize, int vF
 
 //*********************************************************************
 //FUNCTION:
-CTextLabel::~CTextLabel()
+CLabel::~CLabel()
 {
 	CHECK_RESULT(DxLib::DeleteGraph(m_TextGraphHandle));
 }
 
 //*********************************************************************
 //FUNCTION:
-void DxEngine::CTextLabel::drawV()
+void DxEngine::CLabel::drawV()
 {
 	CNode::drawV();
 

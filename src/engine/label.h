@@ -3,11 +3,11 @@
 
 namespace DxEngine
 {
-	class CTextLabel : public CNode
+	class CLabel : public CNode
 	{
 	public:
-		CTextLabel(const std::string& vText = "", int vFontSize = 20, int vFontType = 0, int vFontColor = 0xffffff, int vEdgeColor = 0xffffff, int vFontThickness = 6);
-		~CTextLabel();
+		CLabel(const std::string& vText = "", int vFontSize = 20, int vFontType = 0, int vFontColor = 0xffffff, int vEdgeColor = 0xffffff, int vFontThickness = 6);
+		~CLabel();
 
 		void setText(const std::string& vText) { if (vText != m_Text) { m_Text = vText;  m_IsChanged = true; } }
 		void setFontSize(int vFontSize) { if (vFontSize != m_FontSize) { m_FontSize = vFontSize; m_IsChanged = true; } }
