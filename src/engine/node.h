@@ -29,13 +29,15 @@ namespace DxEngine
 
 		void setName(const std::string& vName) { m_Name = vName; }
 
+		void setVisible(bool vIsVisible) { _IsVisible = vIsVisible; }
+
 		CNode* findChild(const std::string& vName);
 
 		const vec2f& getPosition() const { return _Position; }
 		float getLocalZ() const { return _LocalZ; }
 		const std::string& getName() const { return m_Name; }
 
-		void addChild(CNode* vNode, float vLocalZ = 0.0f) { _ASSERT(vNode); vNode->setLocalZ(vLocalZ); _Childs.emplace_back(vNode); }
+		void addChild(CNode* vNode, float vLocalZ = 0.0f);
 		void removeChild(CNode* vNode, bool vDestroyChild = true);
 		void removeAllChilds(bool vDestroyChilds = true);
 
@@ -58,6 +60,7 @@ namespace DxEngine
 
 		uint32_t _Counter = 0;
 
+		bool _IsVisible = true;
 		bool _IsPaused = false;
 	};
 }

@@ -1,0 +1,146 @@
+{
+	"bgSprite":
+	{
+		"type": "sprite",
+		"localZ": -1.0,
+		"brightness": [50, 50, 50]
+	},
+	"lChSprite":
+	{
+		"type": "sprite",
+		"position": [-50.0, 350.0],
+		"localZ": 1.0
+	},
+	"rChSprite":
+	{
+		"type": "sprite",
+		"position": [1300.0, 350.0],
+		"localZ": 1.0,
+		"flip": true
+	},
+	"dialogueBgSprite":
+	{
+		"type": "sprite",
+		"position": [500.0, 800.0],
+		"localZ": 1.0
+	},
+	"dialogueLabel":
+	{
+		"type": "label",
+		"position": [565, 880],
+		"localZ": 1.0,
+		"fontSize": 22,
+		"fontColor": [228, 231, 152],
+		"edgeColor": [255, 255, 0]
+	},
+	"chNameLabel":
+	{
+		"type": "label",
+		"position": [540, 812],
+		"localZ": 1.0,
+		"fontSize": 26,
+		"fontColor": [255, 255, 0]
+	},
+	"hiscoreSprite":
+	{
+		"type": "sprite",
+		"position": [1450, 20],
+		"localZ": 1.0,
+		"file": "ui.png",
+		"rect": [850, 480, 164, 34]
+	},
+	"hiscoreLabel":
+	{
+		"type": "label",
+		"position": [1650, 20],
+		"localZ": 1.0,
+		"text": "00000000",
+		"fontSize": 36,
+		"fontType": 2
+	},
+	"scoreSprite":
+	{
+		"type": "sprite",
+		"position": [1450, 70],
+		"localZ": 1.0,
+		"file": "ui.png",
+		"rect": [850, 529, 123, 34]
+	},
+	"scoreLabel":
+	{
+		"type": "label",
+		"position": [1650, 70],
+		"localZ": 1.0,
+		"text": "00000000",
+		"fontSize": 36,
+		"fontType": 2
+	},
+	"playerNumSprite":
+	{
+		"type": "sprite",
+		"position": [1450, 150],
+		"localZ": 1.0,
+		"file": "ui.png",
+		"rect": [850, 581, 71, 22]
+	},
+	"playerNumLabel":
+	{
+		"type": "label",
+		"position": [1650, 150],
+		"localZ": 1.0,
+		"text": "000",
+		"fontSize": 24,
+		"fontType": 2
+	},
+	"bombNumSprite":
+	{
+		"type": "sprite",
+		"position": [1450, 190],
+		"localZ": 1.0,
+		"file": "ui.png",
+		"rect": [850, 620, 64, 20]
+	},
+	"bombNumLabel":
+	{
+		"type": "label",
+		"position": [1650, 190],
+		"localZ": 1.0,
+		"text": "000",
+		"fontSize": 24,
+		"fontType": 2
+	},
+	"powerSprite":
+	{
+		"type": "sprite",
+		"position": [1450, 250],
+		"localZ": 1.0,
+		"file": "ui.png",
+		"rect": [849, 664, 70, 21]
+	},
+	"powerLabel":
+	{
+		"type": "label",
+		"position": [1650, 250],
+		"localZ": 1.0,
+		"text": "000",
+		"fontSize": 24,
+		"fontType": 2
+	},
+	"grazeSprite":
+	{
+		"type": "sprite",
+		"position": [1450, 290],
+		"localZ": 1.0,
+		"file": "ui.png",
+		"rect": [849, 709, 69, 21]
+	},
+	"grazeLabel":
+	{
+		"type": "label",
+		"position": [1650, 290],
+		"localZ": 1.0,
+		"text": "000",
+		"fontSize": 24,
+		"fontType": 2
+	}
+}

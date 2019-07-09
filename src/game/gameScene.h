@@ -47,6 +47,9 @@ private:
 	LUAGLUE __setDialogue(lua_State* vioLuaState);
 	LUAGLUE __setCharacterName(lua_State* vioLuaState);
 
+	CSprite* __findUISprite(const std::string& vName);
+	CLabel*  __findUILabel(const std::string& vName);
+
 	EGameState m_GameState = EGameState::UNDEFINED;
 
 	lua_State* m_pLuaState = nullptr;
@@ -54,25 +57,12 @@ private:
 	std::vector<std::string> m_ScriptActions;
 	unsigned m_ActionIndex = 0;
 
+	CNode* m_pUIRootNode = nullptr;
+
 	CPlayer* m_pPlayer = nullptr;
-
-	CSprite* m_pLCharacter = nullptr;
-	CSprite* m_pRCharacter = nullptr;
-	CSprite* m_pBackground = nullptr;
-
-	CLabel* m_pChNameLabel = nullptr;
-	CLabel* m_pDialogueLabel = nullptr;
-	CSprite*	m_pDialogBackground = nullptr;
 
 	CParticle01* m_pLParticles = nullptr;
 	CParticle01* m_pRParticles = nullptr;
-
-	std::pair<CSprite*, CLabel*> m_HiScoreLabel;
-	std::pair<CSprite*, CLabel*> m_ScoreLabel;
-	std::pair<CSprite*, CLabel*> m_PlayerNumLabel;
-	std::pair<CSprite*, CLabel*> m_BombNumLabel;
-	std::pair<CSprite*, CLabel*> m_PowerLabel;
-	std::pair<CSprite*, CLabel*> m_GrazeLabel;
 
 	int m_Counter = 0;
 };

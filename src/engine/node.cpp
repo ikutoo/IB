@@ -52,3 +52,12 @@ CNode* CNode::findChild(const std::string& vName)
 	}
 	return nullptr;
 }
+
+//***********************************************************************************************
+//FUNCTION:
+void CNode::addChild(CNode* vNode, float vLocalZ)
+{
+	_ASSERT(vNode);
+	if (vLocalZ != 0.0) vNode->setLocalZ(vLocalZ);
+	_Childs.emplace_back(vNode);
+}

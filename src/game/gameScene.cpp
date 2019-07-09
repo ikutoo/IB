@@ -2,6 +2,7 @@
 #include "engine/graphics2d.h"
 #include "engine/utility.h"
 #include "engine/inputManager.h"
+#include "engine/jsonUtil.h"
 #include "gameScene.h"
 #include "barrageManager.h"
 #include "barragePattern.h"
@@ -67,90 +68,15 @@ void CGameScene::_destroyV()
 //FUNCTION:
 bool CGameScene::__initUI()
 {
-	m_pBackground = new CSprite;
-	m_pBackground->setBrightness({ 50, 50, 50 });
-	this->addChild(m_pBackground, 1);
+	CJsonReader JsonReader("game_scene.ui");
+	m_pUIRootNode = JsonReader.getRootNode();
+	this->addChild(m_pUIRootNode, 1);
 
 	m_pLParticles = new CParticle01(recti{ 0, 0, 480, GRAPH_SIZE_Y }, 2.0);
-	this->addChild(m_pLParticles, 1);
+	m_pUIRootNode->addChild(m_pLParticles);
 
 	m_pRParticles = new CParticle01(recti{ GRAPH_SIZE_X - 500, 0, 500, GRAPH_SIZE_Y }, 2.0);
-	this->addChild(m_pRParticles, 1);
-
-	m_pLCharacter = new CSprite;
-	m_pLCharacter->setPosition(-50, 250);
-	m_pLCharacter->setScale(0.9, 0.9);
-	this->addChild(m_pLCharacter, 1);
-
-	m_pRCharacter = new CSprite;
-	m_pRCharacter->setPosition(1300, 350);
-	m_pRCharacter->flip();
-	this->addChild(m_pRCharacter, 1);
-
-	m_pDialogBackground = new CSprite;
-	m_pDialogBackground->setPosition(500, 800);
-	this->addChild(m_pDialogBackground, 1);
-
-	const int FontSizeL = 35, FontSizeM = 25;
-	float PosX = 1450;
-	m_HiScoreLabel.first = new CSprite("ui.png", recti{ 850, 480, 164, 34 });
-	m_HiScoreLabel.first->setPosition(PosX, 20);
-	this->addChild(m_HiScoreLabel.first, 1);
-
-	m_ScoreLabel.first = new CSprite("ui.png", recti{ 850, 529, 123, 34 });
-	m_ScoreLabel.first->setPosition(PosX, 70);
-	this->addChild(m_ScoreLabel.first, 1);
-
-	m_PlayerNumLabel.first = new CSprite("ui.png", recti{ 850, 581, 71, 22 });
-	m_PlayerNumLabel.first->setPosition(PosX, 150);
-	this->addChild(m_PlayerNumLabel.first, 1);
-
-	m_BombNumLabel.first = new CSprite("ui.png", recti{ 850, 620, 64, 20 });
-	m_BombNumLabel.first->setPosition(PosX, 190);
-	this->addChild(m_BombNumLabel.first, 1);
-
-	m_PowerLabel.first = new CSprite("ui.png", recti{ 849, 664, 70, 21 });
-	m_PowerLabel.first->setPosition(PosX, 250);
-	this->addChild(m_PowerLabel.first, 1);
-
-	m_GrazeLabel.first = new CSprite("ui.png", recti{ 849, 709, 69, 21 });
-	m_GrazeLabel.first->setPosition(PosX, 290);
-	this->addChild(m_GrazeLabel.first, 1);
-
-	float OffsetX = 200;
-	m_HiScoreLabel.second = new CLabel("00000000", FontSizeL, DX_FONTTYPE_ANTIALIASING);
-	m_HiScoreLabel.second->setPosition(PosX + OffsetX, m_HiScoreLabel.first->getPosition().y);
-	this->addChild(m_HiScoreLabel.second, 1);
-
-	m_ScoreLabel.second = new CLabel("00000000", FontSizeL, DX_FONTTYPE_ANTIALIASING);
-	m_ScoreLabel.second->setPosition(PosX + OffsetX, m_ScoreLabel.first->getPosition().y);
-	this->addChild(m_ScoreLabel.second, 1);
-
-	m_PlayerNumLabel.second = new CLabel("000", FontSizeM, DX_FONTTYPE_ANTIALIASING);
-	m_PlayerNumLabel.second->setPosition(PosX + OffsetX, m_PlayerNumLabel.first->getPosition().y);
-	this->addChild(m_PlayerNumLabel.second, 1);
-
-	m_BombNumLabel.second = new CLabel("000", FontSizeM, DX_FONTTYPE_ANTIALIASING);
-	m_BombNumLabel.second->setPosition(PosX + OffsetX, m_BombNumLabel.first->getPosition().y);
-	this->addChild(m_BombNumLabel.second, 1);
-
-	m_PowerLabel.second = new CLabel("000", FontSizeM, DX_FONTTYPE_ANTIALIASING);
-	m_PowerLabel.second->setPosition(PosX + OffsetX, m_PowerLabel.first->getPosition().y);
-	this->addChild(m_PowerLabel.second, 1);
-
-	m_GrazeLabel.second = new CLabel("000", FontSizeM, DX_FONTTYPE_ANTIALIASING);
-	m_GrazeLabel.second->setPosition(PosX + OffsetX, m_GrazeLabel.first->getPosition().y);
-	this->addChild(m_GrazeLabel.second, 1);
-
-	m_pChNameLabel = new CLabel("", 26);
-	m_pChNameLabel->setFontColor(0xffff00);
-	m_pChNameLabel->setPosition(540, 812);
-	this->addChild(m_pChNameLabel, 1);
-
-	m_pDialogueLabel = new CLabel("", 22);
-	m_pDialogueLabel->setFontColor(GetColor(228, 231, 152));
-	m_pDialogueLabel->setPosition(565, 880);
-	this->addChild(m_pDialogueLabel, 1);
+	m_pUIRootNode->addChild(m_pRParticles);
 
 	return true;
 }
@@ -224,7 +150,7 @@ void CGameScene::__performLuaScript(const char* vScript)
 LUAGLUE CGameScene::__setBackgroundImage(lua_State* vioLuaState)
 {
 	auto FilePath = lua_tostring(vioLuaState, 1);
-	m_pBackground->setImageFile(FilePath);
+	__findUISprite("bgSprite")->setImageFile(FilePath);
 	return 0;
 }
 
@@ -233,7 +159,7 @@ LUAGLUE CGameScene::__setBackgroundImage(lua_State* vioLuaState)
 LUAGLUE CGameScene::__setLCharaterImage(lua_State* vioLuaState)
 {
 	auto FilePath = lua_tostring(vioLuaState, 1);
-	m_pLCharacter->setImageFile(FilePath);
+	__findUISprite("lChSprite")->setImageFile(FilePath);
 	return 0;
 }
 
@@ -242,7 +168,7 @@ LUAGLUE CGameScene::__setLCharaterImage(lua_State* vioLuaState)
 LUAGLUE CGameScene::__setRCharaterImage(lua_State* vioLuaState)
 {
 	auto FilePath = lua_tostring(vioLuaState, 1);
-	m_pRCharacter->setImageFile(FilePath);
+	__findUISprite("rChSprite")->setImageFile(FilePath);
 	return 0;
 }
 
@@ -251,7 +177,7 @@ LUAGLUE CGameScene::__setRCharaterImage(lua_State* vioLuaState)
 LUAGLUE CGameScene::__beginDialogue(lua_State* vioLuaState)
 {
 	m_GameState = EGameState::IN_DIALOGUE;
-	m_pDialogBackground->setImageFile("ui.png", recti{ 1024, 256, 920, 184 });
+	__findUISprite("dialogueBgSprite")->setImageFile("ui.png", recti{ 1024, 256, 920, 184 });
 	return 0;
 }
 
@@ -260,10 +186,10 @@ LUAGLUE CGameScene::__beginDialogue(lua_State* vioLuaState)
 LUAGLUE CGameScene::__endDialogue(lua_State* vioLuaState)
 {
 	m_GameState = EGameState::NORMAL;
-	m_pDialogBackground->setImageFile("");
-	m_pLCharacter->setImageFile("");
-	m_pDialogueLabel->setText("");
-	m_pChNameLabel->setText("");
+	__findUISprite("dialogueBgSprite")->setImageFile("");
+	__findUISprite("lChSprite")->setImageFile("");
+	__findUILabel("dialogueLabel")->setText("");
+	__findUILabel("chNameLabel")->setText("");
 	return 0;
 }
 
@@ -272,7 +198,7 @@ LUAGLUE CGameScene::__endDialogue(lua_State* vioLuaState)
 LUAGLUE CGameScene::__setDialogue(lua_State* vioLuaState)
 {
 	auto Text = lua_tostring(vioLuaState, 1);
-	m_pDialogueLabel->setText(Text);
+	__findUILabel("dialogueLabel")->setText(Text);
 	return 0;
 }
 
@@ -281,6 +207,26 @@ LUAGLUE CGameScene::__setDialogue(lua_State* vioLuaState)
 LUAGLUE CGameScene::__setCharacterName(lua_State* vioLuaState)
 {
 	auto Text = lua_tostring(vioLuaState, 1);
-	m_pChNameLabel->setText(Text);
+	__findUILabel("chNameLabel")->setText(Text);
 	return 0;
+}
+
+//***********************************************************************************************
+//FUNCTION:
+CSprite* CGameScene::__findUISprite(const std::string& vName)
+{
+	_ASSERTE(m_pUIRootNode);
+	auto pSprite = dynamic_cast<CSprite*>(m_pUIRootNode->findChild(vName));
+	_ASSERTE(pSprite);
+	return pSprite;
+}
+
+//***********************************************************************************************
+//FUNCTION:
+CLabel* CGameScene::__findUILabel(const std::string& vName)
+{
+	_ASSERTE(m_pUIRootNode);
+	auto pLabel = dynamic_cast<CLabel*>(m_pUIRootNode->findChild(vName));
+	_ASSERTE(pLabel);
+	return pLabel;
 }
