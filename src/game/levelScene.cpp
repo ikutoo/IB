@@ -21,7 +21,7 @@ namespace
 
 	const std::vector<std::vector<std::string>> LEVEL_DESC =
 	{
-		{ "序章: 人偶失踪事件",		"  在魔法森林中心的一座小洋馆里,居住着一位热衷于人偶技艺的魔法使,她能用魔法操纵人偶,使其表现的栩栩如生.\n她本人也有着人偶般美丽的外表，" },
+		{ "序章: 人偶失踪事件",		"    在魔法森林中心的一座小洋馆里,居住着一位热衷于人偶技艺的魔法使,她能用魔法\n操纵人偶,使其表现的栩栩如生.\n\n    她本人也有着人偶般美丽的外表,金色的短发与白皙的皮肤,时常穿着一身带有披肩\n的蓝色长裙.\n\n    她平时喜欢制作与收集各种人偶,把人偶当做重要的朋友与伙伴,与众多人偶们一起\n过着平淡而又幸福的生活.\n\n    不过最近,她的一些人偶好像被什么人偷走了..." },
 		{ "第一章: 七色的人偶使",		"" },
 		{ "第二章: 魔法森林的访客",	"" },
 		{ "第三章: 是她吗 ?",			"" },
@@ -60,7 +60,7 @@ void CLevelScene::_updateV(double vDeltaTime)
 	if (CHECK_HIT_KEY(KEY_INPUT_Z))
 	{
 		char ScriptFileName[0xff];
-		sprintf(ScriptFileName, "%slevel%d.dialogue", RES_SCR_ROOT.c_str(), m_SelectedLabelIndex);
+		sprintf(ScriptFileName, "%slevel%d.dialogue", DATA_PATH.c_str(), m_SelectedLabelIndex);
 		CEngine::getInstance()->setActiveScene(new CGameScene(ScriptFileName));
 
 		CHECK_RESULT(DxLib::StopMusic());

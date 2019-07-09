@@ -9,8 +9,7 @@ using namespace DxEngine;
 
 void init()
 {
-	std::vector<std::string> FileSearchPaths = { RES_ROOT, RES_IMG_ROOT, RES_SND_ROOT, RES_SCR_ROOT };
-	for (auto& Path : FileSearchPaths) CResourceManager::getInstance()->addFileSearchPath(Path);
+	CResourceManager::getInstance()->addFileSearchPath(DATA_PATH);
 
 	vec2i ScreenSize = { GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN) };
 	int WindowHeight = ScreenSize.y * 0.8;
@@ -26,7 +25,6 @@ void init()
 	CEngine::getInstance()->setActiveScene(new CTitleScene);
 	CEngine::getInstance()->setShowConsoleHint();
 	CEngine::getInstance()->setDisableCNInputHint();
-	CEngine::getInstance()->setExpectedFPS(JsonReader.readFloat("fps"));
 	if (JsonReader.readBool("displayStatus")) CEngine::getInstance()->setDisplayStatusHint();
 }
 

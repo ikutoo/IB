@@ -37,7 +37,7 @@ bool CTitleScene::_initV()
 	m_MenuLabels.push_back(dynamic_cast<CLabel*>(pUIRoot->findChild("exitLabel")));
 	m_pFlagSprite = dynamic_cast<CSprite*>(pUIRoot->findChild("flagSprite"));
 
-	CHECK_RESULT(DxLib::PlayMusic(LOCATE_FILE("bgm_01.mp3"), DX_PLAYTYPE_BACK));
+	CHECK_RESULT(DxLib::PlayMusic(LOCATE_FILE("bgm_01.mp3"), DX_PLAYTYPE_LOOP));
 
 	return true;
 }

@@ -30,7 +30,7 @@ bool CGameScene::_initV()
 	__initUI();
 
 	m_pPlayer = new CPlayer;
-	m_pPlayer->setPosition(960, 1000);
+	m_pPlayer->setPosition(960, 900);
 	this->addChild(m_pPlayer);
 
 	__performLuaScript(m_ScriptActions[m_ActionIndex++].c_str());
@@ -85,13 +85,13 @@ bool CGameScene::__initUI()
 //FUNCTION:
 void CGameScene::__updateBarrage()
 {
-	if (m_Counter == 100)
-	{
-		CBarrage* pBarrage = new CBarrage(CBarragePattern::barragePattern001);
-		pBarrage->setPosition(GRAPH_SIZE_X / 2, GRAPH_SIZE_Y / 2);
-		pBarrage->setLiveTime(3000);
-		CBarrageManager::getInstance()->startBarrage(pBarrage);
-	}
+	//if (m_Counter == 100)
+	//{
+	//	CBarrage* pBarrage = new CBarrage(CBarragePattern::barragePattern001);
+	//	pBarrage->setPosition(GRAPH_SIZE_X / 2, GRAPH_SIZE_Y / 2);
+	//	pBarrage->setLiveTime(3000);
+	//	CBarrageManager::getInstance()->startBarrage(pBarrage);
+	//}
 }
 
 //*********************************************************************

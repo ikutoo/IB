@@ -7,7 +7,6 @@
 
 #pragma comment (lib,"Gdiplus.lib")
 
-const WCHAR* DOLL_IMAGE_PATH = L"../../res/images/shanghai.png";
 const float HIDDEN_DISTANCE = 400.0;
 
 //*********************************************************************
@@ -19,7 +18,7 @@ CTransparentWindow::CTransparentWindow(HINSTANCE hInstance)
 
 	m_hWnd = __createWindow(hInstance);
 	m_DC = GetDC(m_hWnd);
-	m_pDollImage = new Gdiplus::Image(DOLL_IMAGE_PATH);
+	m_pDollImage = new Gdiplus::Image((WCHAR*)LOCATE_FILE("shanghai.png"));
 	m_DollPos = { -HIDDEN_DISTANCE, 0 };
 }
 
