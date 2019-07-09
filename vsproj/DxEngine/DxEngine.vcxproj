@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\engine\animation.h" />
     <ClInclude Include="..\..\src\engine\common.h" />
     <ClInclude Include="..\..\src\engine\cpuTimer.h" />
     <ClInclude Include="..\..\src\engine\engine.h" />

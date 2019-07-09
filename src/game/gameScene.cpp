@@ -3,6 +3,7 @@
 #include "engine/utility.h"
 #include "engine/inputManager.h"
 #include "engine/jsonUtil.h"
+#include "engine/engine.h"
 #include "gameScene.h"
 #include "barrageManager.h"
 #include "barragePattern.h"
@@ -29,7 +30,7 @@ bool CGameScene::_initV()
 	__initLuaEnv();
 	__initUI();
 
-	m_pPlayer = new CPlayer;
+	m_pPlayer = new CPlayer("player_00a.cfg");
 	m_pPlayer->setPosition(960, 900);
 	this->addChild(m_pPlayer);
 
@@ -52,6 +53,8 @@ void CGameScene::_updateV(double vDeltaTime)
 		if (m_ActionIndex < m_ScriptActions.size())
 			__performLuaScript(m_ScriptActions[m_ActionIndex++].c_str());
 	}
+
+	if (CHECK_HIT_KEY(KEY_INPUT_ESCAPE)) CEngine::getInstance()->stop();
 
 	m_Counter++;
 }

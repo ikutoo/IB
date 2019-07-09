@@ -99,5 +99,8 @@
     <ClInclude Include="..\..\src\engine\inputManager.h">
       <Filter>Source Files\manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\engine\animation.h">
+      <Filter>Source Files\utils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

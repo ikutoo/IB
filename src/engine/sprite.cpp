@@ -22,19 +22,25 @@ CSprite::~CSprite()
 //FUNCTION:
 void CSprite::drawV()
 {
-	CNode::drawV();
+	if (!_IsVisible) return;
 
-	if (m_ImageHandle != -1)
+	auto SelfDraw = [&]
 	{
-		if (m_Rect.w != 0)
+		if (m_ImageHandle != -1)
 		{
-			CHECK_RESULT(DxLib::DrawRectRotaGraphFast3(_Position.x, _Position.y, m_Rect.x, m_Rect.y, m_Rect.w, m_Rect.h, m_Anchor.x, m_Anchor.y, _Scale.x, _Scale.y, _Rotation, m_ImageHandle, TRUE, m_IsFliped));
+			if (m_Rect.w != 0)
+			{
+				CHECK_RESULT(DxLib::DrawRectRotaGraphFast3(_Position.x, _Position.y, m_Rect.x, m_Rect.y, m_Rect.w, m_Rect.h, m_Anchor.x, m_Anchor.y, _Scale.x, _Scale.y, _Rotation, m_ImageHandle, TRUE, m_IsFliped));
+			}
+			else
+			{
+				CHECK_RESULT(DxLib::DrawRotaGraphFast3(_Position.x, _Position.y, m_Anchor.x, m_Anchor.y, _Scale.x, _Scale.y, _Rotation, m_ImageHandle, TRUE, m_IsFliped));
+			}
 		}
-		else
-		{
-			CHECK_RESULT(DxLib::DrawRotaGraphFast3(_Position.x, _Position.y, m_Anchor.x, m_Anchor.y, _Scale.x, _Scale.y, _Rotation, m_ImageHandle, TRUE, m_IsFliped));
-		}
-	}
+	};
+
+	if (m_PriorToChilds) { SelfDraw(); CNode::drawV(); }
+	else { CNode::drawV(); SelfDraw(); }
 }
 
 //*********************************************************************
@@ -48,6 +54,8 @@ vec2i CSprite::getSize() const
 //FUNCTION:
 void CSprite::setImageFile(const std::string& vImageFile, const recti& vRect)
 {
+	setRect(vRect);
+
 	if (vImageFile == m_ImageFile) return;
 
 	CResourceManager::getInstance()->deleteImage(m_ImageFile);

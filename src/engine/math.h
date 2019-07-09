@@ -7,6 +7,17 @@ namespace DxEngine
 	struct vec2
 	{
 		T x = {}, y = {};
+
+		void normalize()
+		{
+			T t = sqrt(x*x + y * y);
+			if (t == 0) return;
+			x /= t; y /= t;
+		}
+
+		vec2 operator*(T t) { return vec2{ x*t, y*t }; }
+		vec2 operator/(T t) { if (t == 0) return *this; else return { x / t, y / t }; }
+		void operator+=(vec2 r) { x += r.x; y += r.y; }
 	};
 
 	template<typename T>
@@ -45,5 +56,11 @@ namespace DxEngine
 	inline float randf()
 	{
 		return (float)rand() / RAND_MAX;
+	}
+
+	template<typename T>
+	inline T clip(T value, T low, T high)
+	{
+		return max(min(value, high), low);
 	}
 }

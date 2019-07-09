@@ -115,6 +115,31 @@ CLabel* CJsonReader::readLabel(const std::string& vAttributName)
 
 //*********************************************************************
 //FUNCTION:
+SAnimation CJsonReader::readAnimation(const std::string& vAttributName)
+{
+	const rapidjson::Value &p = m_Doc;
+	_ASSERTE(p.HasMember(vAttributName.c_str()));
+	auto Obj = p[vAttributName.c_str()].GetObject();
+
+	SAnimation Anm = {};
+	Anm.ImageFile = Obj["image_file"].GetString();
+	Anm.TotalFrames = Obj["total_frames"].GetInt();
+	if (Obj.HasMember("loop")) Anm.IsLoop = Obj["loop"].GetBool();
+	if (Obj.HasMember("loop_begin_frame_id")) Anm.LoopBeginFrame = Obj["loop_begin_frame_id"].GetInt();
+	if (Obj.HasMember("loop_end_frame_id")) Anm.LoopEndFrame = Obj["loop_end_frame_id"].GetInt();
+
+	auto KeyFramesObj = Obj["key_frames"].GetArray();
+	for (auto iter = KeyFramesObj.begin(); iter != KeyFramesObj.end(); ++iter)
+	{
+		auto Obj = (*iter).GetObject();
+		Anm.KeyFrames.emplace_back(std::make_pair(Obj["frameID"].GetInt(), __parseRecti(Obj, "rect")));
+	}
+
+	return Anm;
+}
+
+//*********************************************************************
+//FUNCTION:
 vec2f CJsonReader::__parseVec2f(TObject& vObject, const std::string& vAttributName)
 {
 	auto Array = vObject[vAttributName.c_str()].GetArray();

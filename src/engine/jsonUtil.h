@@ -7,6 +7,7 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
 #include "math.h"
+#include "animation.h"
 
 namespace DxEngine
 {
@@ -29,6 +30,7 @@ namespace DxEngine
 		vec2i			readVec2(const std::string& vAttributName);
 		CSprite*		readSprite(const std::string& vAttributName);
 		CLabel*			readLabel(const std::string& vAttributName);
+		SAnimation		readAnimation(const std::string& vAttributName);
 
 		CNode* getRootNode();
 

@@ -8,7 +8,7 @@ using namespace DxEngine;
 //FUNCTION:
 void CNode::drawV()
 {
-	if (_IsPaused) return;
+	if (_IsPaused || !_IsVisible) return;
 
 	DxLib::SetDrawBright(_BrightnessColor.x, _BrightnessColor.y, _BrightnessColor.z);
 

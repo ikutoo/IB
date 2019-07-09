@@ -34,6 +34,7 @@ namespace DxEngine
 		CNode* findChild(const std::string& vName);
 
 		const vec2f& getPosition() const { return _Position; }
+		float getRotation() const { return _Rotation; }
 		float getLocalZ() const { return _LocalZ; }
 		const std::string& getName() const { return m_Name; }
 
