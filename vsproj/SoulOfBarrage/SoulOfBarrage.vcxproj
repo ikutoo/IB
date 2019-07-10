@@ -173,6 +173,7 @@
     <ClCompile Include="..\..\src\game\barrageManager.cpp" />
     <ClCompile Include="..\..\src\game\barragePattern.cpp" />
     <ClCompile Include="..\..\src\game\bullet.cpp" />
+    <ClCompile Include="..\..\src\game\collision.cpp" />
     <ClCompile Include="..\..\src\game\gameoverScene.cpp" />
     <ClCompile Include="..\..\src\game\gameScene.cpp" />
     <ClCompile Include="..\..\src\game\helpScene.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="..\..\src\game\barrageManager.h" />
     <ClInclude Include="..\..\src\game\barragePattern.h" />
     <ClInclude Include="..\..\src\game\bullet.h" />
+    <ClInclude Include="..\..\src\game\collision.h" />
     <ClInclude Include="..\..\src\game\common.h" />
     <ClInclude Include="..\..\src\game\gameoverScene.h" />
     <ClInclude Include="..\..\src\game\gameScene.h" />

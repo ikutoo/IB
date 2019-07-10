@@ -17,6 +17,7 @@ enum class EGameState : char
 };
 
 class CPlayer;
+class CCollisionDetector;
 
 namespace DxEngine
 {
@@ -36,6 +37,7 @@ public:
 private:
 	bool __initUI();
 	void __updateBarrage();
+	void __updateUI();
 
 	void __detectCollision();
 
@@ -75,5 +77,6 @@ private:
 
 	CSprite* m_pBarrageContainer = nullptr;
 	CRenderTarget* m_pBarrageRenderTarget = nullptr;
-	int m_BarrageSoftImage = -1;
+
+	CCollisionDetector* m_pCollisionDetector = nullptr;
 };

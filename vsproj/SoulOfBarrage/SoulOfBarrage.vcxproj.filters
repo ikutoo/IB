@@ -68,6 +68,9 @@
     <ClCompile Include="..\..\src\game\player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\common.h">
@@ -116,6 +119,9 @@
       <Filter>Source Files\particles</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\player.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\collision.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

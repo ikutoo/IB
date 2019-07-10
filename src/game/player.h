@@ -15,14 +15,20 @@ class CPlayer : public CSprite
 		PLAYER_STATE_MOVE_UP = 4,
 		PLAYER_STATE_MOVE_DOWN = 8,
 		PLAYER_STATE_LOW_SPEED = 16,
-		PLAYER_STATE_SHOOTING = 32
+		PLAYER_STATE_SHOOTING = 32,
+		PLAYER_STATE_GRAZE = 64
 	};
 
 public:
-	CPlayer(const std::string& vConfigFile) { __init(vConfigFile); }
-	~CPlayer() = default;
+	CPlayer(const std::string& vConfigFile);
+	~CPlayer();
 
 	void updateV(double vDeltaTime) override;
+
+	void dead();
+	void graze(bool IsGrazed);
+
+	int getGrazeScore() const { return m_GrazeScore; };
 
 private:
 	uint32_t m_State = PLAYER_STATE_IDLE;
@@ -39,7 +45,19 @@ private:
 	float SPEED_HIGH = {};
 	float SPEED_LOW = {};
 
+	int m_GrazeScore = 0;
+
+	int m_DeathProtectionCounter = 0;
+
+	bool m_IsGrazed = false;
+
+	int m_SoundHandleDead = -1;
+	int m_SoundHandleGraze = -1;
+	int m_SoundHandleShoot = -1;
+
 	void __init(const std::string& vConfigFile);
+	void __destroy();
+
 	void __updatePlayerState();
 	void __updatePlayerPosition();
 	void __updateAnimation();

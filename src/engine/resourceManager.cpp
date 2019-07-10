@@ -10,40 +10,72 @@ DxEngine::CResourceManager::CResourceManager()
 
 DxEngine::CResourceManager::~CResourceManager()
 {
-	_ASSERTE(m_ImageResMap.empty());
+	_ASSERTE(m_ResMap.empty());
 }
 
-//***********************************************************************************************
+//*********************************************************************
 //FUNCTION:
-int CResourceManager::loadImage(const std::string& vImageFile)
+int CResourceManager::loadResource(const std::string& vFilePath, EResourceType vResType)
 {
-	if (m_ImageResMap.find(vImageFile) != m_ImageResMap.end())
+	auto LoadResource = [&]()
 	{
-		m_ImageResMap[vImageFile].RefCount++;
-		return m_ImageResMap[vImageFile].ResHandle;
+		switch (vResType)
+		{
+		case DxEngine::EResourceType::IMAGE:
+			return  DxLib::LoadGraph(locateFile(vFilePath).c_str());
+			break;
+		case DxEngine::EResourceType::SOUND:
+			return DxLib::LoadSoundMem(locateFile(vFilePath).c_str());
+			break;
+		default:
+			_ASSERTE(false);
+			break;
+		}
+	};
+
+	if (m_ResMap.find(vFilePath) != m_ResMap.end())
+	{
+		m_ResMap[vFilePath].RefCount++;
+		return m_ResMap[vFilePath].ResHandle;
 	}
 	else
 	{
-		auto ImageHandle = DxLib::LoadGraph(locateFile(vImageFile.c_str()).c_str());
-		_ASSERTE(ImageHandle != -1);
-		m_ImageResMap[vImageFile] = SResDesc{ ImageHandle, 1 };
-		return ImageHandle;
+		auto ResHandle = LoadResource();
+		_ASSERTE(ResHandle != -1);
+		m_ResMap[vFilePath] = SResDesc{ ResHandle, 1 };
+		return ResHandle;
 	}
 }
 
 //*********************************************************************
 //FUNCTION:
-void DxEngine::CResourceManager::deleteImage(const std::string& vImageFile)
+void DxEngine::CResourceManager::deleteResource(const std::string& vFilePath, EResourceType vResType)
 {
-	if (m_ImageResMap.find(vImageFile) == m_ImageResMap.end()) return;
+	if (m_ResMap.find(vFilePath) == m_ResMap.end()) return;
 
-	_ASSERTE(m_ImageResMap[vImageFile].RefCount > 0);
-	m_ImageResMap[vImageFile].RefCount--;
-
-	if (m_ImageResMap[vImageFile].RefCount == 0)
+	auto DeleteResource = [&]()
 	{
-		CHECK_RESULT(DxLib::DeleteGraph(m_ImageResMap[vImageFile].ResHandle));
-		m_ImageResMap.erase(vImageFile);
+		switch (vResType)
+		{
+		case DxEngine::EResourceType::IMAGE:
+			CHECK_RESULT(DxLib::DeleteGraph(m_ResMap[vFilePath].ResHandle));
+			break;
+		case DxEngine::EResourceType::SOUND:
+			CHECK_RESULT(DxLib::DeleteSoundMem(m_ResMap[vFilePath].ResHandle));
+			break;
+		default:
+			_ASSERTE(false);
+			break;
+		}
+	};
+
+	_ASSERTE(m_ResMap[vFilePath].RefCount > 0);
+	m_ResMap[vFilePath].RefCount--;
+
+	if (m_ResMap[vFilePath].RefCount == 0)
+	{
+		DeleteResource();
+		m_ResMap.erase(vFilePath);
 	}
 }
 

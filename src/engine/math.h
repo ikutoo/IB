@@ -1,4 +1,6 @@
 #pragma once
+#include <cmath>
+
 #define PI 3.1415926
 
 namespace DxEngine
@@ -62,5 +64,11 @@ namespace DxEngine
 	inline T clip(T value, T low, T high)
 	{
 		return max(min(value, high), low);
+	}
+
+	template<typename T>
+	inline T distance(vec2<T> v1, vec2<T> v2)
+	{
+		return sqrt((v1.x - v2.x)*(v1.x - v2.x) + (v1.y - v2.y)*(v1.y - v2.y));
 	}
 }

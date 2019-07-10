@@ -6,6 +6,13 @@
 
 namespace DxEngine
 {
+	enum class EResourceType : char
+	{
+		UNDEFINED = 0,
+		IMAGE,
+		SOUND
+	};
+
 	struct SResDesc
 	{
 		int ResHandle = -1;
@@ -19,8 +26,14 @@ namespace DxEngine
 
 		void addFileSearchPath(const std::string& vPath) { m_FileSearchPathSet.insert(vPath); }
 
-		int loadImage(const std::string& vImageFile);
-		void deleteImage(const std::string& vImageFile);
+		int loadResource(const std::string& vFilePath, EResourceType vResType);
+		void deleteResource(const std::string& vFilePath, EResourceType vResType);
+
+		int loadImage(const std::string& vFilePath) { return loadResource(vFilePath, EResourceType::IMAGE); }
+		void deleteImage(const std::string& vFilePath) { deleteResource(vFilePath, EResourceType::IMAGE); }
+
+		int loadSoundMem(const std::string& vFilePath) { return loadResource(vFilePath, EResourceType::SOUND); }
+		void deleteSoundMem(const std::string& vFilePath) { deleteResource(vFilePath, EResourceType::SOUND); }
 
 		std::string locateFile(const std::string& vFileName);
 
@@ -30,6 +43,6 @@ namespace DxEngine
 
 		std::set<std::string> m_FileSearchPathSet;
 
-		std::map<std::string, SResDesc> m_ImageResMap;
+		std::map<std::string, SResDesc> m_ResMap;
 	};
 }

@@ -7,7 +7,7 @@ using namespace DxEngine;
 class CBullet : public CSprite
 {
 public:
-	CBullet(const std::string& vImageFile, const recti& vRect = {}) :CSprite(vImageFile, vRect) {}
+	CBullet(const std::string& vImageFile, const recti& vRect = {});
 	~CBullet() = default;
 
 private:

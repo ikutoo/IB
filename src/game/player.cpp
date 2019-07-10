@@ -1,10 +1,30 @@
 #include "stdafx.h"
 #include "player.h"
+#include <DXLib/DxLib.h>
 #include "engine/inputManager.h"
 #include "engine/jsonUtil.h"
+#include "engine/resourceManager.h"
 #include "common.h"
 
 using namespace DxEngine;
+
+const float INITIAL_POS_X = GRAPH_SIZE_X * 0.5;
+const float INITIAL_POS_Y = 960;
+const int	DEATH_PROTECTION_MAX_COUNT = 120;
+
+//*********************************************************************
+//FUNCTION:
+CPlayer::CPlayer(const std::string& vConfigFile)
+{
+	__init(vConfigFile);
+}
+
+//*********************************************************************
+//FUNCTION:
+CPlayer::~CPlayer()
+{
+	__destroy();
+}
 
 //*********************************************************************
 //FUNCTION:
@@ -15,6 +35,37 @@ void CPlayer::updateV(double vDeltaTime)
 	__updatePlayerState();
 	__updatePlayerPosition();
 	__updateAnimation();
+
+	m_DeathProtectionCounter--;
+
+	if (m_State & PLAYER_STATE_GRAZE) { CHECK_RESULT(DxLib::PlaySoundMem(m_SoundHandleGraze, DX_PLAYTYPE_LOOP)); }
+	else { CHECK_RESULT(DxLib::StopSoundMem(m_SoundHandleGraze)); }
+
+	if (m_State & PLAYER_STATE_SHOOTING) { CHECK_RESULT(DxLib::PlaySoundMem(m_SoundHandleShoot, DX_PLAYTYPE_LOOP)); }
+	else { CHECK_RESULT(DxLib::StopSoundMem(m_SoundHandleShoot)); }
+}
+
+//*********************************************************************
+//FUNCTION:
+void CPlayer::dead()
+{
+	if (m_DeathProtectionCounter > 0) { return; }
+	m_DeathProtectionCounter = DEATH_PROTECTION_MAX_COUNT;
+
+	this->setPosition(INITIAL_POS_X, INITIAL_POS_Y);
+
+	CHECK_RESULT(DxLib::PlaySoundMem(m_SoundHandleDead, DX_PLAYTYPE_BACK));
+}
+
+//*********************************************************************
+//FUNCTION:
+void CPlayer::graze(bool IsGrazed)
+{
+	m_IsGrazed = IsGrazed;
+
+	if (m_DeathProtectionCounter > 0) { return; }
+
+	m_GrazeScore++;
 }
 
 //*********************************************************************
@@ -22,6 +73,8 @@ void CPlayer::updateV(double vDeltaTime)
 void CPlayer::__init(const std::string& vConfigFile)
 {
 	_ASSERTE(!vConfigFile.empty());
+
+	this->setPosition(INITIAL_POS_X, INITIAL_POS_Y);
 
 	CJsonReader JsonReader(vConfigFile);
 	SPEED_HIGH = JsonReader.readFloat("speed_high");
@@ -39,6 +92,21 @@ void CPlayer::__init(const std::string& vConfigFile)
 	this->addChild(m_pPlayerBg2);
 
 	this->setPriorToChildsHint();
+
+	m_SoundHandleGraze = DxLib::LoadSoundMem(LOCATE_FILE("se_graze.wav"));
+	ChangeVolumeSoundMem(255 * 6 / 10, m_SoundHandleGraze);
+	m_SoundHandleDead = DxLib::LoadSoundMem(LOCATE_FILE("se_pldead_00.wav"));
+	m_SoundHandleShoot = DxLib::LoadSoundMem(LOCATE_FILE("se_plst_00.wav"));
+	ChangeVolumeSoundMem(255 * 6 / 10, m_SoundHandleShoot);
+	_ASSERTE(m_SoundHandleGraze != -1 && m_SoundHandleDead != -1 && m_SoundHandleShoot != -1);
+}
+
+//*********************************************************************
+//FUNCTION:
+void CPlayer::__destroy()
+{
+	CHECK_RESULT(DxLib::DeleteSoundMem(m_SoundHandleGraze));
+	CHECK_RESULT(DxLib::DeleteSoundMem(m_SoundHandleDead));
 }
 
 //*********************************************************************
@@ -56,6 +124,8 @@ void CPlayer::__updatePlayerState()
 	if (GET_KEY_STATE(KEY_INPUT_LSHIFT)) m_State |= PLAYER_STATE_LOW_SPEED;
 
 	if (GET_KEY_STATE(KEY_INPUT_Z)) m_State |= PLAYER_STATE_SHOOTING;
+
+	if (m_IsGrazed) m_State |= PLAYER_STATE_GRAZE;
 }
 
 //*********************************************************************

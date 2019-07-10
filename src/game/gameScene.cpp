@@ -10,6 +10,7 @@
 #include "barrageManager.h"
 #include "barragePattern.h"
 #include "player.h"
+#include "collision.h"
 
 using namespace DxEngine;
 
@@ -31,7 +32,6 @@ bool CGameScene::_initV()
 	__initUI();
 
 	m_pPlayer = new CPlayer("player_00a.cfg");
-	m_pPlayer->setPosition(960, 900);
 	this->addChild(m_pPlayer);
 
 	__performLuaScript(m_ScriptActions[m_ActionIndex++].c_str());
@@ -45,7 +45,7 @@ bool CGameScene::_initV()
 
 	CBarrageManager::getInstance()->init(m_pBarrageContainer);
 
-	m_BarrageSoftImage = MakeARGB8ColorSoftImage(1, 1);
+	m_pCollisionDetector = new CCollisionDetector;
 
 	return true;
 }
@@ -56,6 +56,7 @@ void CGameScene::_updateV(double vDeltaTime)
 {
 	__updateBarrage();
 	__detectCollision();
+	__updateUI();
 
 	m_pLParticles->updateV();
 	m_pRParticles->updateV();
@@ -75,8 +76,7 @@ void CGameScene::_updateV(double vDeltaTime)
 //FUNCTION:
 void CGameScene::_destroyV()
 {
-	CHECK_RESULT(DxLib::DeleteSoftImage(m_BarrageSoftImage));
-
+	SAFE_DELETE(m_pCollisionDetector);
 	__closeLuaEvn();
 	CBarrageManager::getInstance()->destroy();
 }
@@ -113,23 +113,19 @@ void CGameScene::__updateBarrage()
 
 //*********************************************************************
 //FUNCTION:
+void CGameScene::__updateUI()
+{
+	//auto pGrazeLabel = dynamic_cast<CLabel*>(m_pUIRootNode->findChild("grazeLabel"));
+	//pGrazeLabel->setText(std::to_string(m_pPlayer->getGrazeScore()));
+}
+
+//*********************************************************************
+//FUNCTION:
 void CGameScene::__detectCollision()
 {
-	CHECK_RESULT(DxLib::SetDrawScreen(m_pBarrageRenderTarget->getRenderGraph()));
-
-	GetDrawScreenSoftImage(m_pPlayer->getPosition().x, m_pPlayer->getPosition().y, m_pPlayer->getPosition().x + 1, m_pPlayer->getPosition().y + 1, m_BarrageSoftImage);
-
-	int r, g, b, a;
-	GetPixelSoftImage(m_BarrageSoftImage, 0, 0, &r, &g, &b, &a);
-
-	const int COLLISION_ALPHA_THRESHOLD = 20;
-	static int i = 0;
-	if (a > COLLISION_ALPHA_THRESHOLD)
-	{
-		std::cout << "collision: " << i++ << std::endl;
-	}
-
-	CHECK_RESULT(DxLib::SetDrawScreen(DX_SCREEN_BACK));
+	m_pCollisionDetector->detectCollision(m_pPlayer->getPosition(), m_pBarrageRenderTarget->getRenderGraph());
+	if (m_pCollisionDetector->isPlayerHit()) m_pPlayer->dead();
+	else m_pPlayer->graze(m_pCollisionDetector->isPlayerGrazed());
 }
 
 //*********************************************************************
