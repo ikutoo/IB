@@ -24,6 +24,12 @@ void CSprite::drawV()
 {
 	if (!_IsVisible) return;
 
+	if (m_RenderGraph != -1)
+	{
+		CHECK_RESULT(DxLib::SetDrawScreen(m_RenderGraph));
+		if (m_ClearRenderTargetOnDraw) CHECK_RESULT(DxLib::ClearDrawScreen());
+	}
+
 	auto SelfDraw = [&]
 	{
 		if (m_ImageHandle != -1)
@@ -41,6 +47,11 @@ void CSprite::drawV()
 
 	if (m_PriorToChilds) { SelfDraw(); CNode::drawV(); }
 	else { CNode::drawV(); SelfDraw(); }
+
+	if (m_RenderGraph != -1)
+	{
+		CHECK_RESULT(DxLib::SetDrawScreen(DX_SCREEN_BACK));
+	}
 }
 
 //*********************************************************************

@@ -23,8 +23,11 @@ namespace DxEngine
 
 		void setPriorToChildsHint() { m_PriorToChilds = true; }
 
+		void setRenderGraph(int vRenderGraph, bool vClearOnDraw = true) { m_RenderGraph = vRenderGraph; m_ClearRenderTargetOnDraw = vClearOnDraw; }
+
 	private:
 		int m_ImageHandle = -1;
+		int m_RenderGraph = -1;
 		std::string m_ImageFile = {};
 
 		recti m_Rect = {};
@@ -33,5 +36,6 @@ namespace DxEngine
 
 		bool m_IsFliped = false;
 		bool m_PriorToChilds = false; //若为true, 则优先于childs进行绘制
+		bool m_ClearRenderTargetOnDraw = true;
 	};
 }

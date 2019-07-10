@@ -1,10 +1,12 @@
 #include "stdafx.h"
+#include "gameScene.h"
+#include <iostream>
 #include "engine/graphics2d.h"
 #include "engine/utility.h"
 #include "engine/inputManager.h"
 #include "engine/jsonUtil.h"
 #include "engine/engine.h"
-#include "gameScene.h"
+#include "engine/renderTarget.h"
 #include "barrageManager.h"
 #include "barragePattern.h"
 #include "player.h"
@@ -25,8 +27,6 @@ bool CGameScene::_initV()
 {
 	CHECK_RESULT(DxLib::SetBackgroundColor(0, 0, 0));
 
-	CBarrageManager::getInstance()->init(this);
-
 	__initLuaEnv();
 	__initUI();
 
@@ -36,6 +36,17 @@ bool CGameScene::_initV()
 
 	__performLuaScript(m_ScriptActions[m_ActionIndex++].c_str());
 
+	m_pBarrageRenderTarget = new CRenderTarget(GRAPH_SIZE_X, GRAPH_SIZE_Y);
+	this->addChild(m_pBarrageRenderTarget, 0.5);
+
+	m_pBarrageContainer = new CSprite;
+	m_pBarrageContainer->setRenderGraph(m_pBarrageRenderTarget->getRenderGraph());
+	this->addChild(m_pBarrageContainer);
+
+	CBarrageManager::getInstance()->init(m_pBarrageContainer);
+
+	m_BarrageSoftImage = MakeARGB8ColorSoftImage(1, 1);
+
 	return true;
 }
 
@@ -44,6 +55,7 @@ bool CGameScene::_initV()
 void CGameScene::_updateV(double vDeltaTime)
 {
 	__updateBarrage();
+	__detectCollision();
 
 	m_pLParticles->updateV();
 	m_pRParticles->updateV();
@@ -63,6 +75,8 @@ void CGameScene::_updateV(double vDeltaTime)
 //FUNCTION:
 void CGameScene::_destroyV()
 {
+	CHECK_RESULT(DxLib::DeleteSoftImage(m_BarrageSoftImage));
+
 	__closeLuaEvn();
 	CBarrageManager::getInstance()->destroy();
 }
@@ -88,13 +102,34 @@ bool CGameScene::__initUI()
 //FUNCTION:
 void CGameScene::__updateBarrage()
 {
-	//if (m_Counter == 100)
-	//{
-	//	CBarrage* pBarrage = new CBarrage(CBarragePattern::barragePattern001);
-	//	pBarrage->setPosition(GRAPH_SIZE_X / 2, GRAPH_SIZE_Y / 2);
-	//	pBarrage->setLiveTime(3000);
-	//	CBarrageManager::getInstance()->startBarrage(pBarrage);
-	//}
+	if (m_Counter == 100)
+	{
+		CBarrage* pBarrage = new CBarrage(CBarragePattern::barragePattern001);
+		pBarrage->setPosition(GRAPH_SIZE_X / 2, GRAPH_SIZE_Y / 2);
+		pBarrage->setLiveTime(3000);
+		CBarrageManager::getInstance()->startBarrage(pBarrage);
+	}
+}
+
+//*********************************************************************
+//FUNCTION:
+void CGameScene::__detectCollision()
+{
+	CHECK_RESULT(DxLib::SetDrawScreen(m_pBarrageRenderTarget->getRenderGraph()));
+
+	GetDrawScreenSoftImage(m_pPlayer->getPosition().x, m_pPlayer->getPosition().y, m_pPlayer->getPosition().x + 1, m_pPlayer->getPosition().y + 1, m_BarrageSoftImage);
+
+	int r, g, b, a;
+	GetPixelSoftImage(m_BarrageSoftImage, 0, 0, &r, &g, &b, &a);
+
+	const int COLLISION_ALPHA_THRESHOLD = 20;
+	static int i = 0;
+	if (a > COLLISION_ALPHA_THRESHOLD)
+	{
+		std::cout << "collision: " << i++ << std::endl;
+	}
+
+	CHECK_RESULT(DxLib::SetDrawScreen(DX_SCREEN_BACK));
 }
 
 //*********************************************************************

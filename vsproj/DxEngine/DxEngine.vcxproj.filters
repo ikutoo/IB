@@ -55,6 +55,9 @@
     <ClCompile Include="..\..\src\engine\resourceManager.cpp">
       <Filter>Source Files\manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\renderTarget .cpp">
+      <Filter>Source Files\node</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\engine\common.h">
@@ -101,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\engine\animation.h">
       <Filter>Source Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\engine\renderTarget.h">
+      <Filter>Source Files\node</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

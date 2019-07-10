@@ -170,6 +170,7 @@
     <ClInclude Include="..\..\src\engine\luaGlue.h" />
     <ClInclude Include="..\..\src\engine\math.h" />
     <ClInclude Include="..\..\src\engine\node.h" />
+    <ClInclude Include="..\..\src\engine\renderTarget.h" />
     <ClInclude Include="..\..\src\engine\resourceManager.h" />
     <ClInclude Include="..\..\src\engine\scene.h" />
     <ClInclude Include="..\..\src\engine\sprite.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="..\..\src\engine\label.cpp" />
     <ClCompile Include="..\..\src\engine\luaGlue.cpp" />
     <ClCompile Include="..\..\src\engine\node.cpp" />
+    <ClCompile Include="..\..\src\engine\renderTarget .cpp" />
     <ClCompile Include="..\..\src\engine\resourceManager.cpp" />
     <ClCompile Include="..\..\src\engine\scene.cpp" />
     <ClCompile Include="..\..\src\engine\sprite.cpp" />

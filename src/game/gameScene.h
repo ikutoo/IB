@@ -18,6 +18,11 @@ enum class EGameState : char
 
 class CPlayer;
 
+namespace DxEngine
+{
+	class CRenderTarget;
+}
+
 class CGameScene : public CScene
 {
 public:
@@ -31,6 +36,8 @@ public:
 private:
 	bool __initUI();
 	void __updateBarrage();
+
+	void __detectCollision();
 
 	void __initLuaEnv();
 	void __registerLuaGlue();
@@ -65,4 +72,8 @@ private:
 	CParticle01* m_pRParticles = nullptr;
 
 	int m_Counter = 0;
+
+	CSprite* m_pBarrageContainer = nullptr;
+	CRenderTarget* m_pBarrageRenderTarget = nullptr;
+	int m_BarrageSoftImage = -1;
 };
