@@ -106,13 +106,13 @@ void CGameScene::__updateBarrage()
 {
 	CBarrageManager::getInstance()->setPlayerPosition(m_pPlayer->getPosition());
 
-	if (m_Counter == 100)
-	{
-		CBarrage* pBarrage = new CBarrage(CBarragePattern::enemyBarrage000);
-		pBarrage->setPosition(GRAPH_SIZE_X / 2, GRAPH_SIZE_Y / 2);
-		pBarrage->setLiveTime(3000);
-		CBarrageManager::getInstance()->startBarrage(pBarrage);
-	}
+	//if (m_Counter == 100)
+	//{
+	//	CBarrage* pBarrage = new CBarrage(CBarragePattern::enemyBarrage000);
+	//	pBarrage->setPosition(GRAPH_SIZE_X / 2, GRAPH_SIZE_Y / 2);
+	//	pBarrage->setLiveTime(3000);
+	//	CBarrageManager::getInstance()->startBarrage(pBarrage);
+	//}
 }
 
 //*********************************************************************

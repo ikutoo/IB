@@ -10,6 +10,8 @@ public:
 	CBarrage(TBarrageFunc vFunc);
 	~CBarrage();
 
+	void setBarrageFunc(TBarrageFunc vFunc) { _BarrageFunc = vFunc; }
+
 	void setLiveTime(int vTime) { _LiveTime = vTime; }
 
 	void setOwn2Player(bool vValue) { m_IsOwn2Player = vValue; }

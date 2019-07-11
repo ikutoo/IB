@@ -181,6 +181,8 @@ void CPlayer::__updateAnimation()
 //FUNCTION:
 void CPlayer::__updateBarrage()
 {
+	m_State & PLAYER_STATE_LOW_SPEED ? m_pBarrage->setBarrageFunc(CBarragePattern::playerBarrage01) : m_pBarrage->setBarrageFunc(CBarragePattern::playerBarrage00);
+
 	if (m_State & PLAYER_STATE_SHOOTING)
 	{
 		CHECK_RESULT(DxLib::PlaySoundMem(m_SoundHandleShoot, DX_PLAYTYPE_LOOP));
@@ -191,5 +193,6 @@ void CPlayer::__updateBarrage()
 	{
 		CHECK_RESULT(DxLib::StopSoundMem(m_SoundHandleShoot));
 		CBarrageManager::getInstance()->stopBarrage(m_pBarrage);
+		m_pBarrage->resetCounter();
 	}
 }

@@ -48,6 +48,7 @@ namespace DxEngine
 		uint32_t getNumChilds() const { return _Childs.size(); }
 
 		uint32_t getCounter() const { return _Counter; }
+		void resetCounter() { _Counter = 0; }
 
 	protected:
 		vec2f _Position = { 0.0, 0.0 };
