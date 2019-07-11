@@ -25,6 +25,7 @@ public:
 
 	void updateV(double vDeltaTime) override;
 
+	void shoot();
 	void dead();
 	void graze(bool IsGrazed);
 
@@ -32,13 +33,13 @@ public:
 
 private:
 	uint32_t m_State = PLAYER_STATE_IDLE;
-	uint32_t m_AnmCounter = 0;
 
 	vec2f m_Speed = {};
 
-	SAnimation m_PlayerAnm1;
-	SAnimation m_PlayerAnm2;
+	SAnimation m_PlayerAnm1;	//自机高速移动动画
+	SAnimation m_PlayerAnm2;	//自机低速移动动画
 
+	CSprite* m_pPlayer = nullptr;
 	CSprite* m_pPlayerBg1 = nullptr;
 	CSprite* m_pPlayerBg2 = nullptr;
 

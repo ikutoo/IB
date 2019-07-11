@@ -21,6 +21,8 @@ namespace DxEngine
 		void flip() { m_IsFliped = !m_IsFliped; }
 		void setFlip(bool vFlip) { m_IsFliped = vFlip; }
 
+		void setImageRotation(float vRotation) { m_ImageRotation = vRotation; }
+
 		void setPriorToChildsHint() { m_PriorToChilds = true; }
 
 		void setRenderGraph(int vRenderGraph, bool vClearOnDraw = true) { m_RenderGraph = vRenderGraph; m_ClearRenderTargetOnDraw = vClearOnDraw; }
@@ -33,6 +35,8 @@ namespace DxEngine
 		recti m_Rect = {};
 		vec2i m_Size = {};
 		vec2i m_Anchor = {};
+
+		float m_ImageRotation = 0.0;
 
 		bool m_IsFliped = false;
 		bool m_PriorToChilds = false; //若为true, 则优先于childs进行绘制

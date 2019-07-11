@@ -36,11 +36,11 @@ void CSprite::drawV()
 		{
 			if (m_Rect.w != 0)
 			{
-				CHECK_RESULT(DxLib::DrawRectRotaGraphFast3(_Position.x, _Position.y, m_Rect.x, m_Rect.y, m_Rect.w, m_Rect.h, m_Anchor.x, m_Anchor.y, _Scale.x, _Scale.y, _Rotation, m_ImageHandle, TRUE, m_IsFliped));
+				CHECK_RESULT(DxLib::DrawRectRotaGraphFast3(_Position.x, _Position.y, m_Rect.x, m_Rect.y, m_Rect.w, m_Rect.h, m_Anchor.x, m_Anchor.y, _Scale.x, _Scale.y, _Rotation + m_ImageRotation, m_ImageHandle, TRUE, m_IsFliped));
 			}
 			else
 			{
-				CHECK_RESULT(DxLib::DrawRotaGraphFast3(_Position.x, _Position.y, m_Anchor.x, m_Anchor.y, _Scale.x, _Scale.y, _Rotation, m_ImageHandle, TRUE, m_IsFliped));
+				CHECK_RESULT(DxLib::DrawRotaGraphFast3(_Position.x, _Position.y, m_Anchor.x, m_Anchor.y, _Scale.x, _Scale.y, _Rotation + m_ImageRotation, m_ImageHandle, TRUE, m_IsFliped));
 			}
 		}
 	};

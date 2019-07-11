@@ -9,10 +9,11 @@ using namespace DxEngine;
 
 //*********************************************************************
 //FUNCTION:
-bool CBarrageManager::init(DxEngine::CNode* vContainer)
+bool CBarrageManager::init(DxEngine::CNode* vContainerEm, DxEngine::CNode* vContainerPy)
 {
-	_ASSERTE(vContainer);
-	m_pContainer = vContainer;
+	_ASSERTE(vContainerEm && vContainerPy);
+	m_pContainerEm = vContainerEm;
+	m_pContainerPy = vContainerPy;
 
 	return true;
 }
@@ -27,7 +28,7 @@ void CBarrageManager::update()
 
 		if (pBarrage->_Counter > pBarrage->_LiveTime)
 		{
-			m_pContainer->removeChild(pBarrage);
+			pBarrage->isOwn2Player() ? m_pContainerPy->removeChild(pBarrage) : m_pContainerEm->removeChild(pBarrage);
 			iter = m_ActiveBarrages.erase(iter);
 		}
 		else
@@ -44,7 +45,7 @@ void CBarrageManager::update()
 
 		if (__isBulletDead(pBullet))
 		{
-			m_pContainer->removeChild(pBullet);
+			pBullet->isOwn2Player() ? m_pContainerPy->removeChild(pBullet) : m_pContainerEm->removeChild(pBullet);
 			iter = m_Bullets.erase(iter);
 		}
 		else
@@ -60,7 +61,8 @@ void CBarrageManager::update()
 //FUNCTION:
 void CBarrageManager::destroy()
 {
-	m_pContainer->removeAllChilds();
+	m_pContainerEm->removeAllChilds();
+	m_pContainerPy->removeAllChilds();
 
 	m_Bullets.clear();
 	m_ActiveBarrages.clear();

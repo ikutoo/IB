@@ -5,6 +5,8 @@
 #include "engine/jsonUtil.h"
 #include "engine/resourceManager.h"
 #include "common.h"
+#include "barragePattern.h"
+#include "barrageManager.h"
 
 using namespace DxEngine;
 
@@ -41,8 +43,17 @@ void CPlayer::updateV(double vDeltaTime)
 	if (m_State & PLAYER_STATE_GRAZE) { CHECK_RESULT(DxLib::PlaySoundMem(m_SoundHandleGraze, DX_PLAYTYPE_LOOP)); }
 	else { CHECK_RESULT(DxLib::StopSoundMem(m_SoundHandleGraze)); }
 
-	if (m_State & PLAYER_STATE_SHOOTING) { CHECK_RESULT(DxLib::PlaySoundMem(m_SoundHandleShoot, DX_PLAYTYPE_LOOP)); }
+	if (m_State & PLAYER_STATE_SHOOTING) { shoot(); CHECK_RESULT(DxLib::PlaySoundMem(m_SoundHandleShoot, DX_PLAYTYPE_LOOP)); }
 	else { CHECK_RESULT(DxLib::StopSoundMem(m_SoundHandleShoot)); }
+}
+
+//*********************************************************************
+//FUNCTION:
+void CPlayer::shoot()
+{
+	CBarrage* pBarrage = new CBarrage(CBarragePattern::playerBarrage00);
+	pBarrage->setLiveTime(30);
+	CBarrageManager::getInstance()->startBarragePy(pBarrage);
 }
 
 //*********************************************************************
@@ -74,7 +85,9 @@ void CPlayer::__init(const std::string& vConfigFile)
 {
 	_ASSERTE(!vConfigFile.empty());
 
-	this->setPosition(INITIAL_POS_X, INITIAL_POS_Y);
+	m_pPlayer = new CSprite;
+	m_pPlayer->setPosition(INITIAL_POS_X, INITIAL_POS_Y);
+	this->addChild(m_pPlayer, -1);
 
 	CJsonReader JsonReader(vConfigFile);
 	SPEED_HIGH = JsonReader.readFloat("speed_high");
@@ -86,12 +99,10 @@ void CPlayer::__init(const std::string& vConfigFile)
 
 	m_pPlayerBg1 = JsonReader.readSprite("effect_sprite_1");
 	m_pPlayerBg1->setAnchor(m_pPlayerBg1->getSize() / 2);
-	this->addChild(m_pPlayerBg1);
+	this->addChild(m_pPlayerBg1, 0);
 	m_pPlayerBg2 = JsonReader.readSprite("effect_sprite_2");
 	m_pPlayerBg2->setAnchor(m_pPlayerBg2->getSize() / 2);
-	this->addChild(m_pPlayerBg2);
-
-	this->setPriorToChildsHint();
+	this->addChild(m_pPlayerBg2, 0);
 
 	m_SoundHandleGraze = DxLib::LoadSoundMem(LOCATE_FILE("se_graze.wav"));
 	ChangeVolumeSoundMem(255 * 6 / 10, m_SoundHandleGraze);
@@ -142,14 +153,17 @@ void CPlayer::__updatePlayerPosition()
 	m_Speed.normalize();
 	m_Speed = m_State & PLAYER_STATE_LOW_SPEED ? m_Speed * SPEED_LOW : m_Speed * SPEED_HIGH;
 
-	_Position += m_Speed;
+	auto Position = m_pPlayer->getPosition();
+	Position += m_Speed;
 
 	int Offset = 20;
-	_Position.x = clip<float>(_Position.x, BORDER_L + Offset, BORDER_R - Offset);
-	_Position.y = clip<float>(_Position.y, BORDER_U + Offset, BORDER_D - Offset);
+	Position.x = clip<float>(Position.x, BORDER_L + Offset, BORDER_R - Offset);
+	Position.y = clip<float>(Position.y, BORDER_U + Offset, BORDER_D - Offset);
 
-	m_pPlayerBg1->setPosition(_Position);
-	m_pPlayerBg2->setPosition(_Position);
+	m_pPlayerBg1->setPosition(Position);
+	m_pPlayerBg2->setPosition(Position);
+	m_pPlayer->setPosition(Position);
+	this->_Position = Position;
 }
 
 //*********************************************************************
@@ -158,17 +172,17 @@ void CPlayer::__updateAnimation()
 {
 	if ((m_State & PLAYER_STATE_MOVE_LEFT) || (m_State & PLAYER_STATE_MOVE_RIGHT))
 	{
-		this->setImageFile(m_PlayerAnm2.ImageFile, m_PlayerAnm2.forward());
+		m_pPlayer->setImageFile(m_PlayerAnm2.ImageFile, m_PlayerAnm2.forward());
 		m_PlayerAnm1.reset();
 	}
 	else
 	{
-		this->setImageFile(m_PlayerAnm1.ImageFile, m_PlayerAnm1.forward());
+		m_pPlayer->setImageFile(m_PlayerAnm1.ImageFile, m_PlayerAnm1.forward());
 		m_PlayerAnm2.reset();
 	}
 
-	this->setAnchor(getSize() / 2);
-	this->setFlip(m_State & PLAYER_STATE_MOVE_RIGHT);
+	m_pPlayer->setAnchor(m_pPlayer->getSize() / 2);
+	m_pPlayer->setFlip(m_State & PLAYER_STATE_MOVE_RIGHT);
 
 	m_pPlayerBg1->setRotation(m_pPlayerBg1->getRotation() + 0.02);
 	m_pPlayerBg1->setVisible(m_State & PLAYER_STATE_LOW_SPEED);

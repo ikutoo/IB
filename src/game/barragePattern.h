@@ -3,5 +3,7 @@
 class CBarragePattern
 {
 public:
-	static void barragePattern001(float x, float y, int vCounter);
+	static void playerBarrage00(float x, float y, int vCounter);
+
+	static void enemyBarrage000(float x, float y, int vCounter);
 };

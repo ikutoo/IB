@@ -5,5 +5,5 @@ class CBullet;
 class CMovePattern
 {
 public:
-	static void movePattern001(CBullet* vioBullet);
+	static void movePattern000(CBullet* vioBullet);		//向前直线匀速移动
 };
