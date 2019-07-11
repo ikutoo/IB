@@ -60,13 +60,6 @@ void CSprite::drawV()
 
 //*********************************************************************
 //FUNCTION:
-vec2i CSprite::getSize() const
-{
-	return vec2i{ (int)(m_Size.x * _Scale.x), (int)(m_Size.y * _Scale.y) };
-}
-
-////*********************************************************************
-//FUNCTION:
 void CSprite::setImageFile(const std::string& vImageFile, const recti& vRect)
 {
 	setRect(vRect);

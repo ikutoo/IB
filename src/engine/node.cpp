@@ -1,6 +1,7 @@
 #include "node.h"
 #include <algorithm>
 #include <DXLib/DxLib.h>
+#include "common.h"
 
 using namespace DxEngine;
 
@@ -30,7 +31,8 @@ void CNode::updateV(double vDeltaTime)
 //FUNCTION:
 void CNode::removeAllChilds(bool vDestroyChilds)
 {
-	if (vDestroyChilds) { for (auto pChild : _Childs) { pChild->removeAllChilds(); delete pChild; } }
+	auto Childs = _Childs;
+	if (vDestroyChilds) { for (auto pChild : Childs) { pChild->setParent(nullptr); SAFE_DELETE(pChild); } }
 	_Childs.clear();
 }
 
@@ -38,9 +40,9 @@ void CNode::removeAllChilds(bool vDestroyChilds)
 //FUNCTION:
 void CNode::removeChild(CNode* vNode, bool vDestroyChild /*= true*/)
 {
-	vNode->removeAllChilds(vDestroyChild);
 	_Childs.remove(vNode);
-	if (vDestroyChild) delete vNode;
+	vNode->setParent(nullptr);
+	if (vDestroyChild) SAFE_DELETE(vNode);
 }
 
 //*********************************************************************
@@ -62,15 +64,6 @@ void CNode::addChild(CNode* vNode, float vLocalZ)
 	if (vLocalZ != 0.0) vNode->setLocalZ(vLocalZ);
 	vNode->setParent(this);
 	_Childs.emplace_back(vNode);
-}
-
-//***********************************************************************************************
-//FUNCTION:
-void CNode::remove()
-{
-	if (_Parent) _Parent->removeChild(this, false);
-	this->removeAllChilds();
-	delete this;
 }
 
 //***********************************************************************************************

@@ -1,3 +1,4 @@
+
 #include "stdafx.h"
 #include "common.h"
 #include "barragePattern.h"
@@ -7,22 +8,38 @@
 
 //*********************************************************************
 //FUNCTION:
-void CBarragePattern::playerBarrage00(CBarrage* vOwner, int vCounter)
+void CBarragePattern::playerBarrage00(float x, float y, int vCounter)
 {
-	auto pBullet = new CBullet("player_00.png", recti{ 0, 448, 512, 64 });
+	auto pBullet = new CBullet("player_00.png", recti{ 0, 288, 128, 32 });
 
 	pBullet->_MoveFunc = CMovePattern::movePattern000;
-	pBullet->_Scale = { 0.5, 0.5 };
-	pBullet->_Speed = 10.0;
-	pBullet->setAnchor(vec2i{ pBullet->getSize().x / 2, pBullet->getSize().y });
-	pBullet->setImageRotation(PI / 2);
+	pBullet->_Position = { x, y };
+	pBullet->_Speed = 30.0;
+	pBullet->setAnchor(vec2i{ 0, pBullet->getSize().y / 2 });
+	pBullet->setImageRotation(-PI / 2);
 
-	vOwner->addBullet(pBullet);
+	CBarrageManager::getInstance()->addBullet(pBullet, true);
 }
 
 //*********************************************************************
 //FUNCTION:
-void CBarragePattern::enemyBarrage000(CBarrage* vOwner, int vCounter)
+void CBarragePattern::playerBarrage01(float x, float y, int vCounter)
+{
+	auto pBullet = new CBullet("player_00.png", recti{ 0, 448, 512, 64 });
+
+	pBullet->_MoveFunc = CMovePattern::movePattern000;
+	pBullet->_Position = { x, y };
+	pBullet->_Scale = { 0.3, 0.3 };
+	pBullet->_Speed = 50.0;
+	pBullet->setAnchor(vec2i{ 0, pBullet->getSize().y / 2 });
+	pBullet->setImageRotation(-PI / 2);
+
+	CBarrageManager::getInstance()->addBullet(pBullet, true);
+}
+
+//*********************************************************************
+//FUNCTION:
+void CBarragePattern::enemyBarrage000(float x, float y, int vCounter)
 {
 	if (vCounter % 10 != 0) return;
 
@@ -31,9 +48,9 @@ void CBarragePattern::enemyBarrage000(CBarrage* vOwner, int vCounter)
 		CBullet* pBullet = new CBullet("bullet_00.png", recti{ 416, 128, 32, 32 });
 		pBullet->_MoveFunc = CMovePattern::movePattern000;
 		pBullet->_Rotation = (i + vCounter) * PI / 180;
-		pBullet->_Position.x = 20 * sin(pBullet->_Rotation);
-		pBullet->_Position.y = -20 * cos(pBullet->_Rotation);
+		pBullet->_Position.x = x + 10 * sin(pBullet->_Rotation);
+		pBullet->_Position.y = y - 10 * cos(pBullet->_Rotation);
 		pBullet->_Speed = 3.0;
-		vOwner->addBullet(pBullet);
+		CBarrageManager::getInstance()->addBullet(pBullet);
 	}
 }

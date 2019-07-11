@@ -5,6 +5,8 @@
 
 using namespace DxEngine;
 
+class CBarrage;
+
 class CPlayer : public CSprite
 {
 	enum EPlayerState
@@ -25,7 +27,6 @@ public:
 
 	void updateV(double vDeltaTime) override;
 
-	void shoot();
 	void dead();
 	void graze(bool IsGrazed);
 
@@ -42,6 +43,8 @@ private:
 	CSprite* m_pPlayer = nullptr;
 	CSprite* m_pPlayerBg1 = nullptr;
 	CSprite* m_pPlayerBg2 = nullptr;
+
+	CBarrage* m_pBarrage = nullptr;
 
 	float SPEED_HIGH = {};
 	float SPEED_LOW = {};
@@ -62,4 +65,5 @@ private:
 	void __updatePlayerState();
 	void __updatePlayerPosition();
 	void __updateAnimation();
+	void __updateBarrage();
 };

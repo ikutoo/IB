@@ -16,7 +16,7 @@ namespace DxEngine
 		void setRect(const recti& vRect) { m_Rect = vRect; m_Size = { vRect.w, vRect.h }; }
 		void setAnchor(vec2i vAnchor) { m_Anchor = vAnchor; }
 
-		vec2i getSize() const;
+		vec2i getSize() const { return m_Size; }
 
 		void flip() { m_IsFliped = !m_IsFliped; }
 		void setFlip(bool vFlip) { m_IsFliped = vFlip; }

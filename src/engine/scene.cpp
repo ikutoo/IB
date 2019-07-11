@@ -31,9 +31,7 @@ void DxEngine::CScene::destroy()
 	if (!m_IsIntialized || m_IsCached) return;
 
 	_destroyV();
-	this->removeAllChilds();
 
 	m_IsIntialized = false;
-
 	delete this;
 }

@@ -7,8 +7,8 @@ namespace DxEngine
 	class CNode
 	{
 	public:
-		CNode() = default;
-		virtual ~CNode() = default;
+		CNode() {}
+		virtual ~CNode() { this->removeFromParent(); this->removeAllChilds(); }
 
 		virtual void updateV(double vDeltaTime);
 		virtual void drawV();
@@ -25,7 +25,7 @@ namespace DxEngine
 		void setBrightness(const vec3i& vBrightnessColor) { _BrightnessColor = vBrightnessColor; }
 		void setName(const std::string& vName) { m_Name = vName; }
 		void setVisible(bool vIsVisible) { _IsVisible = vIsVisible; }
-		void setParent(CNode* vParent) { _ASSERT(vParent); _Parent = vParent; }
+		void setParent(CNode* vParent) { _Parent = vParent; }
 
 		CNode* findChild(const std::string& vName);
 
@@ -42,7 +42,7 @@ namespace DxEngine
 		void addChild(CNode* vNode, float vLocalZ = 0.0f);
 		void removeChild(CNode* vNode, bool vDestroyChild = true);
 		void removeAllChilds(bool vDestroyChilds = true);
-		void remove();
+		void removeFromParent() { if (_Parent) _Parent->removeChild(this, false); }
 
 		CNode* getLastChild() const { return _Childs.back(); }
 		uint32_t getNumChilds() const { return _Childs.size(); }

@@ -75,6 +75,7 @@ private:
 
 	int m_Counter = 0;
 
+	CSprite* m_pPlayerBarrageContainer = nullptr;
 	CSprite* m_pEnemyBarrageContainer = nullptr;
 	CRenderTarget* m_pBarrageRenderTarget = nullptr;
 

@@ -37,23 +37,12 @@ void CPlayer::updateV(double vDeltaTime)
 	__updatePlayerState();
 	__updatePlayerPosition();
 	__updateAnimation();
+	__updateBarrage();
 
 	m_DeathProtectionCounter--;
 
 	if (m_State & PLAYER_STATE_GRAZE) { CHECK_RESULT(DxLib::PlaySoundMem(m_SoundHandleGraze, DX_PLAYTYPE_LOOP)); }
 	else { CHECK_RESULT(DxLib::StopSoundMem(m_SoundHandleGraze)); }
-
-	if (m_State & PLAYER_STATE_SHOOTING) { shoot(); CHECK_RESULT(DxLib::PlaySoundMem(m_SoundHandleShoot, DX_PLAYTYPE_LOOP)); }
-	else { CHECK_RESULT(DxLib::StopSoundMem(m_SoundHandleShoot)); }
-}
-
-//*********************************************************************
-//FUNCTION:
-void CPlayer::shoot()
-{
-	CBarrage* pBarrage = new CBarrage(CBarragePattern::playerBarrage00);
-	pBarrage->setLiveTime(30);
-	CBarrageManager::getInstance()->startBarrage(pBarrage, this);
 }
 
 //*********************************************************************
@@ -111,12 +100,16 @@ void CPlayer::__init(const std::string& vConfigFile)
 	m_SoundHandleShoot = DxLib::LoadSoundMem(LOCATE_FILE("se_plst_00.wav"));
 	ChangeVolumeSoundMem(255 * 6 / 10, m_SoundHandleShoot);
 	_ASSERTE(m_SoundHandleGraze != -1 && m_SoundHandleDead != -1 && m_SoundHandleShoot != -1);
+
+	m_pBarrage = new CBarrage(CBarragePattern::playerBarrage00);
+	m_pBarrage->setDestroyAtDeath(false);
 }
 
 //*********************************************************************
 //FUNCTION:
 void CPlayer::__destroy()
 {
+	SAFE_DELETE(m_pBarrage);
 	CHECK_RESULT(DxLib::DeleteSoundMem(m_SoundHandleGraze));
 	CHECK_RESULT(DxLib::DeleteSoundMem(m_SoundHandleDead));
 }
@@ -182,4 +175,21 @@ void CPlayer::__updateAnimation()
 	m_pPlayerBg1->setRotation(m_pPlayerBg1->getRotation() + 0.02);
 	m_pPlayerBg1->setVisible(m_State & PLAYER_STATE_LOW_SPEED);
 	m_pPlayerBg2->setRotation(m_pPlayerBg2->getRotation() + 0.04);
+}
+
+//*********************************************************************
+//FUNCTION:
+void CPlayer::__updateBarrage()
+{
+	if (m_State & PLAYER_STATE_SHOOTING)
+	{
+		CHECK_RESULT(DxLib::PlaySoundMem(m_SoundHandleShoot, DX_PLAYTYPE_LOOP));
+		m_pBarrage->setPosition(_Position);
+		CBarrageManager::getInstance()->startBarrage(m_pBarrage, true);
+	}
+	else
+	{
+		CHECK_RESULT(DxLib::StopSoundMem(m_SoundHandleShoot));
+		CBarrageManager::getInstance()->stopBarrage(m_pBarrage);
+	}
 }
