@@ -75,7 +75,7 @@ private:
 
 	int m_Counter = 0;
 
-	CSprite* m_pBarrageContainerEm = nullptr;
+	CSprite* m_pEnemyBarrageContainer = nullptr;
 	CRenderTarget* m_pBarrageRenderTarget = nullptr;
 
 	CCollisionDetector* m_pCollisionDetector = nullptr;

@@ -53,7 +53,7 @@ void CPlayer::shoot()
 {
 	CBarrage* pBarrage = new CBarrage(CBarragePattern::playerBarrage00);
 	pBarrage->setLiveTime(30);
-	CBarrageManager::getInstance()->startBarragePy(pBarrage);
+	CBarrageManager::getInstance()->startBarrage(pBarrage, this);
 }
 
 //*********************************************************************
@@ -85,17 +85,15 @@ void CPlayer::__init(const std::string& vConfigFile)
 {
 	_ASSERTE(!vConfigFile.empty());
 
-	m_pPlayer = new CSprite;
-	m_pPlayer->setPosition(INITIAL_POS_X, INITIAL_POS_Y);
-	this->addChild(m_pPlayer, -1);
+	this->setPosition(INITIAL_POS_X, INITIAL_POS_Y);
 
 	CJsonReader JsonReader(vConfigFile);
 	SPEED_HIGH = JsonReader.readFloat("speed_high");
 	SPEED_LOW = JsonReader.readFloat("speed_low");
 	_ASSERTE(SPEED_HIGH > 0 && SPEED_LOW > 0);
 
-	m_PlayerAnm1 = JsonReader.readAnimation("player_anm_1");
-	m_PlayerAnm2 = JsonReader.readAnimation("player_anm_2");
+	m_pPlayer = new CSprite;
+	this->addChild(m_pPlayer, -1);
 
 	m_pPlayerBg1 = JsonReader.readSprite("effect_sprite_1");
 	m_pPlayerBg1->setAnchor(m_pPlayerBg1->getSize() / 2);
@@ -103,6 +101,9 @@ void CPlayer::__init(const std::string& vConfigFile)
 	m_pPlayerBg2 = JsonReader.readSprite("effect_sprite_2");
 	m_pPlayerBg2->setAnchor(m_pPlayerBg2->getSize() / 2);
 	this->addChild(m_pPlayerBg2, 0);
+
+	m_PlayerAnm1 = JsonReader.readAnimation("player_anm_1");
+	m_PlayerAnm2 = JsonReader.readAnimation("player_anm_2");
 
 	m_SoundHandleGraze = DxLib::LoadSoundMem(LOCATE_FILE("se_graze.wav"));
 	ChangeVolumeSoundMem(255 * 6 / 10, m_SoundHandleGraze);
@@ -153,17 +154,11 @@ void CPlayer::__updatePlayerPosition()
 	m_Speed.normalize();
 	m_Speed = m_State & PLAYER_STATE_LOW_SPEED ? m_Speed * SPEED_LOW : m_Speed * SPEED_HIGH;
 
-	auto Position = m_pPlayer->getPosition();
-	Position += m_Speed;
+	_Position += m_Speed;
 
 	int Offset = 20;
-	Position.x = clip<float>(Position.x, BORDER_L + Offset, BORDER_R - Offset);
-	Position.y = clip<float>(Position.y, BORDER_U + Offset, BORDER_D - Offset);
-
-	m_pPlayerBg1->setPosition(Position);
-	m_pPlayerBg2->setPosition(Position);
-	m_pPlayer->setPosition(Position);
-	this->_Position = Position;
+	_Position.x = clip<float>(_Position.x, BORDER_L + Offset, BORDER_R - Offset);
+	_Position.y = clip<float>(_Position.y, BORDER_U + Offset, BORDER_D - Offset);
 }
 
 //*********************************************************************

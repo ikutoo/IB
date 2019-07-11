@@ -38,6 +38,7 @@ void CNode::removeAllChilds(bool vDestroyChilds)
 //FUNCTION:
 void CNode::removeChild(CNode* vNode, bool vDestroyChild /*= true*/)
 {
+	vNode->removeAllChilds(vDestroyChild);
 	_Childs.remove(vNode);
 	if (vDestroyChild) delete vNode;
 }
@@ -59,5 +60,36 @@ void CNode::addChild(CNode* vNode, float vLocalZ)
 {
 	_ASSERT(vNode);
 	if (vLocalZ != 0.0) vNode->setLocalZ(vLocalZ);
+	vNode->setParent(this);
 	_Childs.emplace_back(vNode);
+}
+
+//***********************************************************************************************
+//FUNCTION:
+void CNode::remove()
+{
+	if (_Parent) _Parent->removeChild(this, false);
+	this->removeAllChilds();
+	delete this;
+}
+
+//***********************************************************************************************
+//FUNCTION:
+vec2f CNode::getWorldPosition() const
+{
+	return _Parent ? _Parent->getWorldPosition() + _Position : _Position;
+}
+
+//***********************************************************************************************
+//FUNCTION:
+vec2f CNode::getWorldScale() const
+{
+	return _Parent ? vec2f{ _Parent->getWorldScale().x * _Scale.x,_Parent->getWorldScale().y * _Scale.y } : _Scale;
+}
+
+//***********************************************************************************************
+//FUNCTION:
+float CNode::getWorldRotation() const
+{
+	return _Parent ? _Parent->getWorldRotation() + _Rotation : _Rotation;
 }

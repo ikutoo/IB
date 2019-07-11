@@ -23,4 +23,5 @@ private:
 	friend class CBarragePattern;
 	friend class CMovePattern;
 	friend class CBarrageManager;
+	friend class CBarrage;
 };

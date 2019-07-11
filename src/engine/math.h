@@ -18,8 +18,10 @@ namespace DxEngine
 		}
 
 		vec2 operator*(T t) { return vec2{ x*t, y*t }; }
+		//vec2 operator*(const vec2& r) { return vec2{ x + r.x, y + r.y; } }
 		vec2 operator/(T t) { if (t == 0) return *this; else return { x / t, y / t }; }
-		void operator+=(vec2 r) { x += r.x; y += r.y; }
+		void operator+=(const vec2& r) { x += r.x; y += r.y; }
+		vec2 operator+(const vec2& r) { return vec2{ x + r.x, y + r.y }; }
 	};
 
 	template<typename T>

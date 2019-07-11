@@ -39,11 +39,9 @@ bool CGameScene::_initV()
 	m_pBarrageRenderTarget = new CRenderTarget(GRAPH_SIZE_X, GRAPH_SIZE_Y);
 	this->addChild(m_pBarrageRenderTarget, 0.5);
 
-	m_pBarrageContainerEm = new CSprite;
-	m_pBarrageContainerEm->setRenderGraph(m_pBarrageRenderTarget->getRenderGraph());
-	this->addChild(m_pBarrageContainerEm);
-
-	CBarrageManager::getInstance()->init(m_pBarrageContainerEm, m_pPlayer);
+	m_pEnemyBarrageContainer = new CSprite;
+	m_pEnemyBarrageContainer->setRenderGraph(m_pBarrageRenderTarget->getRenderGraph());
+	this->addChild(m_pEnemyBarrageContainer);
 
 	m_pCollisionDetector = new CCollisionDetector;
 
@@ -102,14 +100,12 @@ bool CGameScene::__initUI()
 //FUNCTION:
 void CGameScene::__updateBarrage()
 {
-	CBarrageManager::getInstance()->setPlayerPosition(m_pPlayer->getPosition());
-
 	if (m_Counter == 100)
 	{
 		CBarrage* pBarrage = new CBarrage(CBarragePattern::enemyBarrage000);
 		pBarrage->setPosition(GRAPH_SIZE_X / 2, GRAPH_SIZE_Y / 2);
 		pBarrage->setLiveTime(3000);
-		CBarrageManager::getInstance()->startBarrageEm(pBarrage);
+		CBarrageManager::getInstance()->startBarrage(pBarrage, m_pEnemyBarrageContainer);
 	}
 }
 

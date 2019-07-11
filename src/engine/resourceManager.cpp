@@ -10,7 +10,6 @@ DxEngine::CResourceManager::CResourceManager()
 
 DxEngine::CResourceManager::~CResourceManager()
 {
-	_ASSERTE(m_ResMap.empty());
 }
 
 //*********************************************************************
