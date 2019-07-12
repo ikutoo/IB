@@ -67,3 +67,12 @@ void Utility::writeStringToFile(const std::string& vFilePath, const std::string&
 	_ASSERTE(ofs.is_open());
 	ofs << vContent;
 }
+
+//*********************************************************************
+//FUNCTION:
+std::wstring Utility::stringToWString(const std::string& vStr)
+{
+	std::wstring Temp(vStr.length(), L' ');
+	std::copy(vStr.begin(), vStr.end(), Temp.begin());
+	return Temp;
+}

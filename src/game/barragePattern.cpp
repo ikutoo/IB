@@ -30,10 +30,10 @@ void CBarragePattern::playerBarrage01(float x, float y, int vCounter)
 	auto pBullet = new CBullet("player_00.png", recti{ 0, 448, 512, 64 });
 
 	pBullet->_MoveFunc = CMovePattern::movePattern001;
-	pBullet->_Scale = { 0.5, 0.5 };
+	pBullet->_Scale = { 0.3, 0.3 };
 	pBullet->_Position.x = x;
-	pBullet->_Position.y = y;
-	pBullet->_Speed = 150;
+	pBullet->_Position.y = y + abs(vCounter % 64 - 32);
+	pBullet->_Speed = 153.6;
 	pBullet->setAnchor(vec2i{ 0, pBullet->getSize().y / 2 });
 	pBullet->setImageRotation(-PI / 2);
 

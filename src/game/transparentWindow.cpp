@@ -2,6 +2,7 @@
 #include <objidl.h>
 #include <gdiplus.h>
 #include "engine/resourceManager.h"
+#include "engine/utility.h"
 #include "transparentWindow.h"
 #include "common.h"
 
@@ -18,7 +19,7 @@ CTransparentWindow::CTransparentWindow(HINSTANCE hInstance)
 
 	m_hWnd = __createWindow(hInstance);
 	m_DC = GetDC(m_hWnd);
-	m_pDollImage = new Gdiplus::Image((WCHAR*)LOCATE_FILE("shanghai.png"));
+	m_pDollImage = new Gdiplus::Image(Utility::stringToWString(LOCATE_FILE("shanghai.png")).c_str());
 	m_DollPos = { -HIDDEN_DISTANCE, 0 };
 }
 
