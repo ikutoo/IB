@@ -27,17 +27,20 @@ void CBarragePattern::playerBarrage00(float x, float y, int vCounter)
 //FUNCTION:
 void CBarragePattern::playerBarrage01(float x, float y, int vCounter)
 {
-	auto pBullet = new CBullet("player_00.png", recti{ 0, 448, 512, 64 });
+	for (int i = 0; i < 2; ++i)
+	{
+		auto pBullet = new CBullet("player_00.png", recti{ 0, 448, 512, 64 });
 
-	pBullet->_MoveFunc = CMovePattern::movePattern001;
-	pBullet->_Scale = { 0.3, 0.3 };
-	pBullet->_Position.x = x;
-	pBullet->_Position.y = y + abs(vCounter % 64 - 32);
-	pBullet->_Speed = 153.6;
-	pBullet->setAnchor(vec2i{ 0, pBullet->getSize().y / 2 });
-	pBullet->setImageRotation(-PI / 2);
+		pBullet->_MoveFunc = CMovePattern::movePattern001;
+		pBullet->_Scale = { 0.3, 0.3 };
+		pBullet->_Position.x = x;
+		pBullet->_Position.y = y + 9 * vCounter % 32 - i * pBullet->getSize().x * pBullet->getScale().x;
+		pBullet->_Speed = 142.6;
+		pBullet->setAnchor(vec2i{ 0, pBullet->getSize().y / 2 });
+		pBullet->setImageRotation(-PI / 2);
 
-	CBarrageManager::getInstance()->addBullet(pBullet, true);
+		CBarrageManager::getInstance()->addBullet(pBullet, true);
+	}
 }
 
 //*********************************************************************
