@@ -58,6 +58,12 @@
     <ClCompile Include="..\..\src\engine\renderTarget .cpp">
       <Filter>Source Files\node</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\action.cpp">
+      <Filter>Source Files\node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\actionManager.cpp">
+      <Filter>Source Files\manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\engine\common.h">
@@ -107,6 +113,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\engine\renderTarget.h">
       <Filter>Source Files\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\engine\action.h">
+      <Filter>Source Files\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\engine\actionManager.h">
+      <Filter>Source Files\manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

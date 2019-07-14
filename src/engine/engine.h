@@ -35,6 +35,7 @@ namespace DxEngine
 		void setShowConsoleHint() { m_ShowConsoleHint = true; }
 		void setDisableCNInputHint() { m_DisableCNInputHint = true; }
 
+		float getFPS() const { m_FPS; }
 		vec2i getGraphSize() const { return m_GraphSize; }
 		bool  isFullScreen() const { return m_DisplayInfo.IsFullscreen; }
 

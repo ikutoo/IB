@@ -159,6 +159,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\engine\action.h" />
+    <ClInclude Include="..\..\src\engine\actionManager.h" />
     <ClInclude Include="..\..\src\engine\animation.h" />
     <ClInclude Include="..\..\src\engine\common.h" />
     <ClInclude Include="..\..\src\engine\cpuTimer.h" />
@@ -177,6 +179,8 @@
     <ClInclude Include="..\..\src\engine\utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\engine\action.cpp" />
+    <ClCompile Include="..\..\src\engine\actionManager.cpp" />
     <ClCompile Include="..\..\src\engine\cpuTimer.cpp" />
     <ClCompile Include="..\..\src\engine\engine.cpp" />
     <ClCompile Include="..\..\src\engine\graphics2d.cpp" />

@@ -100,16 +100,13 @@ void CPlayer::__init(const std::string& vConfigFile)
 	m_SoundHandleShoot = DxLib::LoadSoundMem(LOCATE_FILE("se_plst_00.wav"));
 	ChangeVolumeSoundMem(255 * 6 / 10, m_SoundHandleShoot);
 	_ASSERTE(m_SoundHandleGraze != -1 && m_SoundHandleDead != -1 && m_SoundHandleShoot != -1);
-
-	m_pBarrage = new CBarrage(CBarragePattern::playerBarrage00);
-	m_pBarrage->setDestroyAtDeath(false);
 }
 
 //*********************************************************************
 //FUNCTION:
 void CPlayer::__destroy()
 {
-	SAFE_DELETE(m_pBarrage);
+	for (auto pBarrage : m_Barrages) SAFE_DELETE(pBarrage);
 	CHECK_RESULT(DxLib::DeleteSoundMem(m_SoundHandleGraze));
 	CHECK_RESULT(DxLib::DeleteSoundMem(m_SoundHandleDead));
 }
@@ -181,18 +178,19 @@ void CPlayer::__updateAnimation()
 //FUNCTION:
 void CPlayer::__updateBarrage()
 {
-	m_State & PLAYER_STATE_LOW_SPEED ? m_pBarrage->setBarrageFunc(CBarragePattern::playerBarrage01) : m_pBarrage->setBarrageFunc(CBarragePattern::playerBarrage00);
-
 	if (m_State & PLAYER_STATE_SHOOTING)
 	{
 		CHECK_RESULT(DxLib::PlaySoundMem(m_SoundHandleShoot, DX_PLAYTYPE_LOOP));
-		m_pBarrage->setPosition(_Position);
-		CBarrageManager::getInstance()->startBarrage(m_pBarrage, true);
+		for (auto pBarrage : m_Barrages)
+			CBarrageManager::getInstance()->startBarrage(pBarrage, true);
 	}
 	else
 	{
 		CHECK_RESULT(DxLib::StopSoundMem(m_SoundHandleShoot));
-		CBarrageManager::getInstance()->stopBarrage(m_pBarrage);
-		m_pBarrage->resetCounter();
+		for (auto pBarrage : m_Barrages)
+		{
+			CBarrageManager::getInstance()->stopBarrage(pBarrage);
+			pBarrage->resetCounter();
+		}
 	}
 }

@@ -21,6 +21,9 @@
     <Filter Include="Source Files\particles">
       <UniqueIdentifier>{fc9a78e6-52ae-462c-a3b3-026fa91d1fcb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\player">
+      <UniqueIdentifier>{625b840b-ee14-453c-a896-8a674d0d38f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\game\application.cpp">
@@ -65,11 +68,14 @@
     <ClCompile Include="..\..\src\game\particles.cpp">
       <Filter>Source Files\particles</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\collision.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\player.cpp">
+      <Filter>Source Files\player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerAlice.cpp">
+      <Filter>Source Files\player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,11 +124,14 @@
     <ClInclude Include="..\..\src\game\particles.h">
       <Filter>Source Files\particles</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\game\player.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\game\collision.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\player.h">
+      <Filter>Source Files\player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerAlice.h">
+      <Filter>Source Files\player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,7 +9,7 @@
 #include "engine/renderTarget.h"
 #include "barrageManager.h"
 #include "barragePattern.h"
-#include "player.h"
+#include "playerAlice.h"
 #include "collision.h"
 
 using namespace DxEngine;
@@ -31,7 +31,7 @@ bool CGameScene::_initV()
 	__initLuaEnv();
 	__initUI();
 
-	m_pPlayer = new CPlayer("player_00a.cfg");
+	m_pPlayer = new CPlayerAlice("player_00a.cfg");
 	this->addChild(m_pPlayer);
 
 	__performLuaScript(m_ScriptActions[m_ActionIndex++].c_str());

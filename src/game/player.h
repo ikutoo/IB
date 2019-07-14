@@ -9,6 +9,7 @@ class CBarrage;
 
 class CPlayer : public CSprite
 {
+public:
 	enum EPlayerState
 	{
 		PLAYER_STATE_IDLE = 0,
@@ -21,9 +22,8 @@ class CPlayer : public CSprite
 		PLAYER_STATE_GRAZE = 64
 	};
 
-public:
 	CPlayer(const std::string& vConfigFile);
-	~CPlayer();
+	virtual ~CPlayer();
 
 	void updateV(double vDeltaTime) override;
 
@@ -32,9 +32,12 @@ public:
 
 	int getGrazeScore() const { return m_GrazeScore; };
 
-private:
+protected:
 	uint32_t m_State = PLAYER_STATE_IDLE;
 
+	std::vector<CBarrage*> m_Barrages;
+
+private:
 	vec2f m_Speed = {};
 
 	SAnimation m_PlayerAnm1;	//自机高速移动动画
@@ -43,8 +46,6 @@ private:
 	CSprite* m_pPlayer = nullptr;
 	CSprite* m_pPlayerBg1 = nullptr;
 	CSprite* m_pPlayerBg2 = nullptr;
-
-	CBarrage* m_pBarrage = nullptr;
 
 	float SPEED_HIGH = {};
 	float SPEED_LOW = {};
