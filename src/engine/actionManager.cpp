@@ -26,11 +26,27 @@ void CActionManager::startAction(CAction* vAction, bool vStopPrevActions)
 //FUNCTION:
 void CActionManager::update()
 {
-	for (auto& e : m_Node2ActionMap)
+	for (auto iter = m_Node2ActionMap.begin(); iter != m_Node2ActionMap.end();)
 	{
-		for (auto pAction : e.second)
+		auto& ActionSet = iter->second;
+		for (auto iter2 = ActionSet.begin(); iter2 != ActionSet.end();)
 		{
+			auto pAction = *iter2;
 			pAction->updateV();
+			if (pAction->_IsDone)
+			{
+				SAFE_DELETE(pAction);
+				iter2 = ActionSet.erase(iter2);
+			}
+			else
+			{
+				iter2++;
+			}
 		}
+
+		if (ActionSet.empty())
+			iter = m_Node2ActionMap.erase(iter);
+		else
+			iter++;
 	}
 }

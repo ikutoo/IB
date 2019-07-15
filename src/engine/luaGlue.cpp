@@ -23,7 +23,7 @@ namespace DxEngine
 		LUAGLUE playMusic(lua_State* vioLuaState)
 		{
 			auto filePath = lua_tostring(vioLuaState, 1);
-			CHECK_RESULT(DxLib::PlayMusic(CResourceManager::getInstance()->locateFile(filePath).c_str(), DX_PLAYTYPE_BACK));
+			CHECK_RESULT(DxLib::PlayMusic(CResourceManager::getInstance()->locateFile(filePath).c_str(), DX_PLAYTYPE_LOOP));
 			return 0;
 		}
 

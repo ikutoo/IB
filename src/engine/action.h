@@ -20,13 +20,15 @@ namespace DxEngine
 	protected:
 		CNode* _pTarget = nullptr;
 
+		bool _IsDone = false;
+
 		friend class CActionManager;
 	};
 
 	class CMoveTo : public CAction
 	{
 	public:
-		CMoveTo(CNode* vTarget, vec2f vFrom, vec2f vTo, float vTimeInMS, TInterpFunc vInterpFunc = interpolator::cubic);
+		CMoveTo(CNode* vTarget, vec2f vFrom, vec2f vTo, float vTimeInMS, float vDelayTime = 0.0f, TInterpFunc vInterpFunc = interpolator::cubic);
 
 		void updateV() override;
 
@@ -36,6 +38,7 @@ namespace DxEngine
 		vec2f m_VecTo = {};
 
 		float m_TimeInMS = 0.0f;
+		float m_DelayTime = 0.0f;
 
 		int m_TotalFrameCount = 0;
 		int m_CurrentFrame = 0;
