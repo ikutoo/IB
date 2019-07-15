@@ -12,7 +12,7 @@ void init()
 	CResourceManager::getInstance()->addFileSearchPath(DATA_PATH);
 
 	vec2i ScreenSize = { GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN) };
-	int WindowHeight = ScreenSize.y * 0.8;
+	int WindowHeight = ScreenSize.y * 0.95;
 	int WindowWidth = WindowHeight * 16.0 / 9.0;
 
 	CJsonReader JsonReader("game.config");

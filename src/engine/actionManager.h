@@ -11,7 +11,9 @@ namespace DxEngine
 	public:
 		SINGLETION(CActionManager);
 
-		void startAction(CAction* vAction);
+		void startAction(CAction* vAction, bool vStopPrevActions = true);
+
+		void update();
 
 	private:
 		CActionManager() = default;

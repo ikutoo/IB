@@ -15,5 +15,4 @@ private:
 	SAnimation m_DollAnimation;
 
 	void __updateAnimation();
-	void __updateBarrage();
 };

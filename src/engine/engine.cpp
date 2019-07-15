@@ -1,6 +1,7 @@
 #include "engine.h"
 #include <DXLib/DxLib.h>
 #include "inputManager.h"
+#include "actionManager.h"
 #include "scene.h"
 
 #pragma comment (lib, "imm32.lib")
@@ -75,6 +76,7 @@ bool CEngine::__init()
 void CEngine::__update()
 {
 	CInputManager::getInstance()->update();
+	CActionManager::getInstance()->update();
 
 	double DeltaTime = __updateFPS();
 

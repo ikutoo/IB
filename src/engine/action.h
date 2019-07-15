@@ -7,7 +7,7 @@ namespace DxEngine
 	namespace interpolator
 	{
 		inline float linear(float t) { return t; }
-		inline float cubic(float t) { return (2 * t - 3) * t * t + 1; }
+		inline float cubic(float t) { return (2 * (1 - t) - 3) * (1 - t) * (1 - t) + 1; }
 	}
 
 	class CAction
@@ -16,17 +16,21 @@ namespace DxEngine
 		using TInterpFunc = std::function<float(float)>;
 
 		virtual void updateV() = 0;
+
+	protected:
+		CNode* _pTarget = nullptr;
+
+		friend class CActionManager;
 	};
 
 	class CMoveTo : public CAction
 	{
 	public:
-		CMoveTo(CNode* vTarget, vec2f vFrom, vec2f vTo, float vTimeInMS, TInterpFunc vInterpFunc = interpolator::linear);
+		CMoveTo(CNode* vTarget, vec2f vFrom, vec2f vTo, float vTimeInMS, TInterpFunc vInterpFunc = interpolator::cubic);
 
 		void updateV() override;
 
 	private:
-		CNode* m_pTarget = nullptr;
 
 		vec2f m_VecFrom = {};
 		vec2f m_VecTo = {};
