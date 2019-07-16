@@ -27,6 +27,7 @@ public:
 
 	void updateV(double vDeltaTime) override;
 
+	void freeze(int vTimeInMS);
 	void dead();
 	void graze(bool IsGrazed);
 
@@ -52,6 +53,9 @@ private:
 
 	int m_GrazeScore = 0;
 
+	int m_FreezeStartTime = 0;
+	int m_FreezeTime = 0;
+
 	int m_DeathProtectionCounter = 0;
 
 	bool m_IsGrazed = false;
@@ -60,6 +64,8 @@ private:
 	int m_SoundHandleGraze = -1;
 	int m_SoundHandleShoot = -1;
 
+	int m_WaitFrameCounter = 0;
+
 	void __init(const std::string& vConfigFile);
 	void __destroy();
 
@@ -67,4 +73,5 @@ private:
 	void __updatePlayerPosition();
 	void __updateAnimation();
 	void __updateBarrage();
+	void __updateDeathProtection();
 };

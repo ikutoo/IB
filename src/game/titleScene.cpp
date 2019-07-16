@@ -101,5 +101,5 @@ void CTitleScene::_updateV(double vDeltaTime)
 //FUNCTION:
 void CTitleScene::_destroyV()
 {
-	CHECK_RESULT(DxLib::StopMusic());
+	//CHECK_RESULT(DxLib::StopMusic());
 }

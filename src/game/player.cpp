@@ -12,7 +12,7 @@ using namespace DxEngine;
 
 const float INITIAL_POS_X = GRAPH_SIZE_X * 0.5;
 const float INITIAL_POS_Y = 960;
-const int	DEATH_PROTECTION_MAX_COUNT = 120;
+const int	DEATH_PROTECTION_MAX_COUNT = 240;
 
 //*********************************************************************
 //FUNCTION:
@@ -33,16 +33,23 @@ CPlayer::~CPlayer()
 void CPlayer::updateV(double vDeltaTime)
 {
 	CSprite::updateV(vDeltaTime);
+	if (_IsPaused) return;
 
 	__updatePlayerState();
 	__updatePlayerPosition();
 	__updateAnimation();
 	__updateBarrage();
-
-	m_DeathProtectionCounter--;
+	__updateDeathProtection();
 
 	if (m_State & PLAYER_STATE_GRAZE) { CHECK_RESULT(DxLib::PlaySoundMem(m_SoundHandleGraze, DX_PLAYTYPE_LOOP)); }
 	else { CHECK_RESULT(DxLib::StopSoundMem(m_SoundHandleGraze)); }
+}
+
+//*********************************************************************
+//FUNCTION:
+void CPlayer::freeze(int vTime)
+{
+	//TODO
 }
 
 //*********************************************************************
@@ -100,6 +107,8 @@ void CPlayer::__init(const std::string& vConfigFile)
 	m_SoundHandleShoot = DxLib::LoadSoundMem(LOCATE_FILE("se_plst_00.wav"));
 	ChangeVolumeSoundMem(255 * 6 / 10, m_SoundHandleShoot);
 	_ASSERTE(m_SoundHandleGraze != -1 && m_SoundHandleDead != -1 && m_SoundHandleShoot != -1);
+
+	m_DeathProtectionCounter = DEATH_PROTECTION_MAX_COUNT;
 }
 
 //*********************************************************************
@@ -192,5 +201,21 @@ void CPlayer::__updateBarrage()
 			CBarrageManager::getInstance()->stopBarrage(pBarrage);
 			pBarrage->resetCounter();
 		}
+	}
+}
+
+//*********************************************************************
+//FUNCTION:
+void CPlayer::__updateDeathProtection()
+{
+	m_DeathProtectionCounter--;
+	if (m_DeathProtectionCounter > 1)
+	{
+		if (m_DeathProtectionCounter % 12 == 0) m_pPlayer->setBrightness(vec3i{ 255, 0, 0 });
+		else if (m_DeathProtectionCounter % 12 == 6) m_pPlayer->setBrightness(vec3i{ 255, 255, 255 });
+	}
+	else if (m_DeathProtectionCounter == 1)
+	{
+		m_pPlayer->setBrightness(vec3i{ 255, 255, 255 });
 	}
 }

@@ -33,4 +33,4 @@ setDialogue("趁早出发吧,被贼人跑远了就麻烦了")
 
 #ACTION
 endDialogue()
-playMusic("bgm_02.mp3")
+playMusic("bgm_04.mp3")

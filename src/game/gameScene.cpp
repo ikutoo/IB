@@ -71,7 +71,7 @@ void CGameScene::_updateV(double vDeltaTime)
 
 	if (CHECK_HIT_KEY(KEY_INPUT_ESCAPE)) CEngine::getInstance()->stop();
 
-	m_Counter++;
+	if (m_GameState == EGameState::NORMAL) m_Counter++;
 }
 
 //*********************************************************************
@@ -216,6 +216,9 @@ LUAGLUE CGameScene::__beginDialogue(lua_State* vioLuaState)
 {
 	m_GameState = EGameState::IN_DIALOGUE;
 	__findUISprite("dialogueBgSprite")->setImageFile("ui.png", recti{ 1024, 256, 920, 184 });
+
+	m_pPlayer->pause();
+
 	return 0;
 }
 
@@ -228,6 +231,10 @@ LUAGLUE CGameScene::__endDialogue(lua_State* vioLuaState)
 	__findUISprite("lChSprite")->setImageFile("");
 	__findUILabel("dialogueLabel")->setText("");
 	__findUILabel("chNameLabel")->setText("");
+
+	WaitTimer(200);
+	m_pPlayer->resume();
+
 	return 0;
 }
 

@@ -50,7 +50,16 @@ CPlayerAlice::~CPlayerAlice()
 void CPlayerAlice::updateV(double vDeltaTime)
 {
 	CPlayer::updateV(vDeltaTime);
+	if (_IsPaused) return;
+
 	__updateAnimation();
+
+	if (CHECK_HIT_KEY(KEY_INPUT_X)) { __changeShootingMode(); }
+
+	for (int i = 0; i < MAX_DOLL_NUM; ++i)
+	{
+		m_Barrages[i]->setPosition(m_Dolls[i]->getWorldPosition());
+	}
 }
 
 //***********************************************************************************
@@ -90,12 +99,5 @@ void CPlayerAlice::__updateAnimation()
 	{
 		pDoll->setImageFile(m_DollAnimation.ImageFile, m_DollAnimation.forward());
 		pDoll->setAnchor(pDoll->getSize() / 2);
-	}
-
-	if (CHECK_HIT_KEY(KEY_INPUT_X)) { __changeShootingMode(); }
-
-	for (int i = 0; i < MAX_DOLL_NUM; ++i)
-	{
-		m_Barrages[i]->setPosition(m_Dolls[i]->getWorldPosition());
 	}
 }

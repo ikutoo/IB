@@ -63,7 +63,7 @@ void CLevelScene::_updateV(double vDeltaTime)
 		sprintf(ScriptFileName, "%slevel%d.dialogue", DATA_PATH.c_str(), m_SelectedLabelIndex);
 		CEngine::getInstance()->setActiveScene(new CGameScene(ScriptFileName));
 
-		CHECK_RESULT(DxLib::StopMusic());
+		//CHECK_RESULT(DxLib::StopMusic());
 		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_ok_00.wav"), DX_PLAYTYPE_BACK));
 	}
 	else if (CHECK_HIT_KEY(KEY_INPUT_X))

@@ -8,6 +8,7 @@ namespace DxEngine
 	{
 		inline float linear(float t) { return t; }
 		inline float cubic(float t) { return (2 * (1 - t) - 3) * (1 - t) * (1 - t) + 1; }
+		inline float sine(float t) { return 0.5*sin((t - 0.5)*PI) + 0.5; }
 	}
 
 	class CAction

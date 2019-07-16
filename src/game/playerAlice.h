@@ -14,8 +14,6 @@ private:
 
 	SAnimation m_DollAnimation;
 
-	float m_Theta = 0.0f;
-
 	int m_CurrentShootMode = 0;
 	std::vector<std::vector<vec2f>> m_InitialDollPosSet;
 
