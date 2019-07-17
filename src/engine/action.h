@@ -1,5 +1,6 @@
 #pragma once
 #include <functional>
+#include <vector>
 #include "node.h"
 
 namespace DxEngine
@@ -18,6 +19,8 @@ namespace DxEngine
 
 		virtual void updateV() = 0;
 
+		bool isDone() const { return _IsDone; }
+
 	protected:
 		CNode* _pTarget = nullptr;
 
@@ -29,7 +32,7 @@ namespace DxEngine
 	class CMoveTo : public CAction
 	{
 	public:
-		CMoveTo(CNode* vTarget, vec2f vFrom, vec2f vTo, float vTimeInMS, float vDelayTime = 0.0f, TInterpFunc vInterpFunc = interpolator::cubic);
+		CMoveTo(CNode* vTarget, vec2f vFrom, vec2f vTo, float vTimeInMS, float vDelayTimeInMS = 0.0f, TInterpFunc vInterpFunc = interpolator::cubic);
 
 		void updateV() override;
 
@@ -42,8 +45,22 @@ namespace DxEngine
 		float m_DelayTime = 0.0f;
 
 		int m_TotalFrameCount = 0;
+		int m_DelayFrameCount = 0;
 		int m_CurrentFrame = 0;
 
 		TInterpFunc m_InterpFunc;
+	};
+
+	class CActionSequence : public CAction
+	{
+	public:
+		CActionSequence(CNode* vTarget, const std::vector<CAction*>& vActionSequence);
+		~CActionSequence();
+
+		void updateV() override;
+
+	private:
+		std::vector<CAction*> m_ActionSequence;
+		int m_CurrentActionIndex = 0;
 	};
 }

@@ -62,7 +62,6 @@ private:
 
 	int m_SoundHandleDead = -1;
 	int m_SoundHandleGraze = -1;
-	int m_SoundHandleShoot = -1;
 
 	int m_WaitFrameCounter = 0;
 

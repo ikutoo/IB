@@ -38,6 +38,7 @@ private:
 	bool __initUI();
 	void __updateBarrage();
 	void __updateUI();
+	void __displayStageInfo();
 
 	void __detectCollision();
 

@@ -7,6 +7,8 @@
 #include "engine/jsonUtil.h"
 #include "engine/engine.h"
 #include "engine/renderTarget.h"
+#include "engine/action.h"
+#include "engine/actionManager.h"
 #include "barrageManager.h"
 #include "barragePattern.h"
 #include "playerAlice.h"
@@ -121,6 +123,8 @@ void CGameScene::__updateUI()
 {
 	//auto pGrazeLabel = dynamic_cast<CLabel*>(m_pUIRootNode->findChild("grazeLabel"));
 	//pGrazeLabel->setText(std::to_string(m_pPlayer->getGrazeScore()));
+
+	if (m_Counter == 120) __displayStageInfo();
 }
 
 //*********************************************************************
@@ -130,6 +134,20 @@ void CGameScene::__detectCollision()
 	m_pCollisionDetector->detectCollision(m_pPlayer->getPosition(), m_pBarrageRenderTarget->getRenderGraph());
 	if (m_pCollisionDetector->isPlayerHit()) m_pPlayer->dead();
 	else m_pPlayer->graze(m_pCollisionDetector->isPlayerGrazed());
+}
+
+//*********************************************************************
+//FUNCTION:
+void CGameScene::__displayStageInfo()
+{
+	auto pSprite = new CSprite("shanghai.png");
+	pSprite->setAnchor(pSprite->getSize() / 2);
+	this->addChild(pSprite);
+
+	std::vector<CAction*> Sequnce;
+	Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ GRAPH_SIZE_X / 2 - 600, GRAPH_SIZE_Y / 2 }, vec2f{ GRAPH_SIZE_X / 2, GRAPH_SIZE_Y / 2 }, 3000));
+	Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ GRAPH_SIZE_X / 2, GRAPH_SIZE_Y / 2 }, vec2f{ GRAPH_SIZE_X / 2 + 600, GRAPH_SIZE_Y / 2 }, 3000, 6000));
+	CActionManager::getInstance()->startAction(new CActionSequence(pSprite, Sequnce));
 }
 
 //*********************************************************************

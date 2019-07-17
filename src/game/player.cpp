@@ -104,9 +104,6 @@ void CPlayer::__init(const std::string& vConfigFile)
 	m_SoundHandleGraze = DxLib::LoadSoundMem(LOCATE_FILE("se_graze.wav"));
 	ChangeVolumeSoundMem(255 * 6 / 10, m_SoundHandleGraze);
 	m_SoundHandleDead = DxLib::LoadSoundMem(LOCATE_FILE("se_pldead_00.wav"));
-	m_SoundHandleShoot = DxLib::LoadSoundMem(LOCATE_FILE("se_plst_00.wav"));
-	ChangeVolumeSoundMem(255 * 6 / 10, m_SoundHandleShoot);
-	_ASSERTE(m_SoundHandleGraze != -1 && m_SoundHandleDead != -1 && m_SoundHandleShoot != -1);
 
 	m_DeathProtectionCounter = DEATH_PROTECTION_MAX_COUNT;
 }
@@ -189,13 +186,11 @@ void CPlayer::__updateBarrage()
 {
 	if (m_State & PLAYER_STATE_SHOOTING)
 	{
-		CHECK_RESULT(DxLib::PlaySoundMem(m_SoundHandleShoot, DX_PLAYTYPE_LOOP));
 		for (auto pBarrage : m_Barrages)
 			CBarrageManager::getInstance()->startBarrage(pBarrage, true);
 	}
 	else
 	{
-		CHECK_RESULT(DxLib::StopSoundMem(m_SoundHandleShoot));
 		for (auto pBarrage : m_Barrages)
 		{
 			CBarrageManager::getInstance()->stopBarrage(pBarrage);
