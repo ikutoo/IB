@@ -20,11 +20,13 @@ namespace DxEngine
 		virtual void updateV() = 0;
 
 		bool isDone() const { return _IsDone; }
+		void setDestroyTargetOnDoneHint() { _DestroyTargetOnDone = true; }
 
 	protected:
 		CNode* _pTarget = nullptr;
 
 		bool _IsDone = false;
+		bool _DestroyTargetOnDone = false;
 
 		friend class CActionManager;
 	};

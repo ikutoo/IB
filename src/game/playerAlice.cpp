@@ -87,7 +87,7 @@ void CPlayerAlice::__changeShootingMode()
 
 	for (int i = 0; i < MAX_DOLL_NUM; ++i)
 	{
-		CActionManager::getInstance()->startAction(new CMoveTo(m_Dolls[i], m_Dolls[i]->getPosition(), m_InitialDollPosSet[m_CurrentShootMode][i], 800));
+		CActionManager::getInstance()->startAction(new CMoveTo(m_Dolls[i], m_Dolls[i]->getPosition(), m_InitialDollPosSet[m_CurrentShootMode][i], 400));
 	}
 }
 

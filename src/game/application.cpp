@@ -25,7 +25,7 @@ void init()
 	CEngine::getInstance()->setActiveScene(new CTitleScene);
 	CEngine::getInstance()->setShowConsoleHint();
 	CEngine::getInstance()->setDisableCNInputHint();
-	CEngine::getInstance()->setExpectedFPS(100.0);
+	CEngine::getInstance()->setExpectedFPS(60.0);
 	if (JsonReader.readBool("displayStatus")) CEngine::getInstance()->setDisplayStatusHint();
 }
 

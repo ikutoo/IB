@@ -12,8 +12,8 @@ CMoveTo::CMoveTo(CNode* vTarget, vec2f vFrom, vec2f vTo, float vTimeInMS, float 
 	_ASSERT(vTarget);
 	_pTarget = vTarget;
 
-	m_TotalFrameCount = std::max(1, int(vTimeInMS / CEngine::getInstance()->getFPS()));
-	m_DelayFrameCount = std::max(0, int(vDelayTimeInMS / CEngine::getInstance()->getFPS()));
+	m_TotalFrameCount = std::max(1, int(vTimeInMS * CEngine::getInstance()->getFPS() / 1000));
+	m_DelayFrameCount = std::max(0, int(vDelayTimeInMS * CEngine::getInstance()->getFPS() / 1000));
 }
 
 //************************************************************
@@ -22,7 +22,13 @@ void CMoveTo::updateV()
 {
 	if (m_DelayFrameCount > 0) { m_DelayFrameCount--; return; }
 
-	if (m_CurrentFrame >= m_TotalFrameCount) { _IsDone = true;  return; }
+	if (m_CurrentFrame >= m_TotalFrameCount)
+	{
+		if (_DestroyTargetOnDone) SAFE_DELETE(_pTarget);
+		_IsDone = true;
+		return;
+	}
+
 	m_CurrentFrame++;
 
 	float t = m_InterpFunc((float)m_CurrentFrame / m_TotalFrameCount);
@@ -65,6 +71,7 @@ void CActionSequence::updateV()
 
 	if (m_CurrentActionIndex == m_ActionSequence.size())
 	{
+		if (_DestroyTargetOnDone) SAFE_DELETE(_pTarget);
 		_IsDone = true;
 	}
 }

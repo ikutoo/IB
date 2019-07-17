@@ -140,14 +140,36 @@ void CGameScene::__detectCollision()
 //FUNCTION:
 void CGameScene::__displayStageInfo()
 {
-	auto pSprite = new CSprite("shanghai.png");
-	pSprite->setAnchor(pSprite->getSize() / 2);
-	this->addChild(pSprite);
+	//stage title
+	{
+		auto pSprite = new CSprite("ui.png", recti{ 1070, 458, 366, 104 });
+		pSprite->setAnchor(pSprite->getSize() / 2);
+		this->addChild(pSprite);
 
-	std::vector<CAction*> Sequnce;
-	Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ GRAPH_SIZE_X / 2 - 600, GRAPH_SIZE_Y / 2 }, vec2f{ GRAPH_SIZE_X / 2, GRAPH_SIZE_Y / 2 }, 3000));
-	Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ GRAPH_SIZE_X / 2, GRAPH_SIZE_Y / 2 }, vec2f{ GRAPH_SIZE_X / 2 + 600, GRAPH_SIZE_Y / 2 }, 3000, 6000));
-	CActionManager::getInstance()->startAction(new CActionSequence(pSprite, Sequnce));
+		std::vector<CAction*> Sequnce;
+		float cx = GRAPH_SIZE_X / 2, cy = GRAPH_SIZE_Y * 0.4;
+		Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ cx - 800, cy }, vec2f{ cx, cy }, 1000));
+		Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ cx, cy }, vec2f{ cx + 800, cy }, 1000, 4000));
+
+		auto pActionSequence = new CActionSequence(pSprite, Sequnce);
+		pActionSequence->setDestroyTargetOnDoneHint();
+		CActionManager::getInstance()->startAction(pActionSequence);
+	}
+	//bgm title
+	{
+		auto pSprite = new CSprite("ui.png", recti{ 1100, 585, 298, 33 });
+		pSprite->setAnchor(pSprite->getSize() / 2);
+		this->addChild(pSprite);
+
+		std::vector<CAction*> Sequnce;
+		float cx = GRAPH_SIZE_X / 2, cy = GRAPH_SIZE_Y * 0.4 + 80;
+		Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ cx + 800, cy }, vec2f{ cx, cy }, 1000));
+		Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ cx, cy }, vec2f{ cx - 800, cy }, 1000, 4000));
+
+		auto pActionSequence = new CActionSequence(pSprite, Sequnce);
+		pActionSequence->setDestroyTargetOnDoneHint();
+		CActionManager::getInstance()->startAction(pActionSequence);
+	}
 }
 
 //*********************************************************************
