@@ -18,11 +18,11 @@
     <Filter Include="Source Files\window">
       <UniqueIdentifier>{3039cd1a-9418-4d4f-8e1d-4d03b886dfa6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\particles">
-      <UniqueIdentifier>{fc9a78e6-52ae-462c-a3b3-026fa91d1fcb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\player">
       <UniqueIdentifier>{625b840b-ee14-453c-a896-8a674d0d38f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\effect">
+      <UniqueIdentifier>{fc9a78e6-52ae-462c-a3b3-026fa91d1fcb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,7 +66,7 @@
       <Filter>Source Files\window</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\game\particles.cpp">
-      <Filter>Source Files\particles</Filter>
+      <Filter>Source Files\effect</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\game\collision.cpp">
       <Filter>Source Files</Filter>
@@ -122,7 +122,7 @@
       <Filter>Source Files\window</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\particles.h">
-      <Filter>Source Files\particles</Filter>
+      <Filter>Source Files\effect</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\collision.h">
       <Filter>Source Files</Filter>
