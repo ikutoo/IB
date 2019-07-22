@@ -13,6 +13,7 @@
 #include "barragePattern.h"
 #include "playerAlice.h"
 #include "collision.h"
+#include "background3d.h"
 
 using namespace DxEngine;
 
@@ -32,6 +33,9 @@ bool CGameScene::_initV()
 
 	__initLuaEnv();
 	__initUI();
+
+	m_pStageBg = new CBackground3d;
+	this->addChild(m_pStageBg, -2.0);
 
 	m_pPlayer = new CPlayerAlice("player_00a.cfg");
 	this->addChild(m_pPlayer);

@@ -18,6 +18,7 @@ enum class EGameState : char
 
 class CPlayer;
 class CCollisionDetector;
+class CBackground3d;
 
 namespace DxEngine
 {
@@ -68,7 +69,7 @@ private:
 	unsigned m_ActionIndex = 0;
 
 	CNode* m_pUIRootNode = nullptr;
-
+	CBackground3d * m_pStageBg = nullptr;
 	CPlayer* m_pPlayer = nullptr;
 
 	CParticle01* m_pLParticles = nullptr;

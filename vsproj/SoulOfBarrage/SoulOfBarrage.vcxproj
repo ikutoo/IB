@@ -169,6 +169,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\game\application.cpp" />
+    <ClCompile Include="..\..\src\game\background3d.cpp" />
     <ClCompile Include="..\..\src\game\barrage.cpp" />
     <ClCompile Include="..\..\src\game\barrageManager.cpp" />
     <ClCompile Include="..\..\src\game\barragePattern.cpp" />
@@ -187,6 +188,7 @@
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\game\background3d.h" />
     <ClInclude Include="..\..\src\game\barrage.h" />
     <ClInclude Include="..\..\src\game\barrageManager.h" />
     <ClInclude Include="..\..\src\game\barragePattern.h" />
