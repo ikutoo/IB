@@ -38,8 +38,8 @@ public:
 	void drawV() override;
 
 private:
-	Object_t Object[OBJECT_NUM_MAX];
-	int ObjectNum;
+	Object_t m_Objects[OBJECT_NUM_MAX];
+	int m_ObjectNum = 0;
 
 	void __initObject(Object_t *Ob, int ImgHandle, int ImgSize, int ImgX1, int ImgY1, int ImgX2, int ImgY2, float LargeX, float LargeY,
 		int Type, float FromZ, float FadeFromZ, float FadeToZ, float ToZ, float GraphX, float GraphY, int ObchildMax);
