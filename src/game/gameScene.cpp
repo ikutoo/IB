@@ -69,13 +69,13 @@ void CGameScene::_updateV(double vDeltaTime)
 	m_pLParticles->updateV();
 	m_pRParticles->updateV();
 
-	if (CHECK_HIT_KEY(KEY_INPUT_Z))
+	if (checkHit(GAME_INPUT_Z))
 	{
 		if (m_ActionIndex < m_ScriptActions.size())
 			__performLuaScript(m_ScriptActions[m_ActionIndex++].c_str());
 	}
 
-	if (CHECK_HIT_KEY(KEY_INPUT_ESCAPE)) CEngine::getInstance()->stop();
+	if (checkHit(GAME_INPUT_ESCAPE)) CEngine::getInstance()->stop();
 
 	if (m_GameState == EGameState::NORMAL) m_Counter++;
 }

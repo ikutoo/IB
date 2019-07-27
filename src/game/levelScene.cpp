@@ -57,7 +57,7 @@ void CLevelScene::_updateV(double vDeltaTime)
 
 	m_pDescLabel->setText(LEVEL_DESC[m_SelectedLabelIndex][1]);
 
-	if (CHECK_HIT_KEY(KEY_INPUT_Z))
+	if (checkHit(GAME_INPUT_ENTER) || checkHit(GAME_INPUT_Z))
 	{
 		char ScriptFileName[0xff];
 		sprintf(ScriptFileName, "%sstage%d_dialogue_00.lua", DATA_PATH.c_str(), m_SelectedLabelIndex);
@@ -66,7 +66,7 @@ void CLevelScene::_updateV(double vDeltaTime)
 		//CHECK_RESULT(DxLib::StopMusic());
 		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_ok_00.wav"), DX_PLAYTYPE_BACK));
 	}
-	else if (CHECK_HIT_KEY(KEY_INPUT_X))
+	else if (checkHit(GAME_INPUT_ESCAPE) || checkHit(GAME_INPUT_X))
 	{
 		auto pScene = CEngine::getInstance()->popScene();
 		CEngine::getInstance()->setActiveScene(pScene);
@@ -120,8 +120,8 @@ bool CLevelScene::__initUI()
 void CLevelScene::__updateSelectedLabel()
 {
 	bool IndexChanged = false;
-	if (CHECK_HIT_KEY(KEY_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }
-	else if (CHECK_HIT_KEY(KEY_INPUT_UP)) { m_SelectedLabelIndex--; IndexChanged = true; }
+	if (checkHit(GAME_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }
+	else if (checkHit(GAME_INPUT_UP)) { m_SelectedLabelIndex--; IndexChanged = true; }
 
 	if (IndexChanged) CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_select_00.wav"), DX_PLAYTYPE_BACK));
 

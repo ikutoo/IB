@@ -19,7 +19,7 @@ CHelpScene::~CHelpScene()
 //FUNCTION:
 void CHelpScene::_updateV(double vDeltaTime)
 {
-	if (CheckHitKey(KEY_INPUT_X))
+	if (checkHit(GAME_INPUT_ESCAPE) || checkHit(GAME_INPUT_X))
 	{
 		auto pScene = CEngine::getInstance()->popScene();
 		CEngine::getInstance()->setActiveScene(pScene);

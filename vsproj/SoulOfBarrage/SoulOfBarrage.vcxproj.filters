@@ -139,5 +139,8 @@
     <ClInclude Include="..\..\src\game\background3d.h">
       <Filter>Source Files\effect</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\game\input.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

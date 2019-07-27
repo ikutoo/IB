@@ -198,6 +198,7 @@
     <ClInclude Include="..\..\src\game\gameoverScene.h" />
     <ClInclude Include="..\..\src\game\gameScene.h" />
     <ClInclude Include="..\..\src\game\helpScene.h" />
+    <ClInclude Include="..\..\src\game\input.h" />
     <ClInclude Include="..\..\src\game\levelScene.h" />
     <ClInclude Include="..\..\src\game\movePattern.h" />
     <ClInclude Include="..\..\src\game\particles.h" />

@@ -37,13 +37,13 @@ void CBackground3d::drawV()
 {
 	CNode::drawV();
 
-	SetDrawMode(DX_DRAWMODE_BILINEAR);//ポリゴンが荒く見えないような描画の仕方「バイリニア法」
+	SetDrawMode(DX_DRAWMODE_BILINEAR);
 	for (int t = 0; t < m_ObjectNum; t++) {
 		for (int s = 0; s < m_Objects[t].ObchindMax; s++) {
 			DrawPolygon3D(m_Objects[t].ObChild[s].Vertex, 2, m_Objects[t].Img, TRUE);
 		}
 	}
-	SetDrawMode(DX_DRAWMODE_NEAREST);//描画の仕方を元に戻す
+	SetDrawMode(DX_DRAWMODE_NEAREST);
 }
 
 //****************************************************

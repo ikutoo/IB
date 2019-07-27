@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "engine/common.h"
+#include "input.h"
 
 const int GRAPH_SIZE_X = 1920;
 const int GRAPH_SIZE_Y = 1080;

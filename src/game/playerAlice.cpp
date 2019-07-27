@@ -4,6 +4,7 @@
 #include "engine/jsonUtil.h"
 #include "engine/actionManager.h"
 #include "engine/inputManager.h"
+#include "common.h"
 #include "barragePattern.h"
 #include "barrage.h"
 
@@ -54,7 +55,7 @@ void CPlayerAlice::updateV(double vDeltaTime)
 
 	__updateAnimation();
 
-	if (CHECK_HIT_KEY(KEY_INPUT_X)) { __changeShootingMode(); }
+	if (checkHit(GAME_INPUT_X)) { __changeShootingMode(); }
 
 	for (int i = 0; i < MAX_DOLL_NUM; ++i)
 	{

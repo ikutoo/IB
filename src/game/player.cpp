@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "player.h"
 #include <DXLib/DxLib.h>
-#include "engine/inputManager.h"
 #include "engine/jsonUtil.h"
 #include "engine/resourceManager.h"
 #include "common.h"
@@ -123,15 +122,15 @@ void CPlayer::__updatePlayerState()
 {
 	m_State = PLAYER_STATE_IDLE;
 
-	if (GET_KEY_STATE(KEY_INPUT_UP)) m_State |= PLAYER_STATE_MOVE_UP;
-	else if (GET_KEY_STATE(KEY_INPUT_DOWN)) m_State |= PLAYER_STATE_MOVE_DOWN;
+	if (isPressed(GAME_INPUT_UP)) m_State |= PLAYER_STATE_MOVE_UP;
+	else if (isPressed(GAME_INPUT_DOWN)) m_State |= PLAYER_STATE_MOVE_DOWN;
 
-	if (GET_KEY_STATE(KEY_INPUT_LEFT)) m_State |= PLAYER_STATE_MOVE_LEFT;
-	else if (GET_KEY_STATE(KEY_INPUT_RIGHT)) m_State |= PLAYER_STATE_MOVE_RIGHT;
+	if (isPressed(GAME_INPUT_LEFT)) m_State |= PLAYER_STATE_MOVE_LEFT;
+	else if (isPressed(GAME_INPUT_RIGHT)) m_State |= PLAYER_STATE_MOVE_RIGHT;
 
-	if (GET_KEY_STATE(KEY_INPUT_LSHIFT)) m_State |= PLAYER_STATE_LOW_SPEED;
+	if (isPressed(GAME_INPUT_LSHIFT)) m_State |= PLAYER_STATE_LOW_SPEED;
 
-	if (GET_KEY_STATE(KEY_INPUT_Z)) m_State |= PLAYER_STATE_SHOOTING;
+	if (isPressed(GAME_INPUT_Z)) m_State |= PLAYER_STATE_SHOOTING;
 
 	if (m_IsGrazed) m_State |= PLAYER_STATE_GRAZE;
 }

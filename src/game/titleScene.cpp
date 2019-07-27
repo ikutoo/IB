@@ -51,8 +51,9 @@ void CTitleScene::_updateV(double vDeltaTime)
 	m_pFlagSprite->setPosition(m_MenuLabels[m_SelectedLabelIndex]->getPosition().x - 100, m_MenuLabels[m_SelectedLabelIndex]->getPosition().y);
 
 	bool IndexChanged = false;
-	if (CHECK_HIT_KEY(KEY_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }
-	else if (CHECK_HIT_KEY(KEY_INPUT_UP)) { m_SelectedLabelIndex--; IndexChanged = true; }
+
+	if (checkHit(GAME_INPUT_DOWN)) { m_SelectedLabelIndex++; IndexChanged = true; }
+	else if (checkHit(GAME_INPUT_UP)) { m_SelectedLabelIndex--; IndexChanged = true; }
 
 	if (IndexChanged) CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_select_00.wav"), DX_PLAYTYPE_BACK));
 
@@ -67,7 +68,7 @@ void CTitleScene::_updateV(double vDeltaTime)
 			m_MenuLabels[i]->setBrightness(MENU_COLOR_NORMAL);
 	}
 
-	if (CHECK_HIT_KEY(KEY_INPUT_Z))
+	if (checkHit(GAME_INPUT_ENTER) || checkHit(GAME_INPUT_Z))
 	{
 		switch (m_SelectedLabelIndex)
 		{
@@ -90,7 +91,7 @@ void CTitleScene::_updateV(double vDeltaTime)
 		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_ok_00.wav"), DX_PLAYTYPE_BACK));
 	}
 
-	if (CHECK_HIT_KEY(KEY_INPUT_X))
+	if (checkHit(GAME_INPUT_ESCAPE) || checkHit(GAME_INPUT_X))
 	{
 		m_SelectedLabelIndex = m_MenuLabels.size() - 1;
 		CHECK_RESULT(DxLib::PlaySoundFile(LOCATE_FILE("se_cancel_00.wav"), DX_PLAYTYPE_BACK));
