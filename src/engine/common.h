@@ -12,6 +12,8 @@
 
 #define LOCATE_FILE(file) (CResourceManager::getInstance()->locateFile(file)).c_str()
 
+#define LOG(msg)	std::cout << msg << std::endl;
+
 namespace DxEngine
 {
 	struct SDisplayInfo

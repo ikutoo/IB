@@ -39,16 +39,16 @@ private:
 	bool __initUI();
 	void __updateBarrage();
 	void __updateUI();
-	void __displayStageInfo();
 
 	void __detectCollision();
 
 	void __initLuaEnv();
 	void __registerLuaGlue();
-	void __performLuaScript(const char* vScript);
+	void __performLuaFunc(const char* vFuncName);
+	void __performLuaSource(const char* vSource);
 	void __closeLuaEvn();
 
-	void __setScriptSource(const char* vFilePath);
+	void __setDialogueScript(const char* vFilePath);
 
 	LUAGLUE __setBackgroundImage(lua_State* vioLuaState);
 	LUAGLUE __setLCharaterImage(lua_State* vioLuaState);
@@ -57,19 +57,23 @@ private:
 	LUAGLUE __endDialogue(lua_State* vioLuaState);
 	LUAGLUE __setDialogue(lua_State* vioLuaState);
 	LUAGLUE __setCharacterName(lua_State* vioLuaState);
+	LUAGLUE __startBgAnimation(lua_State *vioLuaState);
+	LUAGLUE __getCounter(lua_State *vioLuaState);
+	LUAGLUE __displayStageInfo(lua_State *vioLuaState);
 
 	CSprite* __findUISprite(const std::string& vName);
 	CLabel*  __findUILabel(const std::string& vName);
 
-	EGameState m_GameState = EGameState::UNDEFINED;
+	EGameState m_GameState = EGameState::NORMAL;
+
+	std::string m_ScriptFile = {};
 
 	lua_State* m_pLuaState = nullptr;
-	std::string m_ScriptSource = "";
-	std::vector<std::string> m_ScriptActions;
+	std::string m_DialogueSource = {};
+	std::vector<std::string> m_DialogueActions;
 	unsigned m_ActionIndex = 0;
 
 	CNode* m_pUIRootNode = nullptr;
-	CBackground3d * m_pStageBg = nullptr;
 	CPlayer* m_pPlayer = nullptr;
 
 	CParticle01* m_pLParticles = nullptr;

@@ -41,5 +41,4 @@ namespace DxEngine
 
 		LUAGLUE setNodeRotation(lua_State* vioLuaState);
 	};
-
 }

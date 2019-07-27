@@ -1,7 +1,5 @@
 #ACTION
-setBackground("stage0_bg_00.png")
 setRCharacter("alice_12.png")
-beginDialogue()
 setCharacterName("-- 爱丽丝 --")
 setDialogue(".........")
 
@@ -32,5 +30,5 @@ setDialogue("不过这个森林里也有很多不友好的妖怪,还是要小心一点比较好")
 setDialogue("趁早出发吧,被贼人跑远了就麻烦了")
 
 #ACTION
-endDialogue()
 playMusic("stage0_bgm_00.mp3")
+startBgAnm()

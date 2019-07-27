@@ -1,4 +1,5 @@
 #include "luaGlue.h"
+#include <iostream>
 #include <DXLib/DxLib.h>
 #include "resourceManager.h"
 #include "common.h"
@@ -12,9 +13,8 @@ namespace DxEngine
 		//FUNCTION:
 		LUAGLUE log(lua_State* vioLuaState)
 		{
-			auto logMsg = lua_tostring(vioLuaState, 1);
-			CHECK_RESULT(DxLib::LogFileAdd(logMsg));
-
+			auto Msg = lua_tostring(vioLuaState, 1);
+			LOG(Msg);
 			return 0;
 		}
 

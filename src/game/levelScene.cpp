@@ -60,7 +60,7 @@ void CLevelScene::_updateV(double vDeltaTime)
 	if (checkHit(GAME_INPUT_ENTER) || checkHit(GAME_INPUT_Z))
 	{
 		char ScriptFileName[0xff];
-		sprintf(ScriptFileName, "%sstage%d_dialogue_00.lua", DATA_PATH.c_str(), m_SelectedLabelIndex);
+		sprintf(ScriptFileName, "%sstage%d.lua", DATA_PATH.c_str(), m_SelectedLabelIndex);
 		CEngine::getInstance()->setActiveScene(new CGameScene(ScriptFileName));
 
 		//CHECK_RESULT(DxLib::StopMusic());

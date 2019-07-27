@@ -37,6 +37,10 @@ void CBackground3d::drawV()
 {
 	CNode::drawV();
 
+	static float a = 0.0;
+	a += 0.5;
+	DxLib::SetCameraPositionAndTargetAndUpVec(VGet(960, 540 + a, 0), VGet(960, 540, 500), VGet(0, 1, 0));
+
 	SetDrawMode(DX_DRAWMODE_BILINEAR);
 	for (int t = 0; t < m_ObjectNum; t++) {
 		for (int s = 0; s < m_Objects[t].ObchindMax; s++) {

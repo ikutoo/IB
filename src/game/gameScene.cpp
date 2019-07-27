@@ -4,6 +4,7 @@
 #include "engine/graphics2d.h"
 #include "engine/utility.h"
 #include "engine/inputManager.h"
+#include "engine/resourceManager.h"
 #include "engine/jsonUtil.h"
 #include "engine/engine.h"
 #include "engine/renderTarget.h"
@@ -19,10 +20,9 @@ using namespace DxEngine;
 
 //*********************************************************************
 //FUNCTION:
-CGameScene::CGameScene(const char* vScriptFile)
+CGameScene::CGameScene(const char* vScriptFile) : m_ScriptFile(vScriptFile)
 {
 	_ASSERTE(vScriptFile);
-	__setScriptSource(vScriptFile);
 }
 
 //*********************************************************************
@@ -34,13 +34,8 @@ bool CGameScene::_initV()
 	__initLuaEnv();
 	__initUI();
 
-	m_pStageBg = new CBackground3d;
-	this->addChild(m_pStageBg, -2.0);
-
 	m_pPlayer = new CPlayerAlice("player_00a.cfg");
 	this->addChild(m_pPlayer);
-
-	__performLuaScript(m_ScriptActions[m_ActionIndex++].c_str());
 
 	m_pBarrageRenderTarget = new CRenderTarget(GRAPH_SIZE_X, GRAPH_SIZE_Y);
 	this->addChild(m_pBarrageRenderTarget, 0.5);
@@ -54,6 +49,8 @@ bool CGameScene::_initV()
 	m_pCollisionDetector = new CCollisionDetector;
 
 	CBarrageManager::getInstance()->init(m_pEnemyBarrageContainer, m_pPlayerBarrageContainer);
+
+	__performLuaFunc("init");
 
 	return true;
 }
@@ -69,15 +66,21 @@ void CGameScene::_updateV(double vDeltaTime)
 	m_pLParticles->updateV();
 	m_pRParticles->updateV();
 
-	if (checkHit(GAME_INPUT_Z))
+	if (m_GameState == EGameState::IN_DIALOGUE)
 	{
-		if (m_ActionIndex < m_ScriptActions.size())
-			__performLuaScript(m_ScriptActions[m_ActionIndex++].c_str());
+		if (m_ActionIndex < m_DialogueActions.size() && checkHit(GAME_INPUT_Z))
+			__performLuaSource(m_DialogueActions[m_ActionIndex++].c_str());
+		else if (m_ActionIndex >= m_DialogueActions.size())
+			__endDialogue(nullptr);
 	}
 
 	if (checkHit(GAME_INPUT_ESCAPE)) CEngine::getInstance()->stop();
 
-	if (m_GameState == EGameState::NORMAL) m_Counter++;
+	if (m_GameState == EGameState::NORMAL)
+	{
+		__performLuaFunc("update");
+		m_Counter++;
+	}
 }
 
 //*********************************************************************
@@ -127,8 +130,6 @@ void CGameScene::__updateUI()
 {
 	//auto pGrazeLabel = dynamic_cast<CLabel*>(m_pUIRootNode->findChild("grazeLabel"));
 	//pGrazeLabel->setText(std::to_string(m_pPlayer->getGrazeScore()));
-
-	if (m_Counter == 120) __displayStageInfo();
 }
 
 //*********************************************************************
@@ -142,47 +143,16 @@ void CGameScene::__detectCollision()
 
 //*********************************************************************
 //FUNCTION:
-void CGameScene::__displayStageInfo()
-{
-	//stage title
-	{
-		auto pSprite = new CSprite("ui.png", recti{ 1070, 458, 366, 104 });
-		pSprite->setAnchor(pSprite->getSize() / 2);
-		this->addChild(pSprite);
-
-		std::vector<CAction*> Sequnce;
-		float cx = GRAPH_SIZE_X / 2, cy = GRAPH_SIZE_Y * 0.4;
-		Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ cx - 800, cy }, vec2f{ cx, cy }, 1000));
-		Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ cx, cy }, vec2f{ cx + 800, cy }, 1000, 4000));
-
-		auto pActionSequence = new CActionSequence(pSprite, Sequnce);
-		pActionSequence->setDestroyTargetOnDoneHint();
-		CActionManager::getInstance()->startAction(pActionSequence);
-	}
-	//bgm title
-	{
-		auto pSprite = new CSprite("ui.png", recti{ 1100, 585, 298, 33 });
-		pSprite->setAnchor(pSprite->getSize() / 2);
-		this->addChild(pSprite);
-
-		std::vector<CAction*> Sequnce;
-		float cx = GRAPH_SIZE_X / 2, cy = GRAPH_SIZE_Y * 0.4 + 80;
-		Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ cx + 800, cy }, vec2f{ cx, cy }, 1000));
-		Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ cx, cy }, vec2f{ cx - 800, cy }, 1000, 4000));
-
-		auto pActionSequence = new CActionSequence(pSprite, Sequnce);
-		pActionSequence->setDestroyTargetOnDoneHint();
-		CActionManager::getInstance()->startAction(pActionSequence);
-	}
-}
-
-//*********************************************************************
-//FUNCTION:
 void CGameScene::__initLuaEnv()
 {
 	m_pLuaState = luaL_newstate();
 	luaL_openlibs(m_pLuaState);
 	__registerLuaGlue();
+
+	auto Ret = luaL_loadfile(m_pLuaState, m_ScriptFile.c_str());
+	_ASSERTE(0 == Ret);
+
+	lua_pcall(m_pLuaState, 0, 0, 0);
 }
 
 //*********************************************************************
@@ -194,11 +164,29 @@ void CGameScene::__closeLuaEvn()
 
 //*********************************************************************
 //FUNCTION:
-void CGameScene::__setScriptSource(const char* vFilePath)
+void CGameScene::__setDialogueScript(const char* vFilePath)
 {
-	m_ScriptSource = Utility::readFileToString(vFilePath);
-	m_ScriptActions = Utility::splitString(m_ScriptSource, "#ACTION");
+	m_DialogueSource = Utility::readFileToString(CResourceManager::getInstance()->locateFile(vFilePath));
+	m_DialogueActions = Utility::splitString(m_DialogueSource, "#ACTION");
 	m_ActionIndex = 0;
+}
+
+//*********************************************************************
+//FUNCTION:
+void CGameScene::__performLuaFunc(const char* vFuncName)
+{
+	lua_getglobal(m_pLuaState, vFuncName);
+
+	auto Ret = lua_pcall(m_pLuaState, 0, 0, 0);
+	_ASSERTE(Ret == 0);
+}
+
+//*********************************************************************
+//FUNCTION:
+void CGameScene::__performLuaSource(const char* vSource)
+{
+	int Ret = luaL_dostring(m_pLuaState, vSource);
+	_ASSERTE(0 == Ret);
 }
 
 //*********************************************************************
@@ -217,14 +205,9 @@ void CGameScene::__registerLuaGlue()
 	lua_registry_member_function(m_pLuaState, "setCharacterName", this, &CGameScene::__setCharacterName);
 	lua_registry_member_function(m_pLuaState, "beginDialogue", this, &CGameScene::__beginDialogue);
 	lua_registry_member_function(m_pLuaState, "endDialogue", this, &CGameScene::__endDialogue);
-}
-
-//*********************************************************************
-//FUNCTION:
-void CGameScene::__performLuaScript(const char* vScript)
-{
-	int Ret = luaL_dostring(m_pLuaState, vScript);
-	_ASSERTE(0 == Ret);
+	lua_registry_member_function(m_pLuaState, "startBgAnm", this, &CGameScene::__startBgAnimation);
+	lua_registry_member_function(m_pLuaState, "getCounter", this, &CGameScene::__getCounter);
+	lua_registry_member_function(m_pLuaState, "displayStageInfo", this, &CGameScene::__displayStageInfo);
 }
 
 //*********************************************************************
@@ -260,6 +243,12 @@ LUAGLUE CGameScene::__beginDialogue(lua_State* vioLuaState)
 {
 	m_GameState = EGameState::IN_DIALOGUE;
 	__findUISprite("dialogueBgSprite")->setImageFile("ui.png", recti{ 1024, 256, 920, 184 });
+
+	auto FilePath = lua_tostring(vioLuaState, 1);
+	__setDialogueScript(FilePath);
+
+	if (m_DialogueActions.size() > 0)
+		__performLuaSource(m_DialogueActions[m_ActionIndex++].c_str());
 
 	m_pPlayer->pause();
 
@@ -297,6 +286,61 @@ LUAGLUE CGameScene::__setCharacterName(lua_State* vioLuaState)
 {
 	auto Text = lua_tostring(vioLuaState, 1);
 	__findUILabel("chNameLabel")->setText(Text);
+	return 0;
+}
+
+//*********************************************************************
+//FUNCTION:
+LUAGLUE CGameScene::__startBgAnimation(lua_State *vioLuaState)
+{
+	auto pStageBg = new CBackground3d;
+	this->addChild(pStageBg, -2.0);
+	return 0;
+}
+
+//*********************************************************************
+//FUNCTION:
+LUAGLUE CGameScene::__getCounter(lua_State *vioLuaState)
+{
+	lua_pushnumber(m_pLuaState, m_Counter);
+	return 1;
+}
+
+//*********************************************************************
+//FUNCTION:
+LUAGLUE CGameScene::__displayStageInfo(lua_State *vioLuaState)
+{
+	//stage title
+	{
+		auto pSprite = new CSprite("ui.png", recti{ 1070, 458, 366, 104 });
+		pSprite->setAnchor(pSprite->getSize() / 2);
+		this->addChild(pSprite);
+
+		std::vector<CAction*> Sequnce;
+		float cx = GRAPH_SIZE_X / 2, cy = GRAPH_SIZE_Y * 0.4;
+		Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ cx - 800, cy }, vec2f{ cx, cy }, 1000));
+		Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ cx, cy }, vec2f{ cx + 800, cy }, 1000, 4000));
+
+		auto pActionSequence = new CActionSequence(pSprite, Sequnce);
+		pActionSequence->setDestroyTargetOnDoneHint();
+		CActionManager::getInstance()->startAction(pActionSequence);
+	}
+	//bgm title
+	{
+		auto pSprite = new CSprite("ui.png", recti{ 1100, 585, 298, 33 });
+		pSprite->setAnchor(pSprite->getSize() / 2);
+		this->addChild(pSprite);
+
+		std::vector<CAction*> Sequnce;
+		float cx = GRAPH_SIZE_X / 2, cy = GRAPH_SIZE_Y * 0.4 + 80;
+		Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ cx + 800, cy }, vec2f{ cx, cy }, 1000));
+		Sequnce.emplace_back(new CMoveTo(pSprite, vec2f{ cx, cy }, vec2f{ cx - 800, cy }, 1000, 4000));
+
+		auto pActionSequence = new CActionSequence(pSprite, Sequnce);
+		pActionSequence->setDestroyTargetOnDoneHint();
+		CActionManager::getInstance()->startAction(pActionSequence);
+	}
+
 	return 0;
 }
 

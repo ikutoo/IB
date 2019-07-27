@@ -20,6 +20,7 @@
 #include <memory.h>
 #include <tchar.h>
 #include <assert.h>
+#include <iostream>
 
 // reference additional headers your program requires here
 #include <DxLib/DxLib.h>
