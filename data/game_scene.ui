@@ -3,7 +3,7 @@
 	{
 		"type": "sprite",
 		"localZ": -1.0,
-		"brightness": [50, 50, 50]
+		"brightness": [100, 100, 100]
 	},
 	"lChSprite":
 	{
