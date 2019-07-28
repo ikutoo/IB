@@ -27,6 +27,13 @@ CBackground3d::CBackground3d()
 	__initObject(&m_Objects[6], ImgHandle, 512, 384, 0, 512, 128, 32, 32, 3, FromZ + 400, FadeFromZ, FadeToZ, ToZ, 850, GRAPH_SIZE_Y / 2 + 48, OBCHILD_MAX);
 }
 
+//*********************************************************************
+//FUNCTION:
+CBackground3d::~CBackground3d()
+{
+	CResourceManager::getInstance()->deleteImage("stage0_bg_01.png");
+}
+
 //****************************************************
 //FUNCTION:
 void CBackground3d::updateV(double vDeltaTime)

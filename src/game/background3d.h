@@ -34,7 +34,7 @@ class CBackground3d : public DxEngine::CNode
 {
 public:
 	CBackground3d();
-	~CBackground3d() {}
+	~CBackground3d();
 
 	void updateV(double vDeltaTime) override;
 	void drawV() override;
