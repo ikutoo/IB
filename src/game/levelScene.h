@@ -10,6 +10,7 @@ namespace DxEngine
 	class CImageLabel;
 	class CLabel;
 	class CSprite;
+	class CPlane;
 }
 
 class CTransparentWindow;
@@ -23,9 +24,10 @@ public:
 
 private:
 	std::vector<CLabel*> m_MenuLabels;
-	CLabel* m_pDescLabel = nullptr;
-	CSprite* m_pFlagSprite = nullptr;
-	CSprite* m_pImageLabel = nullptr;
+	CLabel*		m_pDescLabel = nullptr;
+	CSprite*	m_pFlagSprite = nullptr;
+	CSprite*	m_pChImage = nullptr;
+	std::vector<CPlane*> m_MagicCircles = {};
 
 	CTransparentWindow* m_pTransWindow = nullptr;
 

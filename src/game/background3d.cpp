@@ -35,8 +35,6 @@ void CBackground3d::updateV(double vDeltaTime)
 
 	if (_Counter < 560) m_Speed = 0.0;
 	else m_Speed = 3.0;
-
-	LOG(_Counter);
 }
 
 //****************************************************
@@ -48,7 +46,7 @@ void CBackground3d::drawV()
 	static float a = 0.0;
 	if (_Counter < 560)	a += 0.5;
 	auto PlayerPos = CBarrageManager::getInstance()->getPlayerPosition();
-	auto OffsetX = 0.05 * (2 * PlayerPos.x - GRAPH_SIZE_X) / GRAPH_SIZE_X;
+	auto OffsetX = 0.02 + 0.05 * (2 * PlayerPos.x - GRAPH_SIZE_X) / GRAPH_SIZE_X;
 	DxLib::SetCameraPositionAndTargetAndUpVec(VGet(GRAPH_SIZE_X / 2, GRAPH_SIZE_Y / 2 + a, 0), VGet(GRAPH_SIZE_X / 2, GRAPH_SIZE_Y / 2, 200), VGet(OffsetX, 1, 0));
 
 	__clacObject();

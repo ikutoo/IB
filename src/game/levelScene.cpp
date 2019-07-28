@@ -4,7 +4,7 @@
 #include "engine/label.h"
 #include "engine/sprite.h"
 #include "engine/resourceManager.h"
-#include "engine/graphics2d.h"
+#include "engine/graphics.h"
 #include "levelScene.h"
 #include "gameScene.h"
 #include "transparentWindow.h"
@@ -17,7 +17,7 @@ namespace
 	const int MENU_FONT_COLOE_NORMAL = 0x222222;
 	const int MENU_FONT_EDGE_COLOE_NORMAL = 0x000000;
 	const int MENU_FONT_COLOR_SELECTED = 0xffffff;
-	const int MENU_FONT_EDGE_COLOR_SELECTED = 0xffee55;
+	const int MENU_FONT_EDGE_COLOR_SELECTED = GetColor(135, 135, 247);
 
 	const std::vector<std::vector<std::string>> LEVEL_DESC =
 	{
@@ -51,11 +51,13 @@ bool CLevelScene::_initV()
 //FUNCTION:
 void CLevelScene::_updateV(double vDeltaTime)
 {
-	if(!CEngine::getInstance()->isFullScreen()) m_pTransWindow->update(vDeltaTime);
+	if (!CEngine::getInstance()->isFullScreen()) m_pTransWindow->update(vDeltaTime);
 
 	__updateSelectedLabel();
 
 	m_pDescLabel->setText(LEVEL_DESC[m_SelectedLabelIndex][1]);
+
+	for (auto pMagicCircle : m_MagicCircles) pMagicCircle->setAngle(pMagicCircle->getAngle() + 0.002);
 
 	if (checkHit(GAME_INPUT_ENTER) || checkHit(GAME_INPUT_Z))
 	{
@@ -97,20 +99,25 @@ bool CLevelScene::__initUI()
 
 	m_pFlagSprite = new CSprite("ui.png", recti{ 64, 640, 74, 54 });
 	m_pFlagSprite->setPosition(100, m_MenuLabels[0]->getPosition().y - 10);
+	m_pFlagSprite->setBrightness({ 135, 135, 247 });
 	this->addChild(m_pFlagSprite);
 
-	m_pImageLabel = new CSprite("ui.png", recti{ 256, 256, 480, 480 });
-	m_pImageLabel->setPosition(GRAPH_SIZE_X - m_pImageLabel->getSize().x, GRAPH_SIZE_Y - m_pImageLabel->getSize().y);
-	m_pImageLabel->setBrightness(vec3i{ 200, 200, 200 });
-	this->addChild(m_pImageLabel);
+	m_pChImage = new CSprite("ui.png", recti{ 256, 256, 480, 480 });
+	m_pChImage->setPosition(GRAPH_SIZE_X - m_pChImage->getSize().x, GRAPH_SIZE_Y - m_pChImage->getSize().y);
+	m_pChImage->setBrightness(vec3i{ 200, 200, 200 });
+	this->addChild(m_pChImage);
 
-	m_pDescLabel = new CLabel("", 20, DX_FONTTYPE_NORMAL, GetColor(228, 231, 152), 0, 10);
-	m_pDescLabel->setPosition(800, 200);
+	m_pDescLabel = new CLabel("", 20, DX_FONTTYPE_NORMAL, GetColor(250, 250, 177), 0, 10);
+	m_pDescLabel->setPosition(850, 200);
 	this->addChild(m_pDescLabel);
 
-	int TopY = 128;
-	auto pBox = new CBox2D(recti{ (int)(GRAPH_SIZE_X*0.382), TopY, 6, GRAPH_SIZE_Y - TopY - 50 }, 0xffee55, false);
-	this->addChild(pBox);
+	int TopY = 128, MidX = GRAPH_SIZE_X * 0.382;
+	this->addChild(new CLine2D({ MidX, TopY }, { MidX, GRAPH_SIZE_Y - 50 }, 0x222222), -1);
+	this->addChild(new CBox2D(recti{ 50, TopY, 1820, GRAPH_SIZE_Y - TopY - 50 }, 0x222222, false), -1);
+
+	m_MagicCircles.emplace_back(new CPlane({ 80, 1000, 300 }, { 1, -1, 0.7 }, { 1024, 1024 }, 0, "magic_circle.png", { 177, 250, 250, 40 }));
+	m_MagicCircles.emplace_back(new CPlane({ 1400, 500, 300 }, { 1, 1, 0.7 }, { 1800, 1800 }, 0, "magic_circle.png", { 247, 135, 135, 40 }));
+	for (auto pMagicCircle : m_MagicCircles) this->addChild(pMagicCircle, -2);
 
 	return true;
 }

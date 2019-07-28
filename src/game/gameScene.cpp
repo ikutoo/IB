@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "gameScene.h"
 #include <iostream>
-#include "engine/graphics2d.h"
+#include "engine/graphics.h"
 #include "engine/utility.h"
 #include "engine/inputManager.h"
 #include "engine/resourceManager.h"

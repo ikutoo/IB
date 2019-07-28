@@ -46,9 +46,6 @@
     <ClCompile Include="..\..\src\engine\cpuTimer.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\graphics2d.cpp">
-      <Filter>Source Files\node</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\engine\inputManager.cpp">
       <Filter>Source Files\manager</Filter>
     </ClCompile>
@@ -63,6 +60,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\engine\actionManager.cpp">
       <Filter>Source Files\manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\graphics.cpp">
+      <Filter>Source Files\node</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -99,9 +99,6 @@
     <ClInclude Include="..\..\src\engine\cpuTimer.h">
       <Filter>Source Files\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\engine\graphics2d.h">
-      <Filter>Source Files\node</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\engine\resourceManager.h">
       <Filter>Source Files\manager</Filter>
     </ClInclude>
@@ -119,6 +116,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\engine\actionManager.h">
       <Filter>Source Files\manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\engine\graphics.h">
+      <Filter>Source Files\node</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
