@@ -71,45 +71,43 @@ void CBackground3d::drawV()
 //****************************************************
 //FUNCTION:
 void CBackground3d::__initObject(Object_t *Ob, int ImgHandle, int ImgSize, int ImgX1, int ImgY1, int ImgX2, int ImgY2, float LargeX, float LargeY,
-	int Type, float FromZ, float FadeFromZ, float FadeToZ, float ToZ, float GraphX, float GraphY, int ObchildMax) {
-	int i, s;
-
+	int Type, float FromZ, float FadeFromZ, float FadeToZ, float ToZ, float GraphX, float GraphY, int ObchildMax)
+{
 	if (m_ObjectNum >= OBJECT_NUM_MAX - 1) {
-		printfDx("オブジェクト登録オーバー\n");
+		_ASSERTE(false);
 		return;
 	}
-	m_ObjectNum++;//オブジェクトの登録数加算
+	m_ObjectNum++;
 
-	Ob->Img = ImgHandle;//画像ハンドル
-	Ob->ImgSize = ImgSize;//画像サイズ
+	Ob->Img = ImgHandle;
+	Ob->ImgSize = ImgSize;
 	Ob->ImgX1 = ImgX1;
 	Ob->ImgY1 = ImgY1;
 	Ob->ImgX2 = ImgX2;
 	Ob->ImgY2 = ImgY2;
-	Ob->LargeX = LargeX;//とりあえず描画する大きさを適当に設定。縦・横比は素材の通りにする
+	Ob->LargeX = LargeX;
 	Ob->LargeY = LargeY;
-	Ob->Type = Type;//タイプを垂直に
-	Ob->FromZ = FromZ;//描画開始地点
-	Ob->FadeFromZ = FadeFromZ;//描画フェードイン開始地点
-	Ob->FadeToZ = FadeToZ;//描画フェードアウト開始地点
-	Ob->ToZ = ToZ;//描画終了地点
+	Ob->Type = Type;
+	Ob->FromZ = FromZ;
+	Ob->FadeFromZ = FadeFromZ;
+	Ob->FadeToZ = FadeToZ;
+	Ob->ToZ = ToZ;
 	Ob->ObchindMax = OBCHILD_MAX;
 	if (Ob->Type == 0) {
 		Ob->ObchindMax = ObchildMax;
 	}
 	if (Ob->ObchindMax - 1 <= 0) {
-		printfDx("表示数の設定が異常です\n");
+		_ASSERTE(false);
 		return;
 	}
-	//Zの幅計算
 	Ob->Zhaba = (Ob->FromZ - Ob->ToZ) / (Ob->ObchindMax - 1);
 
 	float ou1 = (float)Ob->ImgX1 / Ob->ImgSize, ou2 = (float)(Ob->ImgX2 - Ob->ImgX1) / Ob->ImgSize;
 	float ov1 = (float)Ob->ImgY1 / Ob->ImgSize, ov2 = (float)(Ob->ImgY2 - Ob->ImgY1) / Ob->ImgSize;
-	for (s = 0; s < Ob->ObchindMax; s++)
+	for (int s = 0; s < Ob->ObchindMax; s++)
 	{
 		Ob->ObChild[s].Pos = VGet(GraphX, GraphY, Ob->ToZ - Ob->Zhaba + Ob->Zhaba * s);
-		for (i = 0; i < 6; i++)
+		for (int i = 0; i < 6; i++)
 		{
 			Ob->ObChild[s].Vertex[i].r = Ob->ObChild[s].Vertex[i].g = Ob->ObChild[s].Vertex[i].b = Ob->ObChild[s].Vertex[i].a = 255;
 			Ob->ObChild[s].Vertex[i].u = ou1 + ou2 * VtPm[i].u;
@@ -150,45 +148,39 @@ void CBackground3d::__clacObject()
 		}
 
 		if (m_Objects[t].FromZ - m_Objects[t].FadeFromZ <= 0) {
-			printfDx("Object[%d].Fromの設定がおかしい\n", t);
+			_ASSERTE(false);
+			return;
 		}
 		else if (m_Objects[t].FadeToZ - m_Objects[t].ToZ <= 0) {
-			printfDx("Object[%d].Toの設定がおかしい\n", t);
+			_ASSERTE(false);
+			return;
 		}
 		else {
 			for (int s = 0; s < m_Objects[t].ObchindMax; s++) {
 				for (int i = 0; i < 6; i++) {
 					float z = m_Objects[t].ObChild[s].Vertex[i].pos.z;
-					//位置が描画する範囲より遠かったら透過0
 					if (z < m_Objects[t].ToZ) {
 						m_Objects[t].ObChild[s].Vertex[i].a = 0;
 					}
-					//(近づいている場合)フェードインする位置だったら
 					else if (m_Objects[t].ToZ < z && z <= m_Objects[t].FadeToZ) {
 						m_Objects[t].ObChild[s].Vertex[i].a = (unsigned char)(255.0f / (m_Objects[t].FadeToZ - m_Objects[t].ToZ) * (z - m_Objects[t].ToZ));
 					}
-					//通常描画する位置なら
 					else if (m_Objects[t].FadeToZ <= z && z <= m_Objects[t].FadeFromZ) {
 						m_Objects[t].ObChild[s].Vertex[i].a = 255;
 					}
-					//(近づいてる場合)フェードアウトする位置だったら
 					else if (m_Objects[t].FadeFromZ <= z && z < m_Objects[t].FromZ) {
 						m_Objects[t].ObChild[s].Vertex[i].a = (unsigned char)(255.0f / (m_Objects[t].FromZ - m_Objects[t].FadeFromZ) * (m_Objects[t].FromZ - z));
 					}
-					//描画する範囲より近かったら透過0
 					else if (m_Objects[t].FromZ < z) {
 						m_Objects[t].ObChild[s].Vertex[i].a = 0;
 					}
 				}
-				//近づいて見えなくなったら
+
 				if (m_Objects[t].ObChild[s].Pos.z < m_Objects[t].ToZ - m_Objects[t].Zhaba*0.5f) {
-					//一番向こう側へ
 					float sub = (m_Objects[t].ToZ - m_Objects[t].Zhaba*0.5f) - m_Objects[t].ObChild[s].Pos.z;
 					m_Objects[t].ObChild[s].Pos.z = m_Objects[t].FromZ + m_Objects[t].Zhaba*0.5f - sub;
 				}
-				//遠ざかって見えなくなったら
 				else if (m_Objects[t].ObChild[s].Pos.z > m_Objects[t].FromZ + m_Objects[t].Zhaba*0.5f) {
-					//一番こちら側へ
 					float sub = m_Objects[t].ObChild[s].Pos.z - (m_Objects[t].FromZ + m_Objects[t].Zhaba*0.5f);
 					m_Objects[t].ObChild[s].Pos.z = m_Objects[t].ToZ - m_Objects[t].Zhaba*0.5f + sub;
 				}
