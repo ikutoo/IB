@@ -15,6 +15,7 @@
 #include "playerAlice.h"
 #include "collision.h"
 #include "background3d.h"
+#include "enemy.h"
 
 using namespace DxEngine;
 
@@ -195,8 +196,8 @@ void CGameScene::__registerLuaGlue()
 {
 	lua_register(m_pLuaState, "log", luaGlue::log);
 	lua_register(m_pLuaState, "playMusic", luaGlue::playMusic);
-	lua_register(m_pLuaState, "setNodePosition", luaGlue::setNodePosition);
-	lua_register(m_pLuaState, "setNodeRotation", luaGlue::setNodeRotation);
+	lua_register(m_pLuaState, "setPosition", luaGlue::setNodePosition);
+	lua_register(m_pLuaState, "setRotation", luaGlue::setNodeRotation);
 
 	lua_registry_member_function(m_pLuaState, "setBackground", this, &CGameScene::__setBackgroundImage);
 	lua_registry_member_function(m_pLuaState, "setLCharacter", this, &CGameScene::__setLCharaterImage);
@@ -208,6 +209,7 @@ void CGameScene::__registerLuaGlue()
 	lua_registry_member_function(m_pLuaState, "startBgAnm", this, &CGameScene::__startBgAnimation);
 	lua_registry_member_function(m_pLuaState, "getCounter", this, &CGameScene::__getCounter);
 	lua_registry_member_function(m_pLuaState, "displayStageInfo", this, &CGameScene::__displayStageInfo);
+	lua_registry_member_function(m_pLuaState, "createEnemy", this, &CGameScene::__createEnemy);
 }
 
 //*********************************************************************
@@ -342,6 +344,26 @@ LUAGLUE CGameScene::__displayStageInfo(lua_State *vioLuaState)
 	}
 
 	return 0;
+}
+
+//***********************************************************************************************
+//FUNCTION:
+LUAGLUE CGameScene::__createEnemy(lua_State* vioLuaState)
+{
+	int Index = 0;
+	auto FilePath = lua_tostring(vioLuaState, ++Index);
+	recti Rect;
+	Rect.x = lua_tointeger(vioLuaState, ++Index);
+	Rect.y = lua_tointeger(vioLuaState, ++Index);
+	Rect.w = lua_tointeger(vioLuaState, ++Index);
+	Rect.h = lua_tointeger(vioLuaState, ++Index);
+
+	auto pEnemy = new CEnemy(FilePath, Rect);
+	this->addChild(pEnemy);
+
+	lua_pushlightuserdata(vioLuaState, pEnemy);
+
+	return 1;
 }
 
 //***********************************************************************************************

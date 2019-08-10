@@ -60,6 +60,7 @@ private:
 	LUAGLUE __startBgAnimation(lua_State *vioLuaState);
 	LUAGLUE __getCounter(lua_State *vioLuaState);
 	LUAGLUE __displayStageInfo(lua_State *vioLuaState);
+	LUAGLUE __createEnemy(lua_State* vioLuaState);
 
 	CSprite* __findUISprite(const std::string& vName);
 	CLabel*  __findUILabel(const std::string& vName);

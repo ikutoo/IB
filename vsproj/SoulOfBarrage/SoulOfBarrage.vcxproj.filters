@@ -24,6 +24,9 @@
     <Filter Include="Source Files\effect">
       <UniqueIdentifier>{fc9a78e6-52ae-462c-a3b3-026fa91d1fcb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\enemy">
+      <UniqueIdentifier>{0df1a80d-9124-4904-83ea-c61cab29fe1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\game\application.cpp">
@@ -79,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\game\background3d.cpp">
       <Filter>Source Files\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\enemy.cpp">
+      <Filter>Source Files\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +147,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\input.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\enemy.h">
+      <Filter>Source Files\enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
